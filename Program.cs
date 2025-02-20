@@ -15,7 +15,10 @@ builder.Services.AddControllersWithViews();
 
 // Registrazione del repository
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IValoriRepository, ValoriRepository>();
 builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<ValoriRepository>();
+
 
 // Registrazione di MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));

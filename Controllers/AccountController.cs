@@ -26,26 +26,30 @@ namespace GestioneAccounts.Controllers
 
         // POST: Account/Create
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([Bind("Id,Nome")] Account account)
+        public async Task<IActionResult> Create([FromBody] CreateAccountDto createAccountDto)
         {
-            var createAccount = new CreateAccount { Nome = account.Nome };
-
-            if (ModelState.IsValid)
+            if (createAccountDto == null)
             {
-                var createdAccount = await _mediator.Send(createAccount);
-
-                if (createdAccount != null)
-                {
-                    return CreatedAtAction(nameof(GetById), new { id = createdAccount.Id }, createdAccount);
-                }
-                else
-                {
-                    return BadRequest("Account creation failed.");
-                }
+                return BadRequest("Invalid account data.");
             }
 
-            return BadRequest(ModelState);
+            var createAccount = new CreateAccount { Nome = createAccountDto.Nome };
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var createdAccount = await _mediator.Send(createAccount);
+
+            if (createdAccount == null)
+            {
+                return StatusCode(500, "Account creation failed due to an internal error.");
+            }
+
+            return CreatedAtAction(nameof(GetById), new { id = createdAccount.Id }, createdAccount);    
         }
+
 
 
 
