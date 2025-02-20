@@ -1,0 +1,12 @@
+namespace matteo.proietti.progetti.Progetti_personali_e_esercitazioni.esercitazioni_dotnet.GestioneAccounts.BE.Domain.Models
+{
+	public class Account
+	{
+                public long Id { get; set; }
+
+                public string Nome { get; set; }
+                public List<Valore> valori { get; set; }
+	}
+}
+
+
