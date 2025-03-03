@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "version": "2.0.0",
     "tasks": [
         {
@@ -42,6 +43,8 @@
 }
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> origin/main
   // For more information, visit: https://go.microsoft.com/fwlink/?LinkId=733558
   "version": "2.0.0",
   "tasks": [
@@ -125,4 +128,7 @@
     ]
 }
 >>>>>>> 76ad79d (BE GestioneAccounts)
+<<<<<<< HEAD
 >>>>>>> 4539cf5 (BE GestioneAccounts)
+=======
+>>>>>>> origin/main

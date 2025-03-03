@@ -26,6 +26,7 @@ namespace GestioneAccounts.Controllers
 
         // POST: Account/Create
         [HttpPost("Create")]
+<<<<<<< HEAD
         public async Task<IActionResult> Create([FromBody] CreateAccountDto createAccountDto)
         {
             if (createAccountDto == null)
@@ -48,12 +49,36 @@ namespace GestioneAccounts.Controllers
             }
 
             return CreatedAtAction(nameof(GetById), new { id = createdAccount.Id }, createdAccount);    
+=======
+        public async Task<IActionResult> Create([Bind("Id,Nome")] Account account)
+        {
+            var createAccount = new CreateAccount { Nome = account.Nome };
+
+            if (ModelState.IsValid)
+            {
+                var createdAccount = await _mediator.Send(createAccount);
+
+                if (createdAccount != null)
+                {
+                    return CreatedAtAction(nameof(GetById), new { id = createdAccount.Id }, createdAccount);
+                }
+                else
+                {
+                    return BadRequest("Account creation failed.");
+                }
+            }
+
+            return BadRequest(ModelState);
+>>>>>>> origin/main
         }
 
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
         // GET: Account/Edit/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)

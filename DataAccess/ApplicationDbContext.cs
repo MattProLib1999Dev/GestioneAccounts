@@ -1,18 +1,25 @@
 using Microsoft.EntityFrameworkCore;
+<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore.Diagnostics;
+=======
+>>>>>>> origin/main
 
 namespace GestioneAccounts.DataAccess
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
     {
         public DbSet<Account> Accounts { get; set; } = default!;
+<<<<<<< HEAD
         public DbSet<Valori> Valori { get; set; } = default!;
+=======
+>>>>>>> origin/main
 
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         }
+<<<<<<< HEAD
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)
       {
@@ -36,5 +43,7 @@ namespace GestioneAccounts.DataAccess
 
 
 
+=======
+>>>>>>> origin/main
     }
 }

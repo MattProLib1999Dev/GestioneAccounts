@@ -270,6 +270,11 @@ C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazio
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\GestioneAccounts.csproj.CoreCompileInputs.cache
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\GestioneAccounts.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\GestioneAccounts.MvcApplicationPartsAssemblyInfo.cache
+<<<<<<< HEAD
+=======
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\GestioneAccounts.RazorAssemblyInfo.cache
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\GestioneAccounts.RazorAssemblyInfo.cs
+>>>>>>> origin/main
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\staticwebassets\msbuild.GestioneAccounts.Microsoft.AspNetCore.StaticWebAssets.props
@@ -284,4 +289,7 @@ C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazio
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\GestioneAccounts.pdb
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\GestioneAccounts.genruntimeconfig.cache
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\ref\GestioneAccounts.dll
+<<<<<<< HEAD
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\GestioneAccounts.sourcelink.json
+=======
+>>>>>>> origin/main
