@@ -2,20 +2,17 @@ using GestioneAccounts.DataAccess;
 using MediatR;
 using Microsoft.EntityFrameworkCore; // Necessario per ToListAsync
 
+// Request class
 public class GetAllValori : IRequest<ICollection<Valori>> {}
 
-public class GetAllValoriHandler : IRequestHandler<GetAllValori, ICollection<Valori>>
+// Handler class
+public class GetAllValoriHandler(ApplicationDbContext context) : IRequestHandler<GetAllValori, ICollection<Valori>>
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context = context;
 
-    public GetAllValoriHandler(ApplicationDbContext context)
+  public async Task<ICollection<Valori>> Handle(GetAllValori request, CancellationToken cancellationToken)
     {
-        _context = context;
-    }
-
-    public async Task<ICollection<Valori>> Handle(GetAllValori request, CancellationToken cancellationToken)
-    {
-        // Corretto: usa ToListAsync per ottenere i dati dalla tabella Valori
-        return await _context.Valori.ToListAsync(cancellationToken);
+        // Asynchronously retrieve all records from the "Valori" table
+        return (ICollection<Valori>)await _context.Valori.ToListAsync(cancellationToken);
     }
 }

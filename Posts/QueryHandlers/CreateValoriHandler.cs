@@ -1,18 +1,16 @@
+using GestioneAccounts.BE.Domain.Models;
 using GestioneAccounts.DataAccess;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
-public class CreateValoriHandler : IRequestHandler<CreateValoreRequest, Valori>
+public class CreateValoriHandler(ApplicationDbContext context) : IRequest<Valore>
 {
-    private readonly ApplicationDbContext _context;
+  private readonly ApplicationDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
 
-    public CreateValoriHandler(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<Valori> Handle(CreateValoreRequest request, CancellationToken cancellationToken)
+  public async Task<Valore> Handle(CreateValoreRequest request, CancellationToken cancellationToken)
     {
         if (request.AccountId <= 0)
         {
@@ -21,8 +19,8 @@ public class CreateValoriHandler : IRequestHandler<CreateValoreRequest, Valori>
 
         // Verifica se l'AccountId esiste nel database
         var account = await _context.Accounts
-                                     .AsNoTracking() // Ottimizzazione se non sono necessarie modifiche all'oggetto Account
-                                     .FirstOrDefaultAsync(a => a.Id == request.AccountId, cancellationToken);
+            .AsNoTracking() // Ottimizzazione se non sono necessarie modifiche all'oggetto Account
+            .FirstOrDefaultAsync(a => a.Id == request.AccountId, cancellationToken);
 
         if (account == null)
         {
@@ -32,10 +30,13 @@ public class CreateValoriHandler : IRequestHandler<CreateValoreRequest, Valori>
         try
         {
             // Crea il nuovo valore
-            var valori = new Valori
+            var valori = new Valore
             {
                 AccountId = request.AccountId,
-                DataCreazione = DateTime.UtcNow
+                DataCreazione = DateTime.UtcNow,
+                Nome = account.Nome,
+                ValoreStr = account.valoreString,
+                Voce = account.voce
             };
 
             // Aggiungi il nuovo record nella tabella Valori

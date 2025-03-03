@@ -1,17 +1,14 @@
 using GestioneAccounts.Abstractions;
+using GestioneAccounts.BE.Domain.Models;
 using GestioneAccounts.DataAccess;
 using GestioneAccounts.Posts.Queries;
 using MediatR;
 
-    public class GetAccountByIdHandler : IRequestHandler<GetAccountById, Account>
+    public class GetAccountByIdHandler(IAccountRepository accountRepository) : IRequestHandler<GetAccountById, Account>
     {
-            public readonly IAccountRepository _accountRepository;
-            public GetAccountByIdHandler(IAccountRepository accountRepository)
-            {
-                _accountRepository = accountRepository;
-            }
+            public readonly IAccountRepository _accountRepository = accountRepository;
 
-            public async Task<Account> Handle(GetAccountById request, CancellationToken cancellationToken)
+  public async Task<Account> Handle(GetAccountById request, CancellationToken cancellationToken)
             {
                 if (!request.Id.HasValue)
                 {

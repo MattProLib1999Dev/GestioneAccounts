@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace GestioneAccounts.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AddBlogCreatedTimestamp : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +17,10 @@ namespace GestioneAccounts.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    valoreString = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    voce = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    dataCreazione = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,8 +34,11 @@ namespace GestioneAccounts.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Voce = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    valore = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AccountId = table.Column<long>(type: "bigint", nullable: false)
+                    ValoreStr = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountId = table.Column<long>(type: "bigint", nullable: true),
+                    DataCreazione = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ValoreString = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,8 +47,7 @@ namespace GestioneAccounts.Migrations
                         name: "FK_Valore_Accounts_AccountId",
                         column: x => x.AccountId,
                         principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

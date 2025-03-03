@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "RCu3SmhL44y1SDGLRk2NZCwwSC4JdOMzOWQwHWBLbcQgLj88fWNFoy86b28/AZqB6aFPnKqVD5yROSzhlE4bfg==",
+  "dgSpecHash": "blqD9GQE4G3eJg+uL+vBN0WpbQFamgxJoLNZqY8wgoD1ikUvI4yxE2Wl5ZRbXf4ZCtsdia0kKD/8bgMfiUCMBg==",
   "success": true,
   "projectFilePath": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\GestioneAccounts.csproj",
   "expectedPackageFiles": [
@@ -58,6 +58,7 @@
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\matteo.proietti\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\11.1.0\\mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.3.0\\microsoft.aspnetcore.authentication.2.3.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.3.0\\microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.aspnetcore.authentication.cookies\\2.3.0\\microsoft.aspnetcore.authentication.cookies.2.3.0.nupkg.sha512",
@@ -113,7 +114,7 @@
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\8.0.1\\microsoft.extensions.diagnostics.abstractions.8.0.1.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\8.0.0\\microsoft.extensions.fileproviders.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\8.0.1\\microsoft.extensions.hosting.abstractions.8.0.1.nupkg.sha512",
-    "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.extensions.identity.core\\3.0.0\\microsoft.extensions.identity.core.3.0.0.nupkg.sha512",
+    "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.extensions.identity.core\\2.3.0\\microsoft.extensions.identity.core.2.3.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.extensions.logging\\9.0.2\\microsoft.extensions.logging.9.0.2.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.2\\microsoft.extensions.logging.abstractions.9.0.2.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.extensions.objectpool\\8.0.11\\microsoft.extensions.objectpool.8.0.11.nupkg.sha512",
@@ -161,6 +162,7 @@
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\system.collections.immutable\\8.0.0\\system.collections.immutable.8.0.0.nupkg.sha512",
+    "C:\\Users\\matteo.proietti\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\system.composition\\7.0.0\\system.composition.7.0.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\system.composition.attributedmodel\\7.0.0\\system.composition.attributedmodel.7.0.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\system.composition.convention\\7.0.0\\system.composition.convention.7.0.0.nupkg.sha512",
@@ -198,11 +200,11 @@
   ],
   "logs": [
     {
-      "code": "NU1603",
+      "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Microsoft.AspNetCore.Identity 2.3.0 dipende da Microsoft.Extensions.Identity.Core (>= 2.3.0) ma non è stato possibile trovare Microsoft.Extensions.Identity.Core 2.3.0. È stata risolta una migliore corrispondenza approssimativa di Microsoft.Extensions.Identity.Core 3.0.0.",
-      "libraryId": "Microsoft.Extensions.Identity.Core",
+      "message": "È stata rilevata una versione del pacchetto all'esterno del vincolo di dipendenza: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 richiede MediatR (>= 11.0.0 && < 12.0.0) ma è stata risolta la versione MediatR 12.4.1.",
+      "libraryId": "MediatR",
       "targetGraphs": [
         "net8.0"
       ]

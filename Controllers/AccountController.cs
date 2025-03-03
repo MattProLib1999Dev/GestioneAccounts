@@ -14,31 +14,50 @@ namespace GestioneAccounts.Controllers
         private readonly ApplicationDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
         private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-    // GET: Account
-    [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var getAccount = new GetAllAccounts();
-            var accounts = await _mediator.Send(getAccount);
-            return Ok(accounts);
-        }
+       // GET: Account
+     [HttpGet]
+      public async Task<IActionResult> GetAll()
+      {
+          var getAccount = new GetAllAccountsQuery();
+          var accounts = await _mediator.Send(getAccount);
+          return Ok(accounts);
+      }
+
+
 
         // POST: Account/Create
-        [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody] ValoriCreateDto createDto)
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] Account createDto)
         {
             if (createDto == null)
             {
-                return BadRequest("Invalid data.");
+                return BadRequest("createDto is required.");
             }
 
-            var account = createDto.Account;
-            var valori = createDto.Valori;
+            // Validate the createDto if needed, for example checking if required fields are not empty
+            if (string.IsNullOrEmpty(createDto.Nome) || string.IsNullOrEmpty(createDto.valoreString) || string.IsNullOrEmpty(createDto.voce))
+            {
+                return BadRequest("Some required fields are missing.");
+            }
 
-            // Validate account and valori, create the records, etc.
+            // Assuming ApplicationDbContext is injected into the controller via constructor
+            try
+            {
+                // Save the new account to the database
+                _context.Accounts.Add(createDto); // Assuming _context is your DbContext
+                await _context.SaveChangesAsync(); // Save the data to the database
 
-            return Ok();
+                // Return a success response
+                return CreatedAtAction(nameof(GetById), new { id = createDto.Id }, createDto); // Return the created account with a 201 Created status
+            }
+            catch (Exception ex)
+            {
+                // Handle any unexpected errors (e.g., database connection errors)
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
+
+
 
 
         // GET: Account/Edit/5
