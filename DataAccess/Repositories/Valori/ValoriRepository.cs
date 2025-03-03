@@ -1,5 +1,9 @@
 using GestioneAccounts.Abstractions;
+using GestioneAccounts.BE.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GestioneAccounts.DataAccess.Repositories
 {
@@ -7,56 +11,92 @@ namespace GestioneAccounts.DataAccess.Repositories
     {
         private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
 
-        public async Task<Valori> CreateValori(Valori account)
+    // Crea un nuovo "Valori"
+    public async Task<Valori> CreateValori(Valori valori)
         {
-            _applicationDbContext.Add(account);
+            _applicationDbContext.Add(valori);
             await _applicationDbContext.SaveChangesAsync();
-            return account;
+            return valori;
         }
 
+        // Elimina un "Valori" per ID
         public async Task<bool> DeleteValori(long valoriId)
         {
             var valori = await _applicationDbContext.Valori.FirstOrDefaultAsync(a => a.Id == valoriId);
-            if (valori == null) 
+            if (valori == null)
                 return false;
 
             _applicationDbContext.Valori.Remove(valori);
-            await _applicationDbContext.SaveChangesAsync(); 
+            await _applicationDbContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<Valori> GetValoriById(long valoriId)
+        // Ottieni un "Valori" per ID
+        public async Task<Valore> GetValoriById(long valoriId)
         {
-            return await _applicationDbContext.Valori.FirstOrDefaultAsync(a => a.Id == valoriId) ?? new Valori();
+            return await _applicationDbContext.Valori
+                .FirstOrDefaultAsync(a => a.Id == valoriId) ?? new Valore();
         }
 
 
-        public async Task<ICollection<Valori>> GetAllValori()
-        {
-            return await _applicationDbContext.Valori.ToListAsync();
-        }
+        // Ottieni tutti i "Valori"
+     public async Task<ICollection<Valore>> GetAllValori()
+     {
+          var valori = await _applicationDbContext.Valori.ToListAsync();
+          return valori ?? new List<Valore>();
+     }
 
-        public async Task<Valori> UpdateValori(Account account, long valoriId)
+
+        // Aggiorna o crea un "Valori" in base all'account
+        public async Task<Valore> UpdateValori(Account account, long valoriId)
         {
-            var valori = await _applicationDbContext.Valori.FirstOrDefaultAsync(v => v.Id == valoriId);
-            
-            if (valori == null)
+            var valore = await _applicationDbContext.Valore.FirstOrDefaultAsync(v => v.Id == valoriId);
+
+            if (valore == null)
             {
-                var valore = new Valori
+                // Crea un nuovo oggetto Valori
+                var nuovoValore = new Valore
                 {
-                    DataCreazione = DateTime.Now
+                    DataCreazione = DateTime.Now,
+                    Nome = account.Nome,
+                    ValoreStr = account.valoreString,
+                    Voce = account.voce
                 };
-                _applicationDbContext.Valori.Add(valori); 
+
+                // Aggiungi il nuovo oggetto al contesto
+                _applicationDbContext.Valori.Add(nuovoValore);
+
+                // Imposta la variabile valori al nuovo oggetto creato
+                valore = nuovoValore;
             }
             else
             {
-                valori.Id = (long)account.Id; 
+                // Aggiorna le proprietà di valori con quelle di account (se necessario)
+                valore.Nome = account.Nome;
+                valore.ValoreString = account.valoreString;
+                valore.Voce = account.voce;
             }
 
+            // Salva le modifiche nel database
             await _applicationDbContext.SaveChangesAsync();
-            return valori; 
+
+            // Restituisci l'oggetto aggiornato
+            return valore;
         }
 
-
+    Task<ICollection<Valori>> IValoriRepository.GetAllValori()
+    {
+      throw new NotImplementedException();
     }
+
+    Task<Valori> IValoriRepository.GetValoriById(long valoriId)
+    {
+      throw new NotImplementedException();
+    }
+
+    Task<Valori> IValoriRepository.UpdateValori(Account account, long valoriId)
+    {
+      throw new NotImplementedException();
+    }
+  }
 }

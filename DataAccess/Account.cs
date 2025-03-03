@@ -1,28 +1,20 @@
 using System.ComponentModel.DataAnnotations;
-<<<<<<< HEAD
+using System.Collections.Generic;
 
-public class Account
+
+namespace GestioneAccounts.BE.Domain.Models
 {
-    [Key]
-    public long? Id { get; set; }
+    public class Account
+    {
+        [Key]
+        public long Id { get; set; }  // ✅ Non-nullable primary key
 
-    public string Nome { get; set; } = string.Empty;
+        public string Nome { get; set; } = string.Empty;
 
-    public List<Valori>? Valori { get; set; }
+        public List<Valore>? Valori { get; set; }  // ✅ Match the `Valore` class name
+        public string valoreString { get; set; } = String.Empty;
+        public string voce { get; set; } = String.Empty;
+        public DateTime dataCreazione { get; set; } = DateTime.Now;
+
+    }
 }
-=======
-using matteo.proietti.progetti.Progetti_personali_e_esercitazioni.esercitazioni_dotnet.GestioneAccounts.BE.Domain.Models;
-
-namespace GestioneAccounts.DataAccess
-{
-	public class Account
-	{
-                [Key]
-                public long ?Id { get; set; }
-                public string? Nome { get; set; } = String.Empty;
-                public List<Valore>? Valori { get; set; }
-	}
-}
-
-
->>>>>>> origin/main

@@ -1,33 +1,36 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using GestioneAccounts.DataAccess;
 using MediatR;
 using GestioneAccounts.Posts.Queries;
 using GestioneAccounts.Posts.Commands;
-using System.ComponentModel.DataAnnotations;
+using GestioneAccounts.BE.Domain.Models;
 
 namespace GestioneAccounts.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-
-    public class ValoriController(ApplicationDbContext context, IMediator mediator) : Controller
+    public class ValoriController : Controller
     {
-        private readonly ApplicationDbContext _context = context;
-        private readonly IMediator _mediator = mediator;
+        private readonly ApplicationDbContext _context;
+        private readonly IMediator _mediator;
 
-        // GET: Account
-         [HttpGet]
+        // Constructor for Dependency Injection
+        public ValoriController(ApplicationDbContext context, IMediator mediator)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        // GET: Get all valori
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var valori = await _mediator.Send(new GetAllValori());
             return Ok(valori);
         }
 
-        // POST: Account/Create
-       
 
-            // POST per creare un nuovo Valori
+        // POST: Create a new Valori
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] Valori createValori)
         {
@@ -36,101 +39,118 @@ namespace GestioneAccounts.Controllers
                 return BadRequest("Invalid valori data.");
             }
 
-            // Non assegnare manualmente l'ID, lascialo vuoto.
-            var createValoriInstance = new Valori
+            // Map Valori model (DTO) to Valore entity
+            var createValoriInstance = new Valore
             {
-                AccountId = createValori.AccountId,   // Usa l'AccountId fornito
-                Nome = createValori.Nome,             // Nome del valore
-                DataCreazione = createValori.DataCreazione // Data di creazione
+                AccountId = createValori.AccountId, // Use the provided AccountId
+                ValoreStr = createValori.valoreString,  // Ensure property name matches your model's
+                Voce = createValori.voce  // Ensure property name matches your model's
             };
 
-            // Verifica se il modello è valido
+            // Validate the model state
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // Salva nel database senza modificare l'ID, il database lo assegnerà automaticamente
-            _context.Valori.Add(createValoriInstance);
-            await _context.SaveChangesAsync();
-
-            // Restituisci il risultato
-            return CreatedAtAction(nameof(GetById), new { id = createValoriInstance.Id }, createValoriInstance);
-        }
-
-
-
-        // GET per ottenere un Valori per ID
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Valori>> GetById(long id)
-        {
-            var valori = await _context.Valori.FindAsync(id);
-
-            if (valori == null)
+            try
             {
-                return NotFound();
+                // Save to database
+                _context.Valori.Add(createValoriInstance);
+                await _context.SaveChangesAsync();
+
+                // Return the created response with a Location header to the new resource
+                return CreatedAtAction(nameof(GetById), new { id = createValoriInstance.Id }, createValoriInstance);
             }
-
-            return Ok(valori);
-        }
-
-        
-    
-
-
-
-        // GET: Account/Edit/5
-        [HttpGet("GetById/{id}")]
-        public async Task<IActionResult> GetValoriById(long id)
-        {
-            var getValori = new GetValoriById { Id = id };
-            var valori = await _mediator.Send(getValori);
-            if (valori == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                // Log the error (if logging is configured)
+                // Handle any exceptions during the save operation
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
-            return Ok(valori);
         }
-        // PUT: Account/Edit/5
-        [HttpPut]
-        public async Task<IActionResult> Edit(long? id, [Bind("Id,Nome")] Valori valori)
+
+
+        // GET: Get Valori by ID
+        // GET: Retrieve Valori by ID
+[HttpGet("{id}")]
+public async Task<IActionResult> GetById(long id)
+{
+    var valori = await _context.Valori.FindAsync(id);
+
+    if (valori == null)
+    {
+        return NotFound(new { message = $"Valori with ID {id} not found." });
+    }
+
+    return Ok(valori);
+}
+
+// PUT: Edit Valori by ID
+[HttpPut("{id}")]
+public async Task<IActionResult> Edit(long id, [FromBody] Valori valori)
+{
+    if (id != valori.Id)
+    {
+        return BadRequest(new { message = "ID mismatch. The provided ID does not match the values' ID." });
+    }
+
+    // Validate the model
+    if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
+
+    try
+    {
+        // Find the existing record to update
+        var existingValori = await _context.Valori.FindAsync(id);
+        if (existingValori == null)
         {
-            // Check if the id from the route matches the account id
-            if (id != valori.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                var updateValori = new UpdateValori
-                {
-                    Nome = valori.Nome
-                };
-                var updatedValori = await _mediator.Send(updateValori);
-                if (updatedValori != null)
-                {
-                    return Ok(updatedValori);
-                }
-                return BadRequest("Account update failed.");
-            }
-
-            // Return a BadRequest if the model state is invalid
-            return BadRequest(ModelState);
+            return NotFound(new { message = $"Valori with ID {id} not found for update." });
         }
 
-        // DELETE: Account/Delete/5
-        [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        // Update the properties
+        existingValori.ValoreString = valori.valoreString;
+        existingValori.Voce = valori.voce;
+
+        // Save the changes
+        await _context.SaveChangesAsync();
+
+        return Ok(existingValori);
+    }
+    catch (Exception ex)
+    {
+        // Handle any errors during the update operation
+        return StatusCode(500, new { message = $"An error occurred while updating the Valori: {ex.Message}" });
+    }
+}
+
+// DELETE: Delete Valori by ID
+[HttpDelete("Delete/{id}")]
+public async Task<IActionResult> Delete(long id)
+{
+    try
+    {
+        // Find the existing record to delete
+        var valoriToDelete = await _context.Valori.FindAsync(id);
+        if (valoriToDelete == null)
         {
-            var deleteAccountCommand = new DeleteAccount { Id = id };
-            var result = await _mediator.Send(deleteAccountCommand);
-            return Ok(new { message = "Account eliminato con successo" });
+            return NotFound(new { message = $"Valori with ID {id} not found for deletion." });
         }
 
-        private bool AccountExists(long? id)
-        {
-            return _context.Accounts.Any(e => e.Id == id);
-        }
+        // Remove the record
+        _context.Valori.Remove(valoriToDelete);
+        await _context.SaveChangesAsync();
+
+        return Ok(new { message = "Valori deleted successfully." });
+    }
+    catch (Exception ex)
+    {
+        // Handle any errors during the delete operation
+        return StatusCode(500, new { message = $"An error occurred while deleting the Valori: {ex.Message}" });
+    }
+}
+
     }
 }

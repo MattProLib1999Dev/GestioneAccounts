@@ -1,4 +1,5 @@
 using GestioneAccounts.Abstractions;
+using GestioneAccounts.BE.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestioneAccounts.DataAccess.Repositories
@@ -17,11 +18,11 @@ namespace GestioneAccounts.DataAccess.Repositories
         public async Task<bool> DeleteAccount(long accountId)
         {
             var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
-            if (account == null) 
+            if (account == null)
                 return false;
 
             _applicationDbContext.Accounts.Remove(account);
-            await _applicationDbContext.SaveChangesAsync(); 
+            await _applicationDbContext.SaveChangesAsync();
             return true;
         }
 
@@ -40,7 +41,7 @@ namespace GestioneAccounts.DataAccess.Repositories
         {
             var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
             if (account == null)
-                return new Account { Id = accountId, Nome = nome ?? "Default" }; 
+                return new Account { Id = accountId, Nome = nome ?? "Default" };
 
             account.Nome = nome ?? account.Nome;
             await _applicationDbContext.SaveChangesAsync();

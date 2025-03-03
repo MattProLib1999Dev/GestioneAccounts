@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GestioneAccounts.BE.Domain.Models;
 using GestioneAccounts.DataAccess;
 
 public class Valori
@@ -16,5 +17,7 @@ public class Valori
     [ForeignKey("AccountId")]
     public Account? Account { get; set; }
 
-    public string Nome { get; set; } = string.Empty;
+    public string Nome { get; set; } = String.Empty;
+    public string valoreString { get; set; } = String.Empty;
+    public string voce { get; set; } = String.Empty;
 }

@@ -9,6 +9,7 @@
       "GestioneAccounts/1.0.0": {
         "dependencies": {
           "MediatR": "12.4.1",
+          "MediatR.Extensions.Microsoft.DependencyInjection": "11.1.0",
           "Microsoft.AspNetCore.Cryptography.KeyDerivation": "3.0.0",
           "Microsoft.AspNetCore.Identity": "2.3.0",
           "Microsoft.EntityFrameworkCore": "9.0.2",
@@ -618,6 +619,18 @@
           }
         }
       },
+      "MediatR.Extensions.Microsoft.DependencyInjection/11.1.0": {
+        "dependencies": {
+          "MediatR": "12.4.1",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.1/MediatR.Extensions.Microsoft.DependencyInjection.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.1.0.0"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authentication/2.3.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.Core": "2.3.0",
@@ -714,7 +727,7 @@
           "Microsoft.AspNetCore.Authentication.Cookies": "2.3.0",
           "Microsoft.AspNetCore.Cryptography.KeyDerivation": "3.0.0",
           "Microsoft.AspNetCore.Hosting.Abstractions": "2.3.0",
-          "Microsoft.Extensions.Identity.Core": "3.0.0"
+          "Microsoft.Extensions.Identity.Core": "2.3.0"
         }
       },
       "Microsoft.AspNetCore.Razor.Language/6.0.24": {
@@ -1529,11 +1542,12 @@
           }
         }
       },
-      "Microsoft.Extensions.Identity.Core/3.0.0": {
+      "Microsoft.Extensions.Identity.Core/2.3.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Cryptography.KeyDerivation": "3.0.0",
           "Microsoft.Extensions.Logging": "9.0.2",
-          "Microsoft.Extensions.Options": "9.0.2"
+          "Microsoft.Extensions.Options": "9.0.2",
+          "System.ComponentModel.Annotations": "5.0.0"
         }
       },
       "Microsoft.Extensions.Logging/9.0.2": {
@@ -2114,6 +2128,7 @@
         }
       },
       "System.Collections.Immutable/8.0.0": {},
+      "System.ComponentModel.Annotations/5.0.0": {},
       "System.Composition/7.0.0": {
         "dependencies": {
           "System.Composition.AttributedModel": "7.0.0",
@@ -2757,6 +2772,13 @@
       "path": "mediatr.contracts/2.0.1",
       "hashPath": "mediatr.contracts.2.0.1.nupkg.sha512"
     },
+    "MediatR.Extensions.Microsoft.DependencyInjection/11.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RW3etRuy6Xp63cgqfC0r/ITOtUT0f9ymJl1+1XZdzsYUsfv7WBPC2kXGOP8IYpY/6c4Q6805vbIW/88DopUs3w==",
+      "path": "mediatr.extensions.microsoft.dependencyinjection/11.1.0",
+      "hashPath": "mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Authentication/2.3.0": {
       "type": "package",
       "serviceable": true,
@@ -3142,12 +3164,12 @@
       "path": "microsoft.extensions.hosting.abstractions/8.0.1",
       "hashPath": "microsoft.extensions.hosting.abstractions.8.0.1.nupkg.sha512"
     },
-    "Microsoft.Extensions.Identity.Core/3.0.0": {
+    "Microsoft.Extensions.Identity.Core/2.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-jFsp3HwXWJvmyfQginRs5BAUu3PES7YgP16CdD9Vfrv3CAdzW10a8gvUkjFtheJ9KCQY5iOA2eGZL7GX3GGx/g==",
-      "path": "microsoft.extensions.identity.core/3.0.0",
-      "hashPath": "microsoft.extensions.identity.core.3.0.0.nupkg.sha512"
+      "sha512": "sha512-yR0eFnUbAM2k+q5QsX0NKinfShIe1B/aiHXEywiNT5Cs2MvEhxQIbIn5rWXnEAfmwW+i+t5D8odPSEHz/taIyQ==",
+      "path": "microsoft.extensions.identity.core/2.3.0",
+      "hashPath": "microsoft.extensions.identity.core.2.3.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Logging/9.0.2": {
       "type": "package",
@@ -3477,6 +3499,13 @@
       "sha512": "sha512-AurL6Y5BA1WotzlEvVaIDpqzpIPvYnnldxru8oXJU2yFxFUy3+pNXjXd1ymO+RA0rq0+590Q8gaz2l3Sr7fmqg==",
       "path": "system.collections.immutable/8.0.0",
       "hashPath": "system.collections.immutable.8.0.0.nupkg.sha512"
+    },
+    "System.ComponentModel.Annotations/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dMkqfy2el8A8/I76n2Hi1oBFEbG1SfxD2l5nhwXV3XjlnOmwxJlQbYpJH4W51odnU9sARCSAgv7S3CyAFMkpYg==",
+      "path": "system.componentmodel.annotations/5.0.0",
+      "hashPath": "system.componentmodel.annotations.5.0.0.nupkg.sha512"
     },
     "System.Composition/7.0.0": {
       "type": "package",

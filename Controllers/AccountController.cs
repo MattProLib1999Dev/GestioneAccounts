@@ -1,101 +1,66 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using GestioneAccounts.DataAccess;
 using MediatR;
 using GestioneAccounts.Posts.Queries;
 using GestioneAccounts.Posts.Commands;
+using GestioneAccounts.BE.Domain.Models;
 
 namespace GestioneAccounts.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]  
-
+    [Route("api/[controller]")]
     public class AccountController(ApplicationDbContext context, IMediator mediator) : Controller
     {
-        private readonly ApplicationDbContext _context = context;
-        private readonly IMediator _mediator = mediator;
+        private readonly ApplicationDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
+        private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-        // GET: Account
-        [HttpGet]
+    // GET: Account
+    [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var getAccount = new GetAllAccounts(); 
-            var accounts = await mediator.Send(getAccount); 
+            var getAccount = new GetAllAccounts();
+            var accounts = await _mediator.Send(getAccount);
             return Ok(accounts);
         }
 
         // POST: Account/Create
         [HttpPost("Create")]
-<<<<<<< HEAD
-        public async Task<IActionResult> Create([FromBody] CreateAccountDto createAccountDto)
+        public async Task<IActionResult> Create([FromBody] ValoriCreateDto createDto)
         {
-            if (createAccountDto == null)
+            if (createDto == null)
             {
-                return BadRequest("Invalid account data.");
+                return BadRequest("Invalid data.");
             }
 
-            var createAccount = new CreateAccount { Nome = createAccountDto.Nome };
+            var account = createDto.Account;
+            var valori = createDto.Valori;
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            // Validate account and valori, create the records, etc.
 
-            var createdAccount = await _mediator.Send(createAccount);
-
-            if (createdAccount == null)
-            {
-                return StatusCode(500, "Account creation failed due to an internal error.");
-            }
-
-            return CreatedAtAction(nameof(GetById), new { id = createdAccount.Id }, createdAccount);    
-=======
-        public async Task<IActionResult> Create([Bind("Id,Nome")] Account account)
-        {
-            var createAccount = new CreateAccount { Nome = account.Nome };
-
-            if (ModelState.IsValid)
-            {
-                var createdAccount = await _mediator.Send(createAccount);
-
-                if (createdAccount != null)
-                {
-                    return CreatedAtAction(nameof(GetById), new { id = createdAccount.Id }, createdAccount);
-                }
-                else
-                {
-                    return BadRequest("Account creation failed.");
-                }
-            }
-
-            return BadRequest(ModelState);
->>>>>>> origin/main
+            return Ok();
         }
 
 
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
         // GET: Account/Edit/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
             var getAccount = new GetAccountById { Id = id };
             var account = await _mediator.Send(getAccount);
+
             if (account == null)
             {
                 return NotFound();
             }
+
             return Ok(account);
         }
+
         // PUT: Account/Edit/5
-        [HttpPut]
-        public async Task<IActionResult> Edit(long? id, [Bind("Id,Nome")] Account account)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Nome")] Account account)
         {
-            // Check if the id from the route matches the account id
+            // Ensure the id from route matches the account id
             if (id != account.Id)
             {
                 return NotFound();
@@ -108,15 +73,17 @@ namespace GestioneAccounts.Controllers
                     AccountId = account.Id,
                     Nome = account.Nome
                 };
+
                 var updatedAccount = await _mediator.Send(updateAccount);
+
                 if (updatedAccount != null)
                 {
                     return Ok(updatedAccount);
                 }
+
                 return BadRequest("Account update failed.");
             }
 
-            // Return a BadRequest if the model state is invalid
             return BadRequest(ModelState);
         }
 
@@ -124,12 +91,19 @@ namespace GestioneAccounts.Controllers
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var deleteAccountCommand = new DeleteAccount { Id = id };
-            var result = await _mediator.Send(deleteAccountCommand);
+          var deleteAccountCommand = new DeleteAccount { Id = id };
+          var result = await _mediator.Send(deleteAccountCommand);
+
+          if (result != null)
+          {
             return Ok(new { message = "Account eliminato con successo" });
+          }
+
+          return BadRequest("Account deletion failed.");
         }
 
-        private bool AccountExists(long? id)
+        // Utility method to check if account exists
+        private bool AccountExists(long id)
         {
             return _context.Accounts.Any(e => e.Id == id);
         }

@@ -1,3 +1,4 @@
+using GestioneAccounts.BE.Domain.Models;
 using GestioneAccounts.DataAccess;
 
 namespace GestioneAccounts.Abstractions

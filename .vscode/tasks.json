@@ -41,6 +41,12 @@
         }
     ]
 }
+}
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> origin/main
+  }
 =======
 <<<<<<< HEAD
 =======
@@ -86,7 +92,6 @@
     }
   ]
 }
-=======
     "version": "2.0.0",
     "tasks": [
         {
@@ -127,8 +132,3 @@
         }
     ]
 }
->>>>>>> 76ad79d (BE GestioneAccounts)
-<<<<<<< HEAD
->>>>>>> 4539cf5 (BE GestioneAccounts)
-=======
->>>>>>> origin/main
