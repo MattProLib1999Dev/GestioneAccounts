@@ -69,6 +69,13 @@ namespace GestioneAccounts.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+      /*   {
+          "AccountId": 1,
+          "Nome": "Some Name",
+          "valoreString": "Some Value",
+          "voce": "Some Voce" --> oggetto da inviare come post
+        } */
+
 
 
         // GET: Get Valori by ID

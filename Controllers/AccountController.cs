@@ -57,6 +57,12 @@ namespace GestioneAccounts.Controllers
             }
         }
 
+            /*  {
+          "Nome": "Test Account",
+          "valoreString": "Some Value",
+          "voce": "Some Voce" --> oggetto da inviare per la post
+            } */
+
 
 
 
