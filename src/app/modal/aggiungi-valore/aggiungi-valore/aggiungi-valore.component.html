@@ -1,0 +1,24 @@
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Gestisci Account</h5>
+      </div>
+      <div class="modal-body">
+        <p>Aggiungi l'account</p>
+        <div class="mb-3">
+          <label for="Nome" class="form-label">Nome:</label>
+          <input type="text" class="form-control" placeholder="nome">
+        </div>
+        <div class="mb-3">
+          <label for="dataCreazione" class="form-label">Data Creazione:</label>
+          <input type="datetime" class="form-control" placeholder="dataCreazione">
+        </div>
+      </div>
+      <ng-container *ngFor="let account of accountModified; let index = index; trackBy: trackByIndex">
+        <button type="button" class="btn btn-warning" (click)="modifica(index, account)">Modifica</button>
+        <button type="button" class="btn btn-danger" (click)="elimina(index)">Elimina</button>
+      </ng-container>
+    </div>
+  </div>
+</div>

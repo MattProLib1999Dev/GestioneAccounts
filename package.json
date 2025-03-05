@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "'": "file:angular-devkit/build-angular:dev-server",
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "@angular/platform-browser": "^19.2.0",
+    "@angular/router": "^19.2.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.2.1"
+  }
+}

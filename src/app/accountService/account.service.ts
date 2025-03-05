@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PostAccounts } from '../../../models/PostAccount';
-import { PutAccount } from '../../../models/PutAccount';
+import { PutAccount } from '../models/PutAccount';
+import { PostAccounts } from '../models/PostAccounts';
 
 
 @Injectable({
@@ -19,8 +19,8 @@ export class AccountService {
       return this.httpClient.get<any>(`${this.rootUrl}/api/Account`);
     }
 
-    postAccount(user: PostAccounts): Observable<PostAccounts[]> {
-      return this.httpClient.post<PostAccounts[]>(`${this.rootUrl}/api/Account/Create`, user);
+    postAccount(account: PostAccounts): Observable<PostAccounts[]> {
+      return this.httpClient.post<PostAccounts[]>(`${this.rootUrl}/api/Account/Create`, account);
     }
 
     putAccount(accountId: number, putAccount:PutAccount): Observable<PutAccount> {
@@ -31,8 +31,10 @@ export class AccountService {
       return this.httpClient.get<any>(`${this.rootUrl}/api/Account/${idUtente}`);
     }
 
-    abilitaRuoli(idUtente: number): Observable<any> {
+    deleteAccount(idUtente: number): Observable<any> {
       return this.httpClient.delete<any>(`${this.rootUrl}/api/Account/Delete/${idUtente}`);
     }
+
+
 
  }
