@@ -8,13 +8,13 @@ namespace GestioneAccounts.BE.Domain.Models
         [Key]
         public long Id { get; set; }  // Primary key (non-nullable)
 
-        public string Nome { get; set; } = string.Empty;  // Account Name
+        public string Nome { get; set; } = String.Empty;  // Account Name
 
         public List<Valore>? Valori { get; set; }  // List of related Valore entities
 
-        public string valoreString { get; set; } = string.Empty;  // Additional value (assuming this is a string)
+        public string valoreString { get; set; } = String.Empty;  // Additional value (assuming this is a string)
 
-        public string voce { get; set; } = string.Empty;  // Additional category or voice (assuming a string)
+        public string voce { get; set; } = String.Empty;  // Additional category or voice (assuming a string)
 
         public DateTime dataCreazione { get; set; } = DateTime.Now;  // Creation timestamp (defaults to now)
     }

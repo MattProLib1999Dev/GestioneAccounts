@@ -1,12 +1,12 @@
 using GestioneAccounts.BE.Domain.Models;
-using GestioneAccounts.DataAccess;
 using MediatR;
 
-namespace GestioneAccounts.Posts.Commands
+public class UpdateAccountCommand : IRequest<Account>
 {
-	public class UpdateAccount: IRequest<Account>
-	{
-        public long ?AccountId { get; set; }
-        public string? Nome { get; set; }
-	}
+    public long Id { get; set; }
+    public string Nome { get; set; } = String.Empty;
+    public List<Valore>? Valori { get; set; }
+    public string valoreString { get; set; } = String.Empty;
+    public string voce { get; set; } = String.Empty;
+    public DateTime dataCreazione = DateTime.Now;
 }

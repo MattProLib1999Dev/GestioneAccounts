@@ -7,8 +7,8 @@ namespace GestioneAccounts.Abstractions
 	{
 		Task<ICollection<Account>> GetAllAccounts();
 		Task<Account> GetAccountById(long accountId);
-        Task<Account> CreateAccount(Account account);
-        Task<Account> UpdateAccount(string ?nome, long accountId);
+    Task<Account> CreateAccount(Account account);
+    Task<Account> UpdateAccount(string ?nome, long accountId);
 		Task<bool> DeleteAccount(long accountId);
 
 	}
