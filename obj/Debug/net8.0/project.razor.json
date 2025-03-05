@@ -19327,32 +19327,6 @@
     "CSharpLanguageVersion": 1200
   },
   "RootNamespace": "GestioneAccounts",
-  "Documents": [
-    {
-      "FilePath": "c:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\FE\\GestioneAccountsFincons\\GestioneAccounts\\Views\\Account\\Edit.cshtml",
-      "TargetPath": "Views\\Account\\Edit.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\FE\\GestioneAccountsFincons\\GestioneAccounts\\Views\\Account\\Delete.cshtml",
-      "TargetPath": "Views\\Account\\Delete.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\FE\\GestioneAccountsFincons\\GestioneAccounts\\Views\\Account\\Details.cshtml",
-      "TargetPath": "Views\\Account\\Details.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\FE\\GestioneAccountsFincons\\GestioneAccounts\\Views\\Account\\Index.cshtml",
-      "TargetPath": "Views\\Account\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\FE\\GestioneAccountsFincons\\GestioneAccounts\\Views\\Account\\Create.cshtml",
-      "TargetPath": "Views\\Account\\Create.cshtml",
-      "FileKind": "mvc"
-    }
-  ],
+  "Documents": [],
   "SerializationFormat": "0.3"
 }
