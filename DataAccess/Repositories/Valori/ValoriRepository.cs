@@ -73,7 +73,7 @@ namespace GestioneAccounts.DataAccess.Repositories
             {
                 // Aggiorna le proprietà di valori con quelle di account (se necessario)
                 valore.Nome = account.Nome;
-                valore.ValoreString = account.valoreString;
+                valore.ValoreStr = account.valoreString;
                 valore.Voce = account.voce;
             }
 

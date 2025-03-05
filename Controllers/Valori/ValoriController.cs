@@ -32,43 +32,47 @@ namespace GestioneAccounts.Controllers
 
         // POST: Create a new Valori
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody] Valori createValori)
-        {
-            if (createValori == null)
-            {
-                return BadRequest("Invalid valori data.");
-            }
+    public async Task<IActionResult> Create(
+            [FromForm] string valoreString,
+            [FromForm] string voce,
+            [FromForm] int accountId)
+    {
+      // Verifica che i parametri non siano nulli o vuoti
+      if (string.IsNullOrEmpty(valoreString) || string.IsNullOrEmpty(voce) || accountId <= 0)
+      {
+        return BadRequest("Invalid input data.");
+      }
 
-            // Map Valori model (DTO) to Valore entity
-            var createValoriInstance = new Valore
-            {
-                AccountId = createValori.AccountId, // Use the provided AccountId
-                ValoreStr = createValori.valoreString,  // Ensure property name matches your model's
-                Voce = createValori.voce  // Ensure property name matches your model's
-            };
+      // Mappare i dati dal parametro in un'istanza della classe Valore
+      var createValoriInstance = new Valore
+      {
+        AccountId = accountId,
+        ValoreStr = valoreString,
+        Voce = voce
+      };
 
-            // Validate the model state
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+      // Verifica che il modello sia valido
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
 
-            try
-            {
-                // Save to database
-                _context.Valori.Add(createValoriInstance);
-                await _context.SaveChangesAsync();
+      try
+      {
+        // Aggiungere alla base dati
+        _context.Valori.Add(createValoriInstance);
+        await _context.SaveChangesAsync();
 
-                // Return the created response with a Location header to the new resource
-                return CreatedAtAction(nameof(GetById), new { id = createValoriInstance.Id }, createValoriInstance);
-            }
-            catch (Exception ex)
-            {
-                // Log the error (if logging is configured)
-                // Handle any exceptions during the save operation
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
+        // Restituire la risposta di creazione con l'header Location
+        return CreatedAtAction(nameof(GetById), new { id = createValoriInstance.Id }, createValoriInstance);
+      }
+      catch (Exception ex)
+      {
+        // Gestire errori imprevisti
+        return StatusCode(500, $"Internal server error: {ex.Message}");
+      }
+    }
+
       /*   {
           "AccountId": 1,
           "Nome": "Some Name",
@@ -118,7 +122,7 @@ public async Task<IActionResult> Edit(long id, [FromBody] Valori valori)
         }
 
         // Update the properties
-        existingValori.ValoreString = valori.valoreString;
+        existingValori.ValoreStr = valori.valoreString;
         existingValori.Voce = valori.voce;
 
         // Save the changes
