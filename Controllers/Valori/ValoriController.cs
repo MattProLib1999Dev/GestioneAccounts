@@ -9,25 +9,26 @@ namespace GestioneAccounts.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ValoriController : Controller
+    public class ValoriController(ApplicationDbContext context, IMediator mediator) : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IMediator _mediator;
+        private readonly ApplicationDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
+        private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-        // Constructor for Dependency Injection
-        public ValoriController(ApplicationDbContext context, IMediator mediator)
-        {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
-
-        // GET: Get all valori
-        [HttpGet]
+    // GET: Get all valori
+    [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var valori = await _mediator.Send(new GetAllValori());
-            return Ok(valori);
+            try
+            {
+                var valori = await _mediator.Send(new GetAllValori());
+                return Ok(valori);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error" +  ex);
+            }
         }
+
 
 
         // POST: Create a new Valori
