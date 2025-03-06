@@ -31,12 +31,12 @@ export class AggiungiAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formAggiungi = new FormGroup({
-      valore: new FormControl(null, [Validators.required, Validators.min(1)]), // Aggiungi validazione per l'ID
-      nome: new FormControl('', Validators.required),
-      valoreString: new FormControl('', [Validators.required]),
-      dataCreazione: new FormControl('', [Validators.required])
-    });
+      this.formAggiungi = this.formBuilder.group({
+        valore: ['', [Validators.required, Validators.min(1)]],
+        nome: ['', Validators.required],
+        valoreString: ['', Validators.required],
+        dataCreazione: ['', Validators.required]
+      });
 
     this.account = [{
       nome: "",
@@ -74,11 +74,12 @@ export class AggiungiAccountComponent implements OnInit {
       this.postAccount = {
         id: 0,
         nome: formValues.nome,
-        valori: formValues.valore,
+        valori: formValues.valore,  // Qui potrebbe esserci un errore
         valoreString: formValues.valoreString,
         voce: "", // Add the missing property 'voce'
         dataCreazione: formValues.dataCreazione
       };
+
 
       console.log('postAccount:', this.postAccount);
 

@@ -55,9 +55,7 @@
 
       </div>
       <div class="row">
-              <div *ngFor="let acc of account; let i = index; trackBy: trackByIndex">
-                <button type="button" class="btn btn-warning" (click)="updateAccount(i)">Modifica</button>
-              </div>
+
               <div *ngFor="let acc of account; let i = index; trackBy: trackByIndex">
                 <button type="button" class="btn btn-warning" (click)="aggiungi()">+</button>
               </div>
