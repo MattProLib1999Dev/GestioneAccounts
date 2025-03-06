@@ -1,24 +1,68 @@
-<div class="modal" tabindex="-1">
+<div class="modal" tabindex="-1" id="aggiungiModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Gestisci Account</h5>
       </div>
       <div class="modal-body">
-        <p>Aggiungi l'account</p>
-        <div class="mb-3">
-          <label for="Nome" class="form-label">Nome:</label>
-          <input type="text" class="form-control" placeholder="nome">
+        <div>
+          <h2>Aggiorna Account</h2>
+
+          <!-- Form di aggiornamento dell'account -->
+          <form [formGroup]="formAggiungi" (ngSubmit)="aggiungi()">
+
+            <div>
+              <label for="id">Valore:</label>
+              <input type="text" id="id" formControlName="valore" class="form-control" />
+              <div *ngIf="formAggiungi.get('valore')?.touched && formAggiungi.get('nome')?.invalid">
+                <small *ngIf="formAggiungi.get('valore')?.hasError('required')">L'ID è obbligatorio.</small>
+                <small *ngIf="formAggiungi.get('valore')?.hasError('min')">L'ID deve essere maggiore di 0.</small>
+              </div>
+            </div>
+
+            <div>
+              <label for="id">Nome:</label>
+              <input type="text" id="id" formControlName="nome" class="form-control"/>
+              <div *ngIf="formAggiungi.get('nome')?.touched && formAggiungi.get('nome')?.invalid">
+                <small *ngIf="formAggiungi.get('nome')?.hasError('required')">il nome è obbligatorio.</small>
+              </div>
+            </div>
+
+            <div>
+              <label for="name">valoreString:</label>
+              <input type="text" id="valoreString" formControlName="valoreString" class="form-control" />
+              <div *ngIf="formAggiungi.get('valoreString')?.touched && formAggiungi.get('valoreString')?.invalid">
+                <small *ngIf="formAggiungi.get('valoreString')?.hasError('required')">Il valoreString è obbligatorio.</small>
+              </div>
+            </div>
+
+            <div>
+              <label for="email">DataCreazione:</label>
+              <input type="dataCreazione" id="dataCreazione" formControlName="dataCreazione" class="form-control" />
+              <div *ngIf="formAggiungi.get('dataCreazione')?.touched && formAggiungi.get('dataCreazione')?.invalid">
+                <small *ngIf="formAggiungi.get('dataCreazione')?.hasError('required')">La data della creazione è obbligatoria.</small>
+              </div>
+            </div>
+
+          </form>
+
+
+          <!-- Mostra messaggio di errore -->
+          <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="dataCreazione" class="form-label">Data Creazione:</label>
-          <input type="datetime" class="form-control" placeholder="dataCreazione">
-        </div>
+
       </div>
-      <ng-container *ngFor="let account of accountModified; let index = index; trackBy: trackByIndex">
-        <button type="button" class="btn btn-warning" (click)="modifica(index, account)">Modifica</button>
-        <button type="button" class="btn btn-danger" (click)="elimina(index)">Elimina</button>
-      </ng-container>
+      <div class="row">
+              <div *ngFor="let acc of account; let i = index; trackBy: trackByIndex">
+                <button type="button" class="btn btn-warning" (click)="updateAccount(i)">Modifica</button>
+              </div>
+              <div *ngFor="let acc of account; let i = index; trackBy: trackByIndex">
+                <button type="button" class="btn btn-warning" (click)="aggiungi()">+</button>
+              </div>
+      </div>
+
     </div>
   </div>
 </div>
