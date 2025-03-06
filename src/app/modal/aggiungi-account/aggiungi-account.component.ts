@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../accountService/account.service';
 import { PutAccount } from '../../models/PutAccount';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-aggiungi-account',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './aggiungi-account.component.html',
   styleUrl: './aggiungi-account.component.css'
 })

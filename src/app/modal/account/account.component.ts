@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../accountService/account.service';
 import { PutAccount } from '../../models/PutAccount';
 import { PostAccounts } from '../../models/PostAccounts';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AggiungiAccountComponent } from "../aggiungi-account/aggiungi-account.component";
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-account',

@@ -3,18 +3,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValoreService } from '../../../accountService/valore/valore.service';
 import { PutAccount } from '../../../models/PutAccount';
 import { putValori } from '../../../models/valori/putValori';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-aggiungi-valore',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './aggiungi-valore.component.html',
   styleUrl: './aggiungi-valore.component.css'
 })
 export class AggiungiValoreComponent implements OnInit {
 
   accountService?: ValoreService;
-  accountModified: PutAccount[] = [];
+  accountModified?: putValori[] = [];
 
   formAggiungi!: FormGroup;
 
@@ -66,8 +67,6 @@ elimina(index: number) {
           this.formAggiungi.removeControl('parentGroup');
           this.formAggiungi.updateValueAndValidity();
           console.log(`Hai eliminato l'account in posizione ${index}:`, result);
-          this.accountModified.splice(index, 1);
-          this.accountModified = [...this.accountModified];
         });
 }
 
