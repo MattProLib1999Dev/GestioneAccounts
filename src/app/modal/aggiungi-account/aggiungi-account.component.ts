@@ -34,8 +34,8 @@ export class AggiungiAccountComponent implements OnInit {
     this.formAggiungi = new FormGroup({
       valore: new FormControl(null, [Validators.required, Validators.min(1)]), // Aggiungi validazione per l'ID
       nome: new FormControl('', Validators.required),
-      valoreString: new FormControl('', [Validators.required, Validators.email]),
-      dataCreazione: new FormControl('', [Validators.required, Validators.email])
+      valoreString: new FormControl('', [Validators.required]),
+      dataCreazione: new FormControl('', [Validators.required])
     });
 
     this.account = [{
@@ -62,12 +62,33 @@ export class AggiungiAccountComponent implements OnInit {
   }
 
   aggiungi() {
-    if (this.postAccount) {
-      this.accountService?.postAccount(this.postAccount).subscribe(
+    console.log('Chiamata al metodo aggiungi');
+
+    if (this.formAggiungi.valid) {
+      console.log('Form valido', this.formAggiungi.value);
+
+      const formValues = this.formAggiungi.value;
+      console.log('Valori del form:', formValues);
+
+      // Costruisci l'oggetto postAccount dai valori del form
+      this.postAccount = {
+        id: 0,
+        nome: formValues.nome,
+        valori: formValues.valore,
+        valoreString: formValues.valoreString,
+        voce: "", // Add the missing property 'voce'
+        dataCreazione: formValues.dataCreazione
+      };
+
+      console.log('postAccount:', this.postAccount);
+
+      // Effettua la chiamata al servizio
+      this.accountService?.postAccount(this.formAggiungi.value).subscribe(
         (response) => {
           console.log('Account creato con successo', response);
         },
         (error) => {
+          console.log('Errore nella chiamata HTTP:', error);
           if (error.status === 400) {
             console.log('Errore 400: Bad Request');
             console.log('Dettagli dell\'errore:', error.error.errors); // Dettagli di validazione
@@ -77,8 +98,11 @@ export class AggiungiAccountComponent implements OnInit {
           }
         }
       );
+    } else {
+      console.log('Il form non è valido');
     }
   }
+
 
 
   updateAccount(accountId: number): void {
@@ -102,14 +126,14 @@ export class AggiungiAccountComponent implements OnInit {
     }
   }
 
-elimina(index: number) {
-    this.accountService?.deleteAccount(index)
-        .subscribe((result: any) => {
-          this.formAggiungi.removeControl('parentGroup');
-          this.formAggiungi.updateValueAndValidity();
-          console.log(`Hai eliminato l'account in posizione ${index}:`, result);
-        });
-}
+  elimina(index: number) {
+      this.accountService?.deleteAccount(index)
+          .subscribe((result: any) => {
+            this.formAggiungi.removeControl('parentGroup');
+            this.formAggiungi.updateValueAndValidity();
+            console.log(`Hai eliminato l'account in posizione ${index}:`, result);
+          });
+  }
 
 
   trackByIndex(index: number, item: any): number {
