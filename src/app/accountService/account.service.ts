@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PutAccount } from '../models/PutAccount';
 import { PostAccounts } from '../models/PostAccounts';
@@ -19,8 +19,12 @@ export class AccountService {
       return this.httpClient.get<any>(`${this.rootUrl}/api/Account`);
     }
 
-    postAccount(account: PostAccounts): Observable<PostAccounts[]> {
-      return this.httpClient.post<PostAccounts[]>(`${this.rootUrl}/api/Account/Create`, account);
+    postAccount(formData: FormData): Observable<any> {
+      // Crea le intestazioni per la richiesta (puoi anche configurare altre opzioni se necessarie)
+      const headers = new HttpHeaders().set('Content-Type', 'multipart/form-data');
+
+      // Invia la richiesta POST con il corpo formData
+      return this.httpClient.post<any>(`${this.rootUrl}/api/Account/Create` , formData, { headers });
     }
 
     putAccount(accountId: number, putAccount:PutAccount): Observable<PutAccount> {

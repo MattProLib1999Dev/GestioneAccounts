@@ -1,66 +1,33 @@
-<div class="modal" tabindex="-1" id="aggiungiModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Gestisci Account</h5>
-      </div>
-      <div class="modal-body">
-        <div>
-          <h2>Aggiorna Account</h2>
-
-          <!-- Form di aggiornamento dell'account -->
-          <form [formGroup]="formAggiungi" (ngSubmit)="aggiungi()">
-
-            <div>
-              <label for="id">Valore:</label>
-              <input type="text" id="id" formControlName="valore" class="form-control" />
-              <div *ngIf="formAggiungi.get('valore')?.touched && formAggiungi.get('nome')?.invalid">
-                <small *ngIf="formAggiungi.get('valore')?.hasError('required')">L'ID è obbligatorio.</small>
-                <small *ngIf="formAggiungi.get('valore')?.hasError('min')">L'ID deve essere maggiore di 0.</small>
-              </div>
-            </div>
-
-            <div>
-              <label for="id">Nome:</label>
-              <input type="text" id="id" formControlName="nome" class="form-control"/>
-              <div *ngIf="formAggiungi.get('nome')?.touched && formAggiungi.get('nome')?.invalid">
-                <small *ngIf="formAggiungi.get('nome')?.hasError('required')">il nome è obbligatorio.</small>
-              </div>
-            </div>
-
-            <div>
-              <label for="name">valoreString:</label>
-              <input type="text" id="valoreString" formControlName="valoreString" class="form-control" />
-              <div *ngIf="formAggiungi.get('valoreString')?.touched && formAggiungi.get('valoreString')?.invalid">
-                <small *ngIf="formAggiungi.get('valoreString')?.hasError('required')">Il valoreString è obbligatorio.</small>
-              </div>
-            </div>
-
-            <div>
-              <label for="email">DataCreazione:</label>
-              <input type="dataCreazione" id="dataCreazione" formControlName="dataCreazione" class="form-control" />
-              <div *ngIf="formAggiungi.get('dataCreazione')?.touched && formAggiungi.get('dataCreazione')?.invalid">
-                <small *ngIf="formAggiungi.get('dataCreazione')?.hasError('required')">La data della creazione è obbligatoria.</small>
-              </div>
-            </div>
-
-          </form>
-
-
-          <!-- Mostra messaggio di errore -->
-          <div *ngIf="errorMessage" class="error-message">
-            {{ errorMessage }}
-          </div>
-        </div>
-
-      </div>
-      <div class="row">
-
-              <div *ngFor="let acc of account; let i = index; trackBy: trackByIndex">
-                <button type="button" class="btn btn-warning" (click)="aggiungi()">+</button>
-              </div>
-      </div>
-
-    </div>
+<form [formGroup]="formAggiungi" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="nome">Nome</label>
+    <input id="nome" formControlName="nome" class="form-control" type="text">
   </div>
-</div>
+
+  <div class="form-group">
+    <label for="valoreString">Valore Stringa</label>
+    <input id="valoreString" formControlName="valoreString" class="form-control" type="text">
+  </div>
+
+  <div class="form-group">
+    <label for="voce">Voce</label>
+    <input id="voce" formControlName="voce" class="form-control" type="text">
+  </div>
+
+  <div class="form-group">
+    <label for="dataCreazione">Data Creazione</label>
+    <input id="dataCreazione" formControlName="dataCreazione" class="form-control" type="text">
+  </div>
+
+  <div formArrayName="valori">
+    <div *ngFor="let valore of formAggiungi.get('valori')?.value; let i = index" [formGroupName]="i">
+      <div class="form-group">
+        <label for="valore{{i}}">Valore {{i + 1}}</label>
+        <input id="valore{{i}}" formControlName="valore" class="form-control" type="text">
+      </div>
+    </div>
+    <button type="button" (click)="addValore()" class="btn btn-secondary">Aggiungi Valore</button>
+  </div>
+
+  <button type="submit" [disabled]="formAggiungi.invalid" class="btn btn-primary">Invia</button>
+</form>

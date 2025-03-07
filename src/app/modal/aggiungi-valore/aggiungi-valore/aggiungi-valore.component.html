@@ -1,11 +1,11 @@
-<div class="modal" tabindex="-1">
+<div class="modal" tabindex="-1" id="aggiungiValore">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Gestisci Account</h5>
+        <h5 class="modal-title">Aggiungi Valore</h5>
       </div>
       <div class="modal-body">
-        <p>Aggiungi l'account</p>
+        <p>Aggiungi valore</p>
         <div class="mb-3">
           <label for="Nome" class="form-label">Nome:</label>
           <input type="text" class="form-control" placeholder="nome">
@@ -14,11 +14,17 @@
           <label for="dataCreazione" class="form-label">Data Creazione:</label>
           <input type="datetime" class="form-control" placeholder="dataCreazione">
         </div>
+        <div class="row">
+          <div>
+            <button type="button" class="btn btn-primary" (click)="aggiungi()">+</button>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#aggiungiModal ">Aggiungi Chiave</button>
+          </div>
+        </div>
       </div>
-      <ng-container *ngFor="let account of accountModified; let index = index; trackBy: trackByIndex">
-        <button type="button" class="btn btn-warning" (click)="modifica(index, account)">Modifica</button>
-        <button type="button" class="btn btn-danger" (click)="elimina(index)">Elimina</button>
-      </ng-container>
     </div>
   </div>
 </div>
