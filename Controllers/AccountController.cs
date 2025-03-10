@@ -6,6 +6,7 @@ using GestioneAccounts.Posts.Commands;
 using GestioneAccounts.BE.Domain.Models;
 using GestioneAccounts.Posts.CommandHandlers;
 using Amazon.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestioneAccounts.Controllers
 {
@@ -32,9 +33,6 @@ namespace GestioneAccounts.Controllers
 
         try
         {
-
-
-
             _logger.LogInformation("User logged in successfully.");
             return Ok(request);
         }
@@ -44,6 +42,31 @@ namespace GestioneAccounts.Controllers
             return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred during login. Please try again later.");
         }
     }
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAll()
+    {
+        try
+        {
+            // Recupera tutti gli account dal database usando Entity Framework.
+            var accounts = await _context.Accounts.ToListAsync();
+
+            if (accounts == null || accounts.Count == 0)
+            {
+                // Se non ci sono account, ritorna un messaggio 404 Not Found.
+                return NotFound(new { message = "No accounts found." });
+            }
+
+            // Ritorna la lista degli account con status 200 OK.
+            return Ok(accounts);
+        }
+        catch (Exception ex)
+        {
+            // Gestisce gli errori e ritorna un errore 500 se c'è un problema.
+            _logger.LogError(ex, "An error occurred while retrieving all accounts.");
+            return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving the accounts.");
+        }
+    }
+
 
 
         // GET: api/Account/{id}
