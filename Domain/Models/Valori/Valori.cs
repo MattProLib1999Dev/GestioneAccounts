@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using GestioneAccounts.BE.Domain.Models;
 using GestioneAccounts.DataAccess;
 
@@ -15,6 +16,8 @@ public class Valori
     public long? AccountId { get; set; }
 
     [ForeignKey("AccountId")]
+    [JsonIgnore]
+
     public Account? Account { get; set; }
 
     public string Nome { get; set; } = String.Empty;

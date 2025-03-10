@@ -1,18 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using GestioneAccounts.DataAccess;
 using MediatR;
-using GestioneAccounts.Posts.Queries;
-using GestioneAccounts.Posts.Commands;
 using GestioneAccounts.BE.Domain.Models;
 
 namespace GestioneAccounts.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ValoriController(ApplicationDbContext context, IMediator mediator) : Controller
+    public class ValoriController(ILogger<ValoriController> logger, ApplicationDbContext context, IMediator mediator) : Controller
     {
         private readonly ApplicationDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
         private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
+        private readonly ILogger<ValoriController> _logger = logger ?? throw new ArgumentNullException(nameof(logger), "Logger is not being injected!");
 
     // GET: Get all valori
     [HttpGet]
@@ -25,150 +25,120 @@ namespace GestioneAccounts.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error" +  ex);
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
 
-
-
         // POST: Create a new Valori
-        [HttpPost("Create")]
-    public async Task<IActionResult> Create(
-            [FromForm] string valoreString,
-            [FromForm] string voce,
-            [FromForm] int accountId)
-    {
-      // Verifica che i parametri non siano nulli o vuoti
-      if (string.IsNullOrEmpty(valoreString) || string.IsNullOrEmpty(voce) || accountId <= 0)
-      {
-        return BadRequest("Invalid input data.");
-      }
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateValori([FromBody] Valori request)
+        {
+            // Controllo dei parametri ricevuti
+            if (request == null || string.IsNullOrWhiteSpace(request.Nome) ||
+                string.IsNullOrWhiteSpace(request.voce))
+            {
+                _logger.LogWarning("Invalid request: missing required fields (Nome, voce).");
+                return BadRequest("Invalid request. Nome and voce are required.");
+            }
 
-      // Mappare i dati dal parametro in un'istanza della classe Valore
-      var createValoriInstance = new Valore
-      {
-        AccountId = accountId,
-        ValoreStr = valoreString,
-        Voce = voce
-      };
+            try
+            {
+              // Log della richiesta di creazione
+              await Task.Run(() => _logger.LogInformation("Creating valori for Nome: {Nome}, Voce: {Voce}", request.Nome, request.voce));
 
-      // Verifica che il modello sia valido
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
+              // Aggiungere la logica per creare il valore nel database o nel sistema di persistenza
+              // Ad esempio: await _valoriService.CreateValoriAsync(request);
 
-      try
-      {
-        // Aggiungere alla base dati
-        _context.Valori.Add(createValoriInstance);
-        await _context.SaveChangesAsync();
-
-        // Restituire la risposta di creazione con l'header Location
-        return CreatedAtAction(nameof(GetById), new { id = createValoriInstance.Id }, createValoriInstance);
-      }
-      catch (Exception ex)
-      {
-        // Gestire errori imprevisti
-        return StatusCode(500, $"Internal server error: {ex.Message}");
-      }
-    }
-
-      /*   {
-          "AccountId": 1,
-          "Nome": "Some Name",
-          "valoreString": "Some Value",
-          "voce": "Some Voce" --> oggetto da inviare come post
-        } */
-
-
+              // Risposta con l'oggetto appena creato
+              return CreatedAtAction(nameof(CreateValori), new { id = request.Id }, request);
+            }
+            catch (Exception ex)
+            {
+                // Log degli errori
+                _logger.LogError(ex, "An unexpected error occurred while creating valori.");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "An error occurred while processing your request. Please try again later.");
+            }
+        }
 
         // GET: Get Valori by ID
-        // GET: Retrieve Valori by ID
-[HttpGet("{id}")]
-public async Task<IActionResult> GetById(long id)
-{
-    var valori = await _context.Valori.FindAsync(id);
-
-    if (valori == null)
-    {
-        return NotFound(new { message = $"Valori with ID {id} not found." });
-    }
-
-    return Ok(valori);
-}
-
-// PUT: Edit Valori by ID
-[HttpPut("{id}")]
-public async Task<IActionResult> Edit(long id, [FromBody] Valori valori)
-{
-    if (id != valori.Id)
-    {
-        return BadRequest(new { message = "ID mismatch. The provided ID does not match the values' ID." });
-    }
-
-    // Validate the model
-    if (!ModelState.IsValid)
-    {
-        return BadRequest(ModelState);
-    }
-
-    try
-    {
-        // Find the existing record to update
-        var existingValori = await _context.Valori.FindAsync(id);
-        if (existingValori == null)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(long id)
         {
-            return NotFound(new { message = $"Valori with ID {id} not found for update." });
+            var valori = await _context.Valori.FindAsync(id);
+
+            if (valori == null)
+            {
+                return NotFound(new { message = $"Valori with ID {id} not found." });
+            }
+
+            return Ok(valori);
         }
 
-        // Update the properties
-        existingValori.ValoreStr = valori.valoreString;
-        existingValori.Voce = valori.voce;
-
-        // Save the changes
-        await _context.SaveChangesAsync();
-
-        return Ok(existingValori);
-    }
-    catch (Exception ex)
-    {
-        // Handle any errors during the update operation
-        return StatusCode(500, new { message = $"An error occurred while updating the Valori: {ex.Message}" });
-    }
-}
- /* {
-  "id": 1,
-  "valoreString": "Updated Value",
-  "voce": "Updated Voce"
-  } --> oggetto in input della put*/
-
-
-// DELETE: Delete Valori by ID
-[HttpDelete("Delete/{id}")]
-public async Task<IActionResult> Delete(long id)
-{
-    try
-    {
-        // Find the existing record to delete
-        var valoriToDelete = await _context.Valori.FindAsync(id);
-        if (valoriToDelete == null)
+        // PUT: Edit Valori by ID
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(long id, [FromBody] Valori valori)
         {
-            return NotFound(new { message = $"Valori with ID {id} not found for deletion." });
+            if (id != valori.Id)
+            {
+                return BadRequest(new { message = "ID mismatch. The provided ID does not match the values' ID." });
+            }
+
+            // Validate the model
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                // Find the existing record to update
+                var existingValori = await _context.Valori.FindAsync(id);
+                if (existingValori == null)
+                {
+                    return NotFound(new { message = $"Valori with ID {id} not found for update." });
+                }
+
+                // Update the properties
+                existingValori.ValoreStr = valori.valoreString;
+                existingValori.Voce = valori.voce;
+
+                // Save the changes
+                await _context.SaveChangesAsync();
+
+                return Ok(existingValori);
+            }
+            catch (Exception ex)
+            {
+                // Handle any errors during the update operation
+                return StatusCode(500, new { message = $"An error occurred while updating the Valori: {ex.Message}" });
+            }
         }
 
-        // Remove the record
-        _context.Valori.Remove(valoriToDelete);
-        await _context.SaveChangesAsync();
+        // DELETE: Delete Valori by ID
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            try
+            {
+                // Find the existing record to delete
+                var valoriToDelete = await _context.Valori.FindAsync(id);
+                if (valoriToDelete == null)
+                {
+                    return NotFound(new { message = $"Valori with ID {id} not found for deletion." });
+                }
 
-        return Ok(new { message = "Valori deleted successfully." });
-    }
-    catch (Exception ex)
-    {
-        // Handle any errors during the delete operation
-        return StatusCode(500, new { message = $"An error occurred while deleting the Valori: {ex.Message}" });
-    }
-}
+                // Remove the record
+                _context.Valori.Remove(valoriToDelete);
+                await _context.SaveChangesAsync();
 
+                return Ok(new { message = "Valori deleted successfully." });
+            }
+            catch (Exception ex)
+            {
+                // Handle any errors during the delete operation
+                return StatusCode(500, new { message = $"An error occurred while deleting the Valori: {ex.Message}" });
+            }
+        }
     }
 }
