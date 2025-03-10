@@ -137,6 +137,12 @@ public async Task<IActionResult> Edit(long id, [FromBody] Valori valori)
         return StatusCode(500, new { message = $"An error occurred while updating the Valori: {ex.Message}" });
     }
 }
+ /* {
+  "id": 1,
+  "valoreString": "Updated Value",
+  "voce": "Updated Voce"
+  } --> oggetto in input della put*/
+
 
 // DELETE: Delete Valori by ID
 [HttpDelete("Delete/{id}")]

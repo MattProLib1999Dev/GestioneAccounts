@@ -1,10 +1,12 @@
 using GestioneAccounts.Abstractions;
 using GestioneAccounts.DataAccess;
 using GestioneAccounts.DataAccess.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Registrazione del DbContext con la stringa di connessione dal file appsettings.json
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
