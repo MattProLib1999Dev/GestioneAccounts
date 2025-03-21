@@ -1,7 +1,13 @@
 <<<<<<< HEAD
 =======
 >>>>>>> origin/main
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\angular.json
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\appsettings.json
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\omnisharp.json
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\tsconfig.app.json
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\tsconfig.json
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\tsconfig.spec.json
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\GestioneAccounts.exe
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\GestioneAccounts.deps.json
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\GestioneAccounts.runtimeconfig.json
@@ -12,6 +18,7 @@ C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazio
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\Humanizer.dll
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\MediatR.dll
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\MediatR.Contracts.dll
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\Microsoft.Build.dll
@@ -286,12 +293,3 @@ C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazio
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\GestioneAccounts.pdb
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\GestioneAccounts.genruntimeconfig.cache
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\ref\GestioneAccounts.dll
-C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\appsettings.Development.json
-C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\appsettings.json
-C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\tsconfig.app.json
-C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\tsconfig.json
-C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\tsconfig.spec.json
-C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\angular.json
-C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\package-lock.json
-C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\package.json
-C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\MediatR.Extensions.Microsoft.DependencyInjection.dll

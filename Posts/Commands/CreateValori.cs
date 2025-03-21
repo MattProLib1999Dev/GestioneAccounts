@@ -1,13 +1,7 @@
 using MediatR;
 
-public class CreateValoreRequest : IRequest<Valori>
+public class CreateValoreRequest(long accountId, string nome) : IRequest<Valori>
 {
-    public long AccountId { get; set; }
-    public string Nome { get; set; }
-
-    public CreateValoreRequest(long accountId, string nome)
-    {
-        AccountId = accountId;
-        Nome = nome;
-    }
+  public long AccountId { get; set; } = accountId;
+  public string Nome { get; set; } = nome;
 }

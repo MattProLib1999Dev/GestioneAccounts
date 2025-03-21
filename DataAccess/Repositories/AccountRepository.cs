@@ -37,7 +37,22 @@ namespace GestioneAccounts.DataAccess.Repositories
             return await _applicationDbContext.Accounts.ToListAsync();
         }
 
-        public async Task<Account> UpdateAccount(string? nome, long accountId)
+        public Task<ICollection<Account>> SearchAccounts(string? nome, DateTime? dataCreazione, string? valoreString, string? voce)
+        {
+            var query = _applicationDbContext.Accounts.AsQueryable();
+            if (!string.IsNullOrEmpty(nome))
+                query = query.Where(a => a.Nome.Contains(nome));
+            if (dataCreazione.HasValue)
+                query = query.Where(a => a.dataCreazione == dataCreazione);
+            if (!string.IsNullOrEmpty(valoreString))
+                query = query.Where(a => a.valoreString.Contains(valoreString));
+            if (!string.IsNullOrEmpty(voce))
+                query = query.Where(a => a.voce.Contains(voce));
+
+            return query.ToListAsync().ContinueWith(task => (ICollection<Account>)task.Result);
+        }
+
+    public async Task<Account> UpdateAccount(string? nome, long accountId)
         {
             var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
             if (account == null)

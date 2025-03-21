@@ -10,6 +10,7 @@ namespace GestioneAccounts.Abstractions
     Task<Account> CreateAccount(Account account);
     Task<Account> UpdateAccount(string ?nome, long accountId);
 		Task<bool> DeleteAccount(long accountId);
+    Task<ICollection<Account>> SearchAccounts(string ?nome, DateTime ?dataCreazione, string ?valoreString, string ?voce);
 
 	}
 }
