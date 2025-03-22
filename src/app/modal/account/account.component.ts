@@ -28,20 +28,6 @@ export class Account implements OnInit {
     });
   }
 
-  aggiungi() {
-    this.accountService
-      ?.postAccount(
-        this.formAggiungi.value)
-      .subscribe({
-        next: (result: any) => {
-          this.formAggiungi.setValue({ nome: '', dataCreazione: '' });
-          console.log("Ecco il risultato", result);
 
-        },
-        error: (error: any) => {
-          console.error("Errore", error)
-        }
-      });
-  }
 
 }
