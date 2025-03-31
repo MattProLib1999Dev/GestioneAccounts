@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using GestioneAccounts.Abstractions;
 using GestioneAccounts.DataAccess;
 using GestioneAccounts.DataAccess.Repositories;
@@ -43,6 +44,12 @@ builder.Services.AddCors(options =>
                   .AllowAnyHeader();
         });
 });
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
+
 
 // Crea l'applicazione
 var app = builder.Build();

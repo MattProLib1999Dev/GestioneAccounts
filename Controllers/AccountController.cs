@@ -22,50 +22,52 @@ namespace GestioneAccounts.Controllers
 
     // POST: api/Account/create
     [HttpPost("create")]
-    public IActionResult Login([FromBody] Account request)
+    public async Task<IActionResult> CreateAccount([FromBody] Account request)
     {
-      if (request == null || string.IsNullOrWhiteSpace(request.Nome) ||
-          string.IsNullOrWhiteSpace(request.Nome) || string.IsNullOrWhiteSpace(request.voce))
-      {
-        _logger.LogWarning("Invalid login request: missing credentials.");
-        return BadRequest("Invalid request. Username, voice, and value are required.");
-      }
+        if (request == null || string.IsNullOrWhiteSpace(request.Nome) || request.Valori == null)
+        {
+            return BadRequest(new { message = "Invalid request. Account data is required." });
+        }
 
-      try
-      {
-        _logger.LogInformation("User logged in successfully.");
-        return Ok(request);
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "An unexpected error occurred during login.");
-        return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred during login. Please try again later.");
-      }
-    }
-    [HttpGet("all")]
-    public async Task<IActionResult> GetAll()
-    {
         try
         {
-            // Recupera tutti gli account dal database usando Entity Framework.
-            var accounts = await _context.Accounts.ToListAsync();
+            _context.Accounts.Add(request); // Aggiunge l'account al DB
+            await _context.SaveChangesAsync(); // Salva nel DB
 
-            if (accounts == null || accounts.Count == 0)
-            {
-                // Se non ci sono account, ritorna un messaggio 404 Not Found.
-                return NotFound(new { message = "No accounts found." });
-            }
-
-            // Ritorna la lista degli account con status 200 OK.
-            return Ok(accounts);
+            return CreatedAtAction(nameof(GetAll), new { id = request.Id }, request);
         }
         catch (Exception ex)
         {
-            // Gestisce gli errori e ritorna un errore 500 se c'è un problema.
-            _logger.LogError(ex, "An error occurred while retrieving all accounts.");
-            return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving the accounts.");
+            _logger.LogError(ex, "An error occurred while creating the account.");
+            return StatusCode(500, new { message = "An error occurred." });
         }
     }
+
+
+   [HttpGet("all")]
+  public async Task<IActionResult> GetAll()
+  {
+      try
+      {
+          var accounts = await _context.Accounts
+              .Include(a => a.Valori) // Include la relazione con Valori
+              .ToListAsync();
+
+          if (accounts == null || accounts.Count == 0)
+          {
+              return NotFound(new { message = "No accounts found." });
+          }
+
+          return Ok(accounts);
+      }
+      catch (Exception ex)
+      {
+          _logger.LogError(ex, "An error occurred while retrieving all accounts.");
+          return StatusCode(StatusCodes.Status500InternalServerError,
+              new { message = "An error occurred while retrieving the accounts." });
+      }
+  }
+
 
 
 
