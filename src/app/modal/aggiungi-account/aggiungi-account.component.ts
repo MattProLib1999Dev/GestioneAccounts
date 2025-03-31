@@ -1,104 +1,95 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { AccountService } from '../../accountService/account.service';
+import { Component } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PostAccounts } from '../../models/PostAccounts';
-import { Data } from '@angular/router';
+import { AccountService } from '../../accountService/account.service';
+import { PostAccounts, Valori } from '../../models/PostAccounts';
+import { getAccount } from '../../models/getAccount';
+
+
 
 @Component({
   selector: 'app-aggiungi-account',
+  standalone: true, // Abilita il componente standalone
   templateUrl: './aggiungi-account.component.html',
   styleUrls: ['./aggiungi-account.component.css'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [HttpClientModule, FormsModule, CommonModule, ReactiveFormsModule], // Importiamo HttpClientModule direttamente qui
 })
-export class AggiungiAccountComponent implements OnInit {
+export class AggiungiAccountComponent {
+  accounts!: getAccount;
+  errorMessage: string | null = "Inserisci un account";
+  successMessage: string | null = "Account aggiunto con successo!";
 
-  formAggiungi!: FormGroup;
-  accounts: any;
+  values: Valori[] = []; // Inizializza values come array vuoto
+  selectedValue: any = null; // Inizializza selectedValue a null
+  accountForm: FormGroup = new FormGroup({}); // Inizializza accountForm come un nuovo FormGroup
 
-  constructor(private formBuilder: FormBuilder, private accountService: AccountService) {}
+
+  constructor(private http: HttpClient, private accountService: AccountService) {}
 
   ngOnInit(): void {
-    // Inizializza il form
-    this.formAggiungi = this.formBuilder.group({
-      nome: ['Default Nome', Validators.required],
-      valoreString: ['Default String', Validators.required],
-      voce: ['Default Voce', Validators.required],
-      dataCreazione: [new Date().toISOString().split('T')[0], Validators.required],
-      valori: this.formBuilder.array([this.createValore()])
-    });
+    this.loadAccounts();
+    console.log(this.accounts);  // Log accounts array to see its structure
 
-    console.log('Form inizializzato:', this.formAggiungi.value);
-
-    this.leggiValori();
   }
 
-  leggiValori(): void {
+  loadAccounts(): void {
     this.accountService.getAccount().subscribe(
-      (response: any) => {
-        console.log('Account recuperati con successo', response);
-        this.accounts = response;
-
-        // Assicurati che `valori` sia un FormArray prima di modificarlo
-        const valoriArray = this.formAggiungi.get('valori') as FormArray;
-        valoriArray.clear(); // Pulisce eventuali valori precedenti
-        response.forEach((val: any) => valoriArray.push(this.createValore(val.valore)));
+      (data: any) => {
+        this.accounts = data; // Assegna i dati ricevuti alla variabile accounts
+        console.log(this.accounts); // Log accounts array to see its structure
+        this.errorMessage = null; // Reset error message on successful load
+        this.successMessage = null; // Reset success message on successful load
       },
-      (error: any) => {
-        console.error('Errore nel recupero degli account', error);
+      (error:Error) => {
+        console.error('Error loading accounts:', error);
+        this.errorMessage = 'Failed to load accounts.';
       }
     );
   }
 
-  createValore(valore: string = ''): FormGroup {
-    return this.formBuilder.group({
-      valore: [valore, Validators.required]
-    });
-  }
-
-  addValore(): void {
-    (this.formAggiungi.get('valori') as FormArray).push(this.createValore());
-  }
-
-  // Metodo per valorizzare l'oggetto PostAccounts
-  creaPostAccount(): PostAccounts {
-    return {
-      id: 0,
-      nome: this.formAggiungi.get('nome')?.value,
-      valori: this.formAggiungi.get('valori')?.value,
-      valoreString: this.formAggiungi.get('valoreString')?.value,
-      voce: this.formAggiungi.get('voce')?.value,
-      dataCreazione: this.formAggiungi.get('dataCreazione')?.value
-    };
-  }
-
-  onSubmit(): void {
-    if (!this.formAggiungi) {
-      console.error('Il form non è stato inizializzato correttamente');
+  addAccount(account: PostAccounts): void {
+    // Validation (Angular's form validation or custom checks)
+    for (let index = 0; index < this.accounts.$values.length; index++) {
+      const accounts = this.accounts.$values[index];
+       if (!accounts.nome || !accounts.voce || !accounts.valori || !accounts.dataCreazione || !accounts.valoreString) {
+      alert('Please fill in all fields.');
       return;
     }
-
-    // Tocca tutti i campi per attivare la validazione
-    this.formAggiungi.markAllAsTouched();
-
-    if (this.formAggiungi.valid) {
-      console.log('Form valido, invio i dati:', this.formAggiungi.value);
-      const nuovoAccount = this.creaPostAccount();
-
-      this.accountService.createAccount(nuovoAccount).subscribe(
-        (response) => {
-          console.log('Account creato con successo', response);
-        },
-        (error) => {
-          console.error('Errore nella creazione dell\'account', error);
-        }
-      );
-    } else {
-      console.log('⚠️ Form non valido! Stato:', this.formAggiungi.status);
-      console.log('⚠️ Errori nei campi:', this.formAggiungi.controls);
+    // Ensure 'valori' is an array before passing the account
+    this.accountService.createAccount(account).subscribe(
+      response => {
+        // Handle success response
+        alert('Account created successfully');
+        console.log(response);
+        this.successMessage = 'Account created successfully!';
+        this.errorMessage = null;},
+      error => {
+        // Handle error response
+        alert('An error occurred while creating the account');
+        console.error(error);
+      }
+    );
     }
+
+
+    // Call the service to create the account
+
   }
 
+  deleteAccount(accountId: number): void {
+    this.accountService.deleteAccount(accountId).subscribe(
+      (response:any) => {
+        this.successMessage = 'Account deleted successfully!';
+        this.errorMessage = null;
+        this.loadAccounts(); // Ricarica gli account dopo la cancellazione
+      },
+      (error: Error) => {
+        console.error('Error deleting account:', error);
+        this.errorMessage = 'Failed to delete account.';
+        this.successMessage = null;
+      }
+    );
+  }
 }

@@ -10,7 +10,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   standalone: true,  // This ensures it's a standalone component
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],
-  imports: [AggiungiAccountComponent]
 })
 export class Account implements OnInit {
 

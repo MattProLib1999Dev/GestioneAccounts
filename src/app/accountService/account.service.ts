@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PutAccount } from '../models/PutAccount';
 import { PostAccounts } from '../models/PostAccounts';
+import { getAccount } from '../models/getAccount';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class AccountService {
     return this.httpClient.put<PutAccount>(`${this.rootUrl}/${accountId}`, putAccount);
   }
 
-  getAccount(): Observable<any> {
-    return this.httpClient.get<any>(`${this.rootUrl}/all`);
+  getAccount(): Observable<getAccount[]> {
+    return this.httpClient.get<getAccount[]>(`${this.rootUrl}/all`);
   }
 
   getByIdAccount(idUtente: number): Observable<any> {
