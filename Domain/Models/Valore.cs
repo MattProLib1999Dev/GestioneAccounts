@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace GestioneAccounts.BE.Domain.Models
 {
@@ -11,6 +12,8 @@ namespace GestioneAccounts.BE.Domain.Models
         public string ValoreStr { get; set; } = string.Empty;
 
         public long? AccountId { get; set; }
+
+        [JsonIgnore]
         public Account? Account { get; set; }
         public DateTime DataCreazione { get; set; } = DateTime.Now;
         public string Nome { get; set; } = String.Empty;

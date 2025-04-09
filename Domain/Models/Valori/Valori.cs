@@ -18,7 +18,7 @@ public class Valori
     [ForeignKey("AccountId")]
     [JsonIgnore]
 
-    public Account? Account { get; set; }
+    //public Account? Account { get; set; }
 
     public string Nome { get; set; } = String.Empty;
     public string valoreString { get; set; } = String.Empty;

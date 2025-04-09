@@ -22,26 +22,43 @@ namespace GestioneAccounts.Controllers
 
     // POST: api/Account/create
     [HttpPost("create")]
-    public async Task<IActionResult> CreateAccount([FromBody] Account request)
+public async Task<IActionResult> CreateAccount([FromBody] Account request)
+{
+    if (request == null || string.IsNullOrWhiteSpace(request.Nome))
     {
-        if (request == null || string.IsNullOrWhiteSpace(request.Nome) || request.Valori == null)
-        {
-            return BadRequest(new { message = "Invalid request. Account data is required." });
-        }
-
-        try
-        {
-            _context.Accounts.Add(request); // Aggiunge l'account al DB
-            await _context.SaveChangesAsync(); // Salva nel DB
-
-            return CreatedAtAction(nameof(GetAll), new { id = request.Id }, request);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "An error occurred while creating the account.");
-            return StatusCode(500, new { message = "An error occurred." });
-        }
+        return BadRequest(new { message = "Invalid request. Account data is required." });
     }
+
+    try
+    {
+        // Assicura che gli ID siano nulli per evitare problemi con il tracking di Entity Framework
+        request.Id = 0;
+
+        request.voce = string.Empty; // Assicurati che Voce sia inizializzato
+        request.dataCreazione = DateTime.Now; // Imposta la data di creazione a ora corrente
+
+        // Controlla se l'account esiste già
+        var existingAccount = await _context.Accounts
+            .FirstOrDefaultAsync(a => a.Nome == request.Nome && a.voce == request.voce && a.valoreString == request.valoreString);
+        if (existingAccount != null)
+        {
+            return Conflict(new { message = "Account already exists." });
+        }
+
+        // Aggiungi l'account al contesto
+        _context.Entry(request).State = EntityState.Added; // Imposta lo stato dell'entità a "Added"
+
+        _context.Accounts.Add(request); // Aggiunge l'account al DB
+        await _context.SaveChangesAsync(); // Salva nel DB
+
+        return CreatedAtAction(nameof(GetAll), new { id = request.Id }, request);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "An error occurred while creating the account.");
+        return StatusCode(500, new { message = "An error occurred." });
+    }
+}
 
 
    [HttpGet("all")]

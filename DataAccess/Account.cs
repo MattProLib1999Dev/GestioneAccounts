@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace GestioneAccounts.BE.Domain.Models
 {
@@ -11,6 +12,7 @@ namespace GestioneAccounts.BE.Domain.Models
         [StringLength(100, ErrorMessage = "Il nome non può essere più lungo di 100 caratteri.")]
         public string Nome { get; set; } = string.Empty;  // Account Name
 
+        [JsonIgnore]
         public List<Valore>? Valori { get; set; }  // List of related Valore entities
 
         public string valoreString { get; set; } = string.Empty;  // Additional value (assuming this is a string)

@@ -24,8 +24,7 @@ namespace GestioneAccounts.DataAccess
 
             modelBuilder.Entity<Account>()
                 .HasMany(a => a.Valori)
-                .WithOne(v => v.Account)  // ✅ Correct navigation property name
-                .HasForeignKey(v => v.AccountId)
+                .WithOne(v => v.Account)  // ✅ Corrected to match the navigation property
                 .IsRequired(false);  // ✅ If optional, AccountId should be nullable
         }
 

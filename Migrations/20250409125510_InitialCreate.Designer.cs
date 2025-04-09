@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestioneAccounts.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250305111234_InitialCreate")]
+    [Migration("20250409125510_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,7 +35,8 @@ namespace GestioneAccounts.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("dataCreazione")
                         .HasColumnType("datetime2");
@@ -46,7 +47,8 @@ namespace GestioneAccounts.Migrations
 
                     b.Property<string>("voce")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 

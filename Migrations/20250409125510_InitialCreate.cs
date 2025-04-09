@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GestioneAccounts.Migrations
 {
     /// <inheritdoc />
-    public partial class AddBlogCreatedTimestamp : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,9 +17,9 @@ namespace GestioneAccounts.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     valoreString = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    voce = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    voce = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     dataCreazione = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -37,8 +37,7 @@ namespace GestioneAccounts.Migrations
                     ValoreStr = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AccountId = table.Column<long>(type: "bigint", nullable: true),
                     DataCreazione = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ValoreString = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
