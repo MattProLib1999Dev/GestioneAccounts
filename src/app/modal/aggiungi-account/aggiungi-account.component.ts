@@ -84,35 +84,21 @@ export class AggiungiAccountComponent {
 
   addAccount(account: PostAccounts): void {
     // Validation (Angular's form validation or custom checks)
-    for (let index = 0; index < this.accounts.$values.length; index++) {
-      const accounts = this.accounts.$values[index];
-      if (
-        !accounts.nome ||
-        !accounts.voce ||
-        !accounts.valori ||
-        !accounts.dataCreazione ||
-        !accounts.valoreString
-      ) {
-        alert('Please fill in all fields.');
-        return;
-      }
+    console.log(this.accountForm.value); // Log the form value to see its structure
       // Ensure 'valori' is an array before passing the account
       this.accountService.createAccount(account).subscribe(
-        (response) => {
+        (response:PostAccounts) => {
           // Handle success response
-          alert('Account created successfully');
           console.log(response);
           this.successMessage = 'Account created successfully!';
           this.errorMessage = null;
         },
-        (error) => {
+        (error:Error) => {
           // Handle error response
           alert('An error occurred while creating the account');
           console.error(error);
         }
       );
-    }
-
     // Call the service to create the account
   }
 

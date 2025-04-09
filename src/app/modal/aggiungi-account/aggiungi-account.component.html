@@ -4,7 +4,7 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col">nome</th>
-        <th scope="col">valori</th>
+        <th scope="col">valore</th>
         <th scope="col">voce</th>
         <th scope="col">dataCreazione</th>
       </tr>
@@ -12,9 +12,9 @@
     <tbody>
       <tr>
         <tr *ngFor="let valori of accounts.$values">
-          <td>{{ valori.voce }}</td>
-          <td>{{ valori.valori }}</td>
           <td>{{ valori.nome }}</td>
+          <td>{{ valori.valoreString }}</td>
+          <td>{{ valori.voce }}</td>
           <td>{{ valori.dataCreazione }}</td>
         </tr>
     </tbody>
@@ -32,54 +32,29 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
-            <div class="form-group" [formGroup]="accountForm" (ngSubmit)="addAccount(accountForm.value)">
-                <label for="recipient-name" class="col-form-label">Nome:</label>
-                <input type="text" class="form-control" formControlName="nome" placeholder="Nome account" style="margin-bottom: 10px;">
-              <div class="form-group">
-                <div class="form-group bs5-card-border" style="border: 1px solid #040404; padding: 10px; border-radius: 5px;">
-                  <label for="message-text" class="col-form-label">Voce valore:</label>
-                  <input type="text" class="form-control" formControlName="voce" placeholder="Voce account">
-                  <label for="message-text" class="col-form-label">ValoreStr valore:</label>
-                  <input type="text" class="form-control" formControlName="valoreStr" placeholder="valoreStr">
-                  <label for="message-text" class="col-form-label">Account:</label>
-                  <input type="text" class="form-control" formControlName="account" placeholder="account">
-                  <label for="message-text" class="col-form-label">Data creazione valore:</label>
-                  <input type="date" class="form-control" formControlName="dataCreazione" placeholder="Data creazione account">
-                  <label for="message-text" class="col-form-label">Nome valore:</label>
-                  <input type="text" class="form-control" formControlName="nome" placeholder="nome">
-                </div>
-            </div>
-
-            <div formArrayName="valori" *ngIf="valori.length > 0">
-              <div *ngFor="let gruppo of valori.controls; let i = index" [formGroupName]="i">
-                <label for="message-text" class="col-form-label">Voce:</label>
-                <input formControlName="voce" class="form-control" placeholder="voce">
-                <label for="message-text" class="col-form-label">Valore:</label>
-                <input formControlName="valoreStr" class="form-control" placeholder="valoreStr">
-                <label for="message-text" class="col-form-label">Account:</label>
-                <input formControlName="account" class="form-control" placeholder="account">
-                <label for="message-text" class="col-form-label">Data creazione:</label>
-                <input formControlName="dataCreazione" class="form-control" type="date">
-                <label for="message-text" class="col-form-label">Nome:</label>
-                <input formControlName="nome" class="form-control" placeholder="nome">
+        <div style="border: 1px solid #040404; padding: 10px; border-radius: 5px;">
+          <form [formGroup]="accountForm" (ngSubmit)="addAccount(accountForm.value)">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Nome:</label>
+              <input type="text" class="form-control" formControlName="nome" placeholder="Nome account" style="margin-bottom: 10px;">
+              <div class="form-group bs5-card-border">
+                <label for="message-text" class="col-form-label">Voce valore:</label>
+                <input type="text" class="form-control" formControlName="voce" placeholder="Voce account">
+                <label for="message-text" class="col-form-label">ValoreStr valore:</label>
+                <input type="text" class="form-control" formControlName="valoreString" placeholder="valoreString">
+                <label for="message-text" class="col-form-label">Data creazione valore:</label>
+                <input type="date" class="form-control" formControlName="dataCreazione" placeholder="Data creazione account">
               </div>
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Send Account</button>
+            </div>
+          </form>
 
-
-            <label for="message-text" class="col-form-label">Valore:</label>
-            <input type="text" class="form-control" formControlName="valoreString" placeholder="valoreString">
-            <label for="message-text" class="col-form-label">Voce:</label>
-            <input type="text" class="form-control" formControlName="voce" placeholder="voce">
-            <label for="message-text" class="col-form-label">dataCreazione</label>
-            <input type="date" class="form-control" formControlName="dataCreazione" placeholder="dataCreazione">
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send Account</button>
+        </div>
+        <div class="modal-footer">
+        </div>
       </div>
     </div>
   </div>
