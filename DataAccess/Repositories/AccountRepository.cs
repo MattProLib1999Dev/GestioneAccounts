@@ -1,5 +1,6 @@
 using GestioneAccounts.Abstractions;
 using GestioneAccounts.BE.Domain.Models;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestioneAccounts.DataAccess.Repositories
@@ -36,7 +37,18 @@ namespace GestioneAccounts.DataAccess.Repositories
         {
             return await _applicationDbContext.Accounts.ToListAsync();
         }
+        public async Task<Account> UpdateAccount(string? nome, long accountId)
+        {
+            var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
+            if (account == null)
+                return new Account { Id = accountId, Nome = nome ?? "Default" };
 
+            account.Nome = nome ?? account.Nome;
+            await _applicationDbContext.SaveChangesAsync();
+            return account;
+        }
+
+        // search accounts by nome, dataCreazione, valoreString, voce
         public Task<ICollection<Account>> SearchAccounts(string? nome, DateTime? dataCreazione, string? valoreString, string? voce)
         {
             var query = _applicationDbContext.Accounts.AsQueryable();
@@ -52,16 +64,6 @@ namespace GestioneAccounts.DataAccess.Repositories
             return query.ToListAsync().ContinueWith(task => (ICollection<Account>)task.Result);
         }
 
-    public async Task<Account> UpdateAccount(string? nome, long accountId)
-        {
-            var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
-            if (account == null)
-                return new Account { Id = accountId, Nome = nome ?? "Default" };
-
-            account.Nome = nome ?? account.Nome;
-            await _applicationDbContext.SaveChangesAsync();
-            return account;
-        }
 
     }
 }

@@ -1,12 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Xml.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestioneAccounts.BE.Domain.Models
 {
     public class Account
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), JsonIgnore]
         public long Id { get; set; }  // Primary key (non-nullable)
 
         [StringLength(100, ErrorMessage = "Il nome non può essere più lungo di 100 caratteri.")]

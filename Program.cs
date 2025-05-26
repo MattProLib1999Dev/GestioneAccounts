@@ -5,6 +5,11 @@ using GestioneAccounts.DataAccess.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Namespace.GestioneAccounts.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using GestioneAccounts.BE.Domain.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,12 +20,72 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Aggiungi altri servizi
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.WriteIndented = true; // opzionale: rende il JSON leggibile
+    });
+builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+builder.Services.AddAuthentication(options =>
+{
+  options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+  var secret = builder.Configuration.GetSection("JwtConfig:Secret").Value ?? throw new InvalidOperationException("JwtConfig:Secret is not configured.");
+  var key = Encoding.ASCII.GetBytes(secret);
+  options.TokenValidationParameters = new TokenValidationParameters
+  {
+      ValidateIssuer = true,
+      ValidateAudience = true,
+      ValidateLifetime = true,
+      ValidateIssuerSigningKey = true,
+      IssuerSigningKey = new SymmetricSecurityKey(key)
+  };
+  options.SaveToken = true;
+  options.TokenValidationParameters = new TokenValidationParameters()
+  {
+    ValidateIssuerSigningKey = true,
+    IssuerSigningKey = new SymmetricSecurityKey(key),
+    ValidateIssuer = true,
+    ValidateAudience = false,
+    RequireExpirationTime = false,
+    ValidateLifetime = false
+  };
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key) // ← Sostituisci con la tua chiave segreta
+    };
+});
+});
+
 
 // Registrazione del repository
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IValoriRepository, ValoriRepository>();
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<ValoriRepository>();
+
+builder.Services.AddDefaultIdentity<Account>(options =>
+{
+  options.SignIn.RequireConfirmedAccount = false;
+  options.User.RequireUniqueEmail = true;
+});
 
 
 // Registrazione di MediatR
@@ -69,6 +134,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseAuthentication();
 app.MapControllers();
 
 // Avvia l'app

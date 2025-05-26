@@ -1,6 +1,7 @@
 using GestioneAccounts.BE.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
 namespace GestioneAccounts.DataAccess
 {
@@ -9,7 +10,6 @@ namespace GestioneAccounts.DataAccess
         public DbSet<Account> Accounts { get; set; } = default!;
         public DbSet<Valore> Valori { get; set; } = default!;  // ✅ Match the class name
         public DbSet<Valore> Valore { get; set; } = default!;  // ✅ Match the class name
-
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>

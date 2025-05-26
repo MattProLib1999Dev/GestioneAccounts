@@ -1,15 +1,29 @@
-using GestioneAccounts.Abstractions;
 using GestioneAccounts.BE.Domain.Models;
-using GestioneAccounts.DataAccess;
+using GestioneAccounts.DataAccess.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
-public class SearchAccountsHandler(IAccountRepository repository) : IRequestHandler<SearchItemsQuery, List<Account>>
+public class SearchAccountQueryHandler : IRequestHandler<SearchAccount, Account>
 {
-    private readonly IAccountRepository _repository = repository;
+  public AccountRepository _accountRepository { get; set; }
+  public SearchAccountQueryHandler(AccountRepository accountRepository)
+  {
+    _accountRepository = accountRepository;
+  }
 
-  public async Task<List<Account>> Handle(SearchItemsQuery request, CancellationToken cancellationToken)
-    {
-        return (List<Account>)await _repository.SearchAccounts(request.Nome, request.DataCreazione, request.ValoreString, request.Voce);
-    }
+  // Inietta eventualmente il tuo servizio o contesto dati nel costruttore
+
+  public async Task<Account> Handle(SearchAccount request, CancellationToken cancellationToken)
+  {
+        // Esegui la logica di ricerca. Esempio:
+        var result = await _accountRepository.SearchAccounts(
+            nome: request.Nome,
+            dataCreazione: request.DataCreazione,
+            valoreString: request.ValoreString,
+            voce: null // Puoi passare un valore specifico se necessario
+        );
+
+        // Restituisci il risultato della ricerca
+        return result.FirstOrDefault() ?? new Account();
+  }
+
 }
