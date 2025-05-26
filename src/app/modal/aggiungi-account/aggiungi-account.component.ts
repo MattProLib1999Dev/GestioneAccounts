@@ -36,6 +36,7 @@ export class AggiungiAccountComponent {
   account!: string | number | null;
   dataCreazione!: string | number | null;
   nome!: string | number | null;
+sortedAccounts: any;
 
   constructor(
     private http: HttpClient,
@@ -119,6 +120,30 @@ export class AggiungiAccountComponent {
 
   get valori(): FormArray {
     return this.accountForm.get('valori') as FormArray;
+  }
+
+  sortAccountsByName(): void {
+    // Assumiamo che this.accounts abbia la proprietà $values che è un array
+    const accountsArray = this.accounts?.$values || this.accounts || [];
+
+    // Creiamo una copia e ordiniamo per nome
+    this.sortedAccounts = [...accountsArray].sort((a: any, b: any) => {
+      const nameA = (a.nome || '').toLowerCase();
+      const nameB = (b.nome || '').toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+    this.accountService.getOrderByName().subscribe(
+      (data: any) => {
+        this.accounts = data.$values || data;
+        this.errorMessage = null;
+        this.successMessage = null;
+        console.log('Accounts sorted by name:', this.accounts);
+      },
+      (error: Error) => {
+        console.error('Errore durante l\'ordinamento:', error);
+        this.errorMessage = 'Errore durante l\'ordinamento.';
+      }
+    );
   }
 
 

@@ -34,6 +34,12 @@ export class AccountService {
   deleteAccount(idUtente: number): Observable<any> {
     return this.httpClient.delete<any>(`${this.rootUrl}/Delete/${idUtente}`);
   }
+
+  getOrderByName(): Observable<any> {
+    return this.httpClient.get(`${this.rootUrl}/orderByName`);
+
+
+  }
 }
 
 
