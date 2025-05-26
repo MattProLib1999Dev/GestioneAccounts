@@ -4,10 +4,11 @@ using System.Text.Json.Serialization;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Xml.Serialization;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace GestioneAccounts.BE.Domain.Models
 {
-    public class Account
+    public class Account: IdentityUser
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), JsonIgnore]
         public long Id { get; set; }  // Primary key (non-nullable)

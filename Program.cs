@@ -10,52 +10,38 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using GestioneAccounts.BE.Domain.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Registrazione del DbContext con la stringa di connessione dal file appsettings.json
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Aggiungi altri servizi
-builder.Services.AddControllersWithViews();
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
-        options.JsonSerializerOptions.WriteIndented = true; // opzionale: rende il JSON leggibile
-    });
-builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
-builder.Services.AddAuthentication(options =>
+// Registrazione dei repository
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IValoriRepository, ValoriRepository>();
+builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<ValoriRepository>();
+
+// Configurazione Identity con ruolo corretto (IdentityRole)
+builder.Services.AddIdentity<Account, IdentityRole>(options =>
 {
-  options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.SignIn.RequireConfirmedAccount = false;
+    options.User.RequireUniqueEmail = true;
 })
-.AddJwtBearer(options =>
-{
-  var secret = builder.Configuration.GetSection("JwtConfig:Secret").Value ?? throw new InvalidOperationException("JwtConfig:Secret is not configured.");
-  var key = Encoding.ASCII.GetBytes(secret);
-  options.TokenValidationParameters = new TokenValidationParameters
-  {
-      ValidateIssuer = true,
-      ValidateAudience = true,
-      ValidateLifetime = true,
-      ValidateIssuerSigningKey = true,
-      IssuerSigningKey = new SymmetricSecurityKey(key)
-  };
-  options.SaveToken = true;
-  options.TokenValidationParameters = new TokenValidationParameters()
-  {
-    ValidateIssuerSigningKey = true,
-    IssuerSigningKey = new SymmetricSecurityKey(key),
-    ValidateIssuer = true,
-    ValidateAudience = false,
-    RequireExpirationTime = false,
-    ValidateLifetime = false
-  };
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
+
+// Configurazione MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+// Configurazione JWT Bearer Authentication
+builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+var secret = builder.Configuration.GetValue<string>("JwtConfig:Secret")
+             ?? throw new InvalidOperationException("JwtConfig:Secret is not configured.");
+var key = Encoding.ASCII.GetBytes(secret);
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -69,33 +55,10 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key) // ← Sostituisci con la tua chiave segreta
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        RequireExpirationTime = true
     };
-});
-});
-
-
-// Registrazione del repository
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<IValoriRepository, ValoriRepository>();
-builder.Services.AddScoped<AccountRepository>();
-builder.Services.AddScoped<ValoriRepository>();
-
-builder.Services.AddDefaultIdentity<Account>(options =>
-{
-  options.SignIn.RequireConfirmedAccount = false;
-  options.User.RequireUniqueEmail = true;
-});
-
-
-// Registrazione di MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-
-// Configurazione Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gestione Accounts API", Version = "v1" });
+    options.SaveToken = true;
 });
 
 // Configurazione CORS
@@ -110,19 +73,27 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddControllers().AddJsonOptions(options =>
+// Configurazione Controller e JSON options
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+
+// Configurazione Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
 {
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gestione Accounts API", Version = "v1" });
 });
 
-
-// Crea l'applicazione
 var app = builder.Build();
 
-// Abilita CORS
+// Middleware pipeline
 app.UseCors("AllowAll");
 
-// Configura la pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -133,9 +104,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();  // Authentication deve venire PRIMA di Authorization
 app.UseAuthorization();
-app.UseAuthentication();
+
 app.MapControllers();
 
-// Avvia l'app
 app.Run();

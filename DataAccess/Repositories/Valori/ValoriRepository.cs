@@ -50,7 +50,7 @@ namespace GestioneAccounts.DataAccess.Repositories
         // Aggiorna o crea un "Valori" in base all'account
         public async Task<Valore> UpdateValori(Account account, long valoriId)
         {
-            var valore = await _applicationDbContext.Valore.FirstOrDefaultAsync(v => v.Id == valoriId);
+            var valore = await _applicationDbContext.Valori.FirstOrDefaultAsync(v => v.Id == valoriId);
 
             if (valore == null)
             {
