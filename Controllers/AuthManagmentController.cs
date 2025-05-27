@@ -113,7 +113,7 @@ namespace GestioneAccounts.Controllers
                 Expires = DateTime.UtcNow.AddHours(4),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha512Signature
+                    SecurityAlgorithms.HmacSha256
                 )
             };
 
