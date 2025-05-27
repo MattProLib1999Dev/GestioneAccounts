@@ -1,4 +1,4 @@
-export class Login {
+export class Register {
   name = "";
   email = "";
   password = "";

@@ -1,11 +1,36 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <div class="container">
-    <!-- app.component.html -->
-  <h1>{{ title }}</h1>
+
+  <div class="row ca" style="border: 1px solid black; padding: 5px;">
+    <div class="col-md-6 offset-md-3">
+      <h2 style="text-align: center;">Register</h2>
+      <h1 style="text-align: center;">{{ title }}</h1>
+
+      <div> name: <input [(ngModel)]="registerDto.name" class="form-control" style="width: 500px;" name="name"></div>
+      <div> email: <input [(ngModel)]="registerDto.email" class="form-control" style="width: 500px;" name="email"></div>
+      <div> password: <input [(ngModel)]="registerDto.password" class="form-control" style="width: 500px;" name="password"></div>
+      <button (click)="register(registerDto)" class="btn btn-primary" style="margin-top: 5px;">Register</button>
+      <hr />
+
+      <form>
+        <div> name: <input [(ngModel)]="registerDto.name" class="form-control" style="width: 500px;" name="name"></div>
+        <div> email: <input [(ngModel)]="registerDto.email" class="form-control" style="width: 500px;" name="email"></div>
+        <div> password: <input [(ngModel)]="registerDto.password" class="form-control" style="width: 500px;" name="password"></div>
+        <button (click)="login(registerDto)" class="btn btn-primary" style="margin-top: 5px;" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- app.component.html -->
 
   <!-- Usa i componenti nel template -->
+  @if (isLoggedIn) {
+  <p style="color: rgb(54, 193, 54);" style="text-align: center;">Login successful!</p>
   <app-account></app-account>
   <app-aggiungi-account></app-aggiungi-account>
   <app-aggiungi-valore></app-aggiungi-valore>
+  } @else {
+  <p style="color: rgb(231, 35, 35);" style="text-align: center;">Login failed. Please try again.</p>
+  }
 </div>
