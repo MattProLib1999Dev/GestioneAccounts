@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { AccountService } from '../../accountService/account.service';
 import { PostAccounts, Valori } from '../../models/PostAccounts';
 import { getAccount } from '../../models/getAccount';
+import { Account } from '../account/account.component';
 
 @Component({
   selector: 'app-aggiungi-account',
@@ -124,7 +125,7 @@ sortedAccounts: any;
 
   sortAccountsByName(): void {
     // Assumiamo che this.accounts abbia la proprietà $values che è un array
-    const accountsArray = this.accounts?.$values || this.accounts || [];
+    const accountsArray = this.accounts || this.accounts || [];
 
     // Creiamo una copia e ordiniamo per nome
     this.sortedAccounts = [...accountsArray].sort((a: any, b: any) => {

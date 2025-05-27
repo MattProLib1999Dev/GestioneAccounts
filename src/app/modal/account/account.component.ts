@@ -4,10 +4,12 @@ import { PutAccount } from '../../models/PutAccount';
 import { PostAccounts } from '../../models/PostAccounts';
 import { AggiungiAccountComponent } from "../aggiungi-account/aggiungi-account.component";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AggiungiValoreComponent } from '../aggiungi-valore/aggiungi-valore/aggiungi-valore.component';
 
 @Component({
   selector: 'app-account',
   standalone: true,  // This ensures it's a standalone component
+  imports: [AggiungiAccountComponent,AggiungiValoreComponent],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],
 })

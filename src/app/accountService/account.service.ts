@@ -10,7 +10,7 @@ import { getAccount } from '../models/getAccount';
 })
 export class AccountService {
 
-  private rootUrl: string = 'http://localhost:5082/api/Account';  // Modifica con l'URL corretto dell'API
+  private rootUrl: string = 'https://localhost:7045/api/Account';  // Modifica con l'URL corretto dell'API
 
   constructor(private httpClient: HttpClient) { }
 

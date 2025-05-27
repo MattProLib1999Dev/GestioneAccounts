@@ -15,11 +15,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let account of accounts?.$values" class="text-center table-light">
+      <tr *ngFor="let account of accounts" class="text-center table-light">
         <td>{{ account.nome }}</td>
         <td>{{ account.valoreString }}</td>
         <td>{{ account.dataCreazione | date: 'dd/MM/yyyy' }}</td>
-      </tr>
     </tbody>
   </table>
 </div>
@@ -34,14 +33,14 @@
     <thead class="thead-dark text-center table-primary">
       <tr>
         <th scope="col">nome</th>
-        <th scope="col">valore</th>
+        <th scope="col">email</th>
         <th scope="col">dataCreazione</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let account of sortedAccounts" class="text-center table-light">
-        <td>{{ account.nome }}</td>
-        <td>{{ account.valoreString }}</td>
+        <td>{{ account.userName }}</td>
+        <td>{{ account.email }}</td>
         <td>{{ account.dataCreazione | date: 'dd/MM/yyyy' }}</td>
       </tr>
     </tbody>
