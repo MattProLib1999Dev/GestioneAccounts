@@ -16,8 +16,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let account of accounts" class="text-center table-light">
-        <td>{{ account.nome }}</td>
-        <td>{{ account.valoreString }}</td>
+        <td>{{ account.userName }}</td>
+        <td>{{ account.email }}</td>
         <td>{{ account.dataCreazione | date: 'dd/MM/yyyy' }}</td>
     </tbody>
   </table>
