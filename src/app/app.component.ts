@@ -13,7 +13,7 @@ import { NgIf } from '@angular/common';
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
-  imports: [Account, AggiungiAccountComponent, AggiungiValoreComponent, FormsModule],
+  imports: [Account, FormsModule],
 })
 export class AppComponent {
   title = 'Gestione Accounts';

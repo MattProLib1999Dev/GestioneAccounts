@@ -1,19 +1,21 @@
 export interface PostAccounts {
-  id: number
+  id: string
+  userName: string
+  normalizedUserName: string
+  email: string
+  normalizedEmail: string
+  emailConfirmed: boolean
+  passwordHash: string
+  securityStamp: string
+  concurrencyStamp: string
+  phoneNumber: string
+  phoneNumberConfirmed: boolean
+  twoFactorEnabled: boolean
+  lockoutEnd: string
+  lockoutEnabled: boolean
+  accessFailedCount: number
   nome: string
-  valori: Valori[]
   valoreString: string
   voce: string
   dataCreazione: string
-}
-
-export interface Valori {
-  id: number
-  voce: string
-  valoreStr: string
-  accountId: number
-  account: string
-  dataCreazione: string
-  nome: string
-  valoreString: string
 }

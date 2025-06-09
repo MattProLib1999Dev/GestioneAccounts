@@ -8,10 +8,11 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AccountService } from '../../accountService/account.service';
-import { PostAccounts, Valori } from '../../models/PostAccounts';
+import { PostAccounts } from '../../models/PostAccounts';
 import { getAccount } from '../../models/getAccount';
 import { Account } from '../account/account.component';
 
@@ -26,8 +27,6 @@ export class AggiungiAccountComponent {
   accounts!: getAccount;
   errorMessage: string | null = 'Inserisci un account';
   successMessage: string | null = 'Account aggiunto con successo!';
-
-  values: Valori[] = []; // Inizializza values come array vuoto
   selectedValue: any = null; // Inizializza selectedValue a null
   accountForm: FormGroup = new FormGroup({}); // Inizializza accountForm come un nuovo FormGroup
   value: any;
@@ -37,7 +36,7 @@ export class AggiungiAccountComponent {
   account!: string | number | null;
   dataCreazione!: string | number | null;
   nome!: string | number | null;
-sortedAccounts: any;
+  sortedAccounts: getAccount = []; // Inizializza sortedAccounts come un array vuoto
 
   constructor(
     private http: HttpClient,
@@ -47,23 +46,21 @@ sortedAccounts: any;
 
   ngOnInit(): void {
     // Inizializza il form con FormBuilder
-    this.accountForm = new FormGroup({
-      nome: new FormControl(''),
-      voce: new FormControl(''),
-      valori: new FormArray([
-        new FormGroup({
-          voce: new FormControl(''),
-          valoreStr: new FormControl(''),
-          account: new FormControl(''),
-          dataCreazione: new FormControl(''),
-          nome: new FormControl(''),
-        })
-      ]),
-      dataCreazione: new FormControl(''),
-      valoreString: new FormControl(''),
-      valoreStr: new FormControl(''),
-      account: new FormControl(''),
+    this.accountForm = this.fb.group({
+      nome: ['', Validators.required],
+      userName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: [''],
+      valoreString: [''],
+      voce: [''],
+      dataCreazione: ['', Validators.required],
+      passwordHash: [''],
+      accessFailedCount: [0],
+      emailConfirmed: [false],
+      phoneNumberConfirmed: [false],
+      twoFactorEnabled: [false]
     });
+
 
     this.loadAccounts();
     console.log(this.accounts); // Log accounts array to see its structure
@@ -85,24 +82,26 @@ sortedAccounts: any;
   }
 
   addAccount(account: PostAccounts): void {
-    // Validation (Angular's form validation or custom checks)
-    console.log(this.accountForm.value); // Log the form value to see its structure
-      // Ensure 'valori' is an array before passing the account
-      this.accountService.createAccount(account).subscribe(
-        (response:PostAccounts) => {
-          // Handle success response
-          console.log(response);
-          this.successMessage = 'Account created successfully!';
-          this.errorMessage = null;
-        },
-        (error:Error) => {
-          // Handle error response
-          alert('An error occurred while creating the account');
-          console.error(error);
-        }
-      );
-    // Call the service to create the account
+    const payload = {
+      ...account,
+      dataCreazione: new Date(account.dataCreazione).toISOString() // normalize datetime
+    };
+
+    console.log(payload); // inspect structure
+
+    this.accountService.createAccount(payload).subscribe(
+      (response: PostAccounts) => {
+        console.log(response);
+        this.successMessage = 'Account created successfully!';
+        this.errorMessage = null;
+      },
+      (error: Error) => {
+        alert('An error occurred while creating the account');
+        console.error(error);
+      }
+    );
   }
+
 
   deleteAccount(accountId: number): void {
     this.accountService.deleteAccount(accountId).subscribe(
@@ -119,23 +118,10 @@ sortedAccounts: any;
     );
   }
 
-  get valori(): FormArray {
-    return this.accountForm.get('valori') as FormArray;
-  }
-
   sortAccountsByName(): void {
-    // Assumiamo che this.accounts abbia la proprietà $values che è un array
-    const accountsArray = this.accounts || this.accounts || [];
-
-    // Creiamo una copia e ordiniamo per nome
-    this.sortedAccounts = [...accountsArray].sort((a: any, b: any) => {
-      const nameA = (a.nome || '').toLowerCase();
-      const nameB = (b.nome || '').toLowerCase();
-      return nameA.localeCompare(nameB);
-    });
     this.accountService.getOrderByName().subscribe(
       (data: any) => {
-        this.accounts = data.$values || data;
+        this.sortedAccounts = data || data;
         this.errorMessage = null;
         this.successMessage = null;
         console.log('Accounts sorted by name:', this.accounts);
