@@ -1,0 +1,27 @@
+.animated-image {
+  position: absolute;
+  top: -100px;
+  left: 80%;
+  transform: translateX(-50%);
+  animation: dropToRight 1.5s ease-out forwards;
+}
+
+@keyframes dropToRight {
+  to {
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+.animated-image img {
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}

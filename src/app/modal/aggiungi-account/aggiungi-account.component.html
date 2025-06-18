@@ -9,6 +9,7 @@
   <table class="table table-bordered table-striped table-hover table-responsive table-sm">
     <thead class="thead-dark text-center table-primary">
       <tr>
+        <th scope="col">nome</th>
         <th scope="col">username</th>
         <th scope="col">email</th>
         <th scope="col">dataCreazione</th>
@@ -16,6 +17,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let account of accounts" class="text-center table-light">
+        <td>{{ account.nome }}</td>
         <td>{{ account.userName }}</td>
         <td>{{ account.email }}</td>
         <td>{{ account.dataCreazione | date: 'dd/MM/yyyy' }}</td>

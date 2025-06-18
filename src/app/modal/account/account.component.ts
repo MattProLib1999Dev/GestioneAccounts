@@ -5,6 +5,7 @@ import { PostAccounts } from '../../models/PostAccounts';
 import { AggiungiAccountComponent } from "../aggiungi-account/aggiungi-account.component";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AggiungiValoreComponent } from '../aggiungi-valore/aggiungi-valore/aggiungi-valore.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -19,7 +20,7 @@ export class Account implements OnInit {
   accountadded?: PostAccounts;
   formAggiungi!: FormGroup;
 
-  constructor(accountService_: AccountService, private formBuilder: FormBuilder) {
+  constructor(accountService_: AccountService, private formBuilder: FormBuilder, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -27,6 +28,10 @@ export class Account implements OnInit {
       nome: ['Seleziona', Validators.required],
       dataCreazione: ['', Validators.required]
     });
+  }
+
+  onAnimationEnd() {
+    this.router.navigate(['/account']);
   }
 
 
