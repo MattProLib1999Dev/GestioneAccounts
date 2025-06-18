@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
-    @Inject(PLATFORM_ID) private platformId: Object // ⬅️ AGGIUNTO
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {

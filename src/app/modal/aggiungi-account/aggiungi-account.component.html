@@ -56,7 +56,7 @@
 
 <div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Nuovo Account</h5>
@@ -65,81 +65,109 @@
         </button>
       </div>
       <div class="modal-body">
-        <div style="border: 1px solid #040404; padding: 10px; border-radius: 5px;">
-          <form [formGroup]="accountForm" (ngSubmit)="addAccount(accountForm.value)">
-            <div class="container mt-4">
-                <div class="row g-3">
-                  <div class="col-md-6">
-                    <label class="form-label">Nome</label>
-                    <input type="text" class="form-control" formControlName="nome" />
-                  </div>
+        <form [formGroup]="accountForm" (ngSubmit)="addAccount(accountForm.value)">
+          <div class="row g-3">
 
-                  <div class="col-md-6">
-                    <label class="form-label">Username</label>
-                    <input type="text" class="form-control" formControlName="userName" />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" formControlName="email" />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="form-label">Telefono</label>
-                    <input type="tel" class="form-control" formControlName="phoneNumber" />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="form-label">Livello Utente</label>
-                    <input type="text" class="form-control" formControlName="valoreString" />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="form-label">Voce</label>
-                    <input type="text" class="form-control" formControlName="voce" />
-                  </div>
-
-
-
-                  <div class="col-md-6">
-                    <label class="form-label">Data Creazione</label>
-                    <input type="datetime-local" class="form-control" formControlName="dataCreazione" />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="form-label">passwordHash</label>
-                    <input type="text" class="form-control" formControlName="passwordHash" />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="form-label">Tentativi di accesso falliti</label>
-                    <input type="number" class="form-control" formControlName="accessFailedCount" />
-                  </div>
-
-                  <div class="col-md-6 form-check mt-4">
-                    <input type="checkbox" class="form-check-input" formControlName="emailConfirmed" />
-                    <label class="form-check-label">Email Confermata</label>
-                  </div>
-
-                  <div class="col-md-6 form-check mt-4">
-                    <input type="checkbox" class="form-check-input" formControlName="phoneNumberConfirmed" />
-                    <label class="form-check-label">Telefono Confermato</label>
-                  </div>
-
-                  <div class="col-md-6 form-check mt-4">
-                    <input type="checkbox" class="form-check-input" formControlName="twoFactorEnabled" />
-                    <label class="form-check-label">2FA Abilitato</label>
-                  </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary mt-4">Invia</button>
+            <!-- Nome -->
+            <div class="col-md-4">
+              <label class="form-label">Nome</label>
+              <input type="text" class="form-control" formControlName="nome" />
+              <div *ngIf="accountForm.get('nome')?.touched && accountForm.get('nome')?.invalid" class="text-danger">
+                Il nome è obbligatorio.
+              </div>
             </div>
-            </form>
 
-        </div>
-        <div class="modal-footer">
-        </div>
+            <!-- Username -->
+            <div class="col-md-4">
+              <label class="form-label">Username</label>
+              <input type="text" class="form-control" formControlName="userName" />
+              <div *ngIf="accountForm.get('userName')?.touched && accountForm.get('userName')?.invalid" class="text-danger">
+                L'username è obbligatorio.
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-4">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" formControlName="email" />
+              <div *ngIf="accountForm.get('email')?.touched && accountForm.get('email')?.invalid" class="text-danger">
+                Inserisci un'email valida.
+              </div>
+            </div>
+
+            <!-- Telefono -->
+            <div class="col-md-4">
+              <label class="form-label">Telefono</label>
+              <input type="tel" class="form-control" formControlName="phoneNumber" />
+              <div *ngIf="accountForm.get('phoneNumber')?.touched && accountForm.get('phoneNumber')?.invalid" class="text-danger">
+                Il numero di telefono è obbligatorio.
+              </div>
+            </div>
+
+            <!-- Livello Utente -->
+            <div class="col-md-4">
+              <label class="form-label">Livello Utente</label>
+              <input type="text" class="form-control" formControlName="valoreString" />
+            </div>
+
+            <!-- Voce -->
+            <div class="col-md-4">
+              <label class="form-label">Voce</label>
+              <input type="text" class="form-control" formControlName="voce" />
+            </div>
+
+            <!-- Data Creazione -->
+            <div class="col-md-4">
+              <label class="form-label">Data Creazione</label>
+              <input type="datetime-local" class="form-control" formControlName="dataCreazione" />
+              <div *ngIf="accountForm.get('dataCreazione')?.touched && accountForm.get('dataCreazione')?.invalid" class="text-danger">
+                La data è obbligatoria.
+              </div>
+            </div>
+
+            <!-- Password Hash -->
+            <div class="col-md-4">
+              <label class="form-label">Password Hash</label>
+              <input type="text" class="form-control" formControlName="passwordHash" />
+            </div>
+
+            <!-- Tentativi di accesso falliti -->
+            <div class="col-md-4">
+              <label class="form-label">Tentativi di accesso falliti</label>
+              <input type="number" class="form-control" formControlName="accessFailedCount" />
+              <div *ngIf="accountForm.get('accessFailedCount')?.touched && accountForm.get('accessFailedCount')?.invalid" class="text-danger">
+                Inserisci un numero valido.
+              </div>
+            </div>
+
+            <!-- Checkbox -->
+            <div class="col-md-4 form-check mt-4">
+              <input type="checkbox" class="form-check-input" formControlName="emailConfirmed" />
+              <label class="form-check-label">Email Confermata</label>
+            </div>
+
+            <div class="col-md-4 form-check mt-4">
+              <input type="checkbox" class="form-check-input" formControlName="phoneNumberConfirmed" />
+              <label class="form-check-label">Telefono Confermato</label>
+            </div>
+
+            <div class="col-md-4 form-check mt-4">
+              <input type="checkbox" class="form-check-input" formControlName="twoFactorEnabled" />
+              <label class="form-check-label">2FA Abilitato</label>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-md-12 text-center">
+              <button type="submit" class="btn btn-primary" [disabled]="accountForm.invalid">
+                Aggiungi Account
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
+      <div class="modal-footer"></div>
     </div>
   </div>
 </div>
+

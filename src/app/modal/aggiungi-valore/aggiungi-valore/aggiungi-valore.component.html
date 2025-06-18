@@ -1,5 +1,5 @@
 <div class="modal" tabindex="-1" id="aggiungiValore">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Aggiungi Valore</h5>
@@ -14,17 +14,18 @@
           <label for="dataCreazione" class="form-label">Data Creazione:</label>
           <input type="datetime" class="form-control" placeholder="dataCreazione">
         </div>
-        <div class="row">
+        <div class="row mb-2">
           <div>
             <button type="button" class="btn btn-primary" (click)="aggiungi()">+</button>
           </div>
         </div>
         <div class="row">
           <div>
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#aggiungiModal ">Aggiungi Chiave</button>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#aggiungiModal">Aggiungi Chiave</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
