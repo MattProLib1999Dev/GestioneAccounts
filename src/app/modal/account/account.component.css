@@ -3,13 +3,14 @@
   top: -100px;
   left: 80%;
   transform: translateX(-50%);
-  animation: dropToRight 1.5s ease-out forwards;
+  transform: translateY(-10%);
+  animation: dropToRight ease-in-out 1s forwards;
 }
 
 @keyframes dropToRight {
   to {
-    top: 50%;
-    left: 80%;
+    top: 10%;
+    left: 90%;
     transform: translate(-50%, -50%);
   }
 }
@@ -24,4 +25,5 @@ img {
   width: 100px;
   height: 100px;
   object-fit: cover;
+  border-radius: 50px;
 }
