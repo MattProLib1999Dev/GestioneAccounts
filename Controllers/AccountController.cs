@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestioneAccounts.Controllers
 {
@@ -44,6 +45,7 @@ namespace GestioneAccounts.Controllers
 
             try
             {
+
                 request.Id = 0;
                 request.voce = string.Empty;
                 request.dataCreazione = DateTime.Now;
