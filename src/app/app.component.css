@@ -1,3 +1,10 @@
 button {
   margin-top: 16px; /* Adjust the value as needed */
 }
+
+input {
+  width: 100%; /* Full width */
+  padding: 8px; /* Padding for better appearance */
+  box-sizing: border-box; /* Include padding in width calculation */
+  align-items: center; /* Center align items */
+}

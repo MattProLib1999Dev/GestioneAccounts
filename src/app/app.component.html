@@ -3,41 +3,47 @@
 <div class="container">
 
   @if (!isLoggedIn) {
-    <div class="row">
-      <div class="row ca" style="border: 2px solid black; padding: 3px; margin: 50px; background-color: beige;">
-        <div class="col-md-6 offset-md-3">
-          <h1 style="text-align: center;">{{ title }}</h1>
-
-          @if (!isRegistered) {
-            <h2 style="text-align: center;">Loggati</h2>
-            <form (ngSubmit)="login(registerDto)" style="text-align: center;">
-              <div> name: <input [(ngModel)]="registerDto.name" class="form-control" style="width: 500px;" name="name"></div>
-              <div> email: <input [(ngModel)]="registerDto.email" class="form-control" style="width: 500px;" name="email"></div>
-              <div> password: <input [(ngModel)]="registerDto.password" class="form-control" style="width: 500px;" name="password"></div>
-              <button class="btn btn-primary" style="margin-top: 5px;" type="submit">Login</button>
-            </form>
-            <button class="btn btn-link" (click)="toggleRegistrationForm()">Registrati</button>
-          } @else {
-            <h2 style="text-align: center;">Registrati</h2>
-            <form (ngSubmit)="register(registerDto)" style="text-align: center;">
-              <div> name: <input [(ngModel)]="registerDto.name" class="form-control" style="width: 500px;" name="name"></div>
-              <div> email: <input [(ngModel)]="registerDto.email" class="form-control" style="width: 500px;" name="email"></div>
-              <div> password: <input [(ngModel)]="registerDto.password" class="form-control" style="width: 500px;" name="password"></div>
-              <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Registrati</button>
-            </form>
-            <button class="btn btn-link" (click)="toggleRegistrationForm()">Torna al login</button>
-          }
-        </div>
-      </div>
-    </div>
-  } @else {
-    <div class="row">
+  <div class="row">
+    <div class="row ca" style="border: 2px solid black; padding: 3px; margin: 50px; background-color: beige;">
       <div class="col-md-6 offset-md-3">
-        <h1 style="text-align: center;">Benvenuto!</h1>
-        <p style="text-align: center; color: rgb(54, 193, 54);">Login successful!</p>
+        <h1 style="text-align: center;">{{ title }}</h1>
+
+        @if (!isRegistered) {
+        <h2 style="text-align: center;">Loggati</h2>
+        <form (ngSubmit)="login(registerDto)" style="text-align: center;">
+          <div> name: <input [(ngModel)]="registerDto.name" class="form-control"  name="name">
+          </div>
+          <div> email: <input [(ngModel)]="registerDto.email" class="form-control"  name="email">
+          </div>
+          <div> password: <input [(ngModel)]="registerDto.password" class="form-control"
+              name="password"></div>
+          <button class="btn btn-primary" style="margin-top: 5px;" type="submit">Login</button>
+        </form>
+        <button class="btn btn-link" (click)="toggleRegistrationForm()">Registrati</button>
+        } @else {
+        <h2 style="text-align: center;">Registrati</h2>
+        <form (ngSubmit)="register(registerDto)" style="text-align: center;">
+          <div> name: <input [(ngModel)]="registerDto.name" class="form-control"  name="name">
+          </div>
+          <div> email: <input [(ngModel)]="registerDto.email" class="form-control"  name="email">
+          </div>
+          <div> password: <input [(ngModel)]="registerDto.password" class="form-control"
+              name="password"></div>
+          <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Registrati</button>
+        </form>
+        <button class="btn btn-link" (click)="toggleRegistrationForm()">Torna al login</button>
+        }
       </div>
-      <app-account></app-account>
     </div>
+  </div>
+  } @else {
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h1 style="text-align: center;">Benvenuto!</h1>
+      <p style="text-align: center; color: rgb(54, 193, 54);">Login successful!</p>
+    </div>
+    <app-account></app-account>
+  </div>
   }
 
 </div>

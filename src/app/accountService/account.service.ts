@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PutAccount } from '../models/PutAccount';
 import { PostAccounts } from '../models/PostAccounts';
 import { getAccount } from '../models/getAccount';
+import { search } from '../models/search';
 
 @Injectable({
   providedIn: 'root'
@@ -37,9 +38,17 @@ export class AccountService {
 
   getOrderByName(): Observable<any> {
     return this.httpClient.get(`${this.rootUrl}/orderByName`);
-
-
   }
+
+  search(search: { nome: string; dataCreazione: string; valoreString: string }): Observable<any> {
+    const params = new HttpParams()
+      .set('nome', search.nome || '')
+      .set('dataCreazione', search.dataCreazione || '')
+      .set('valoreString', search.valoreString || '');
+
+    return this.httpClient.get(`${this.rootUrl}/search/`, { params });
+  }
+
 }
 
 

@@ -1,13 +1,10 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Account } from './modal/account/account.component';
-import { AggiungiAccountComponent } from './modal/aggiungi-account/aggiungi-account.component';
-import { AggiungiValoreComponent } from './modal/aggiungi-valore/aggiungi-valore/aggiungi-valore.component';
 import { JwtAuth } from './models/jwtAuth';
 import { Login } from './models/login';
 import { Register } from './models/register';
 import { AuthenticationService } from './services/authentication.service';
 import { FormsModule } from '@angular/forms';
-import { isPlatformBrowser, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -29,13 +26,13 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    /* if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('jwtToken');
       if (token) {
         this.isLoggedIn = true;
         this.jwtAuth.token = token;
       }
-    }
+    } */
   }
 
   register(registerDto: Register) {

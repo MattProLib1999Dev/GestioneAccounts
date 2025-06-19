@@ -1,27 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 import { AccountService } from '../../accountService/account.service';
-import { PutAccount } from '../../models/PutAccount';
 import { PostAccounts } from '../../models/PostAccounts';
 import { AggiungiAccountComponent } from "../aggiungi-account/aggiungi-account.component";
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AggiungiValoreComponent } from '../aggiungi-valore/aggiungi-valore/aggiungi-valore.component';
-import { Router } from '@angular/router';
+import { SearchComponent } from "../../search/search.component";
 
 @Component({
   selector: 'app-account',
-  standalone: true,  // This ensures it's a standalone component
-  imports: [AggiungiAccountComponent,AggiungiValoreComponent],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    AggiungiAccountComponent,
+    AggiungiValoreComponent,
+    SearchComponent
+  ],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],
 })
 export class Account implements OnInit {
 
-  accountService?: AccountService;
-  accountadded?: PostAccounts;
   formAggiungi!: FormGroup;
+  accountadded?: PostAccounts;
 
-  constructor(accountService_: AccountService, private formBuilder: FormBuilder, private router: Router) {
-  }
+  constructor(
+    private accountService: AccountService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.formAggiungi = this.formBuilder.group({
@@ -30,10 +40,7 @@ export class Account implements OnInit {
     });
   }
 
-  onAnimationEnd() {
-    this.router.navigate(['/account']);
+  onAnimationEnd(): void {
+    this.router.navigate(['/aggiungi-account']);
   }
-
-
-
 }
