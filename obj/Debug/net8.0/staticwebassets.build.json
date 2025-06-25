@@ -1,12 +1,20 @@
 {
   "Version": 1,
-  "Hash": "ELkOctJipgxnZN0wcIPD0xRCcYb28IF8J4fxyMQyHYM=",
+  "Hash": "k+Gc8UyXctszlM5zCmQZEe26+AACsjEMBrwdCWa1IJU=",
   "Source": "GestioneAccounts",
   "BasePath": "_content/GestioneAccounts",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "GestioneAccounts\\wwwroot",
+      "Source": "GestioneAccounts",
+      "ContentRoot": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\",
+      "BasePath": "_content/GestioneAccounts",
+      "Pattern": "**"
+    }
+  ],
   "Assets": [
     {
       "Identity": "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\8.0.0\\staticwebassets\\V5\\css\\site.css",

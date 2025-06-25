@@ -95,6 +95,8 @@ builder.Services.AddCors(options =>
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });
+builder.WebHost.UseWebRoot("wwwroot");
+
 
 var app = builder.Build();
 
