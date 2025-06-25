@@ -5,6 +5,7 @@ import { Login } from './models/login';
 import { Register } from './models/register';
 import { AuthenticationService } from './services/authentication.service';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -20,9 +21,11 @@ export class AppComponent implements OnInit {
   isLoggedIn: boolean = false;
   isRegistered: boolean = false;
 
+
   constructor(
     private authService: AuthenticationService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
