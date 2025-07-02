@@ -11,7 +11,7 @@ namespace GestioneAccounts.BE.Domain.Models
     public class Account: IdentityUser
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), JsonIgnore]
-        public long Id { get; set; }  // Primary key (non-nullable)
+        public string Id { get; set; }  // Primary key (non-nullable)
 
         [StringLength(100, ErrorMessage = "Il nome non può essere più lungo di 100 caratteri.")]
         public string Nome { get; set; } = string.Empty;  // Account Name
@@ -26,5 +26,11 @@ namespace GestioneAccounts.BE.Domain.Models
 
         public DateTime dataCreazione { get; set; } = DateTime.Now;  // Creation timestamp (defaults to now)
 
-    }
+        [StringLength(1, ErrorMessage = "La voce non può essere più lunga di un carattere.")]
+        public int Ore_lavorate { get; set; } = 0;
+        public Role Role { get; set; } = new();
+            public int RoleId { get; set; }  // FK per Role
+
+
+  }
 }

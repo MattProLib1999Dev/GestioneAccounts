@@ -4,6 +4,7 @@ using GestioneAccounts.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestioneAccounts.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250702131204_FixRoleController")]
+    partial class FixRoleController
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,9 +77,6 @@ namespace GestioneAccounts.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -108,8 +108,6 @@ namespace GestioneAccounts.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -285,11 +283,17 @@ namespace GestioneAccounts.Migrations
 
             modelBuilder.Entity("Role", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AccountId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Admin")
                         .IsRequired()
@@ -302,18 +306,13 @@ namespace GestioneAccounts.Migrations
                     b.HasKey("Id")
                         .HasName("PK_Roles");
 
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("AccountId1")
+                        .IsUnique()
+                        .HasFilter("[AccountId1] IS NOT NULL");
+
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Account", b =>
-                {
-                    b.HasOne("Role", "Role")
-                        .WithMany("Accounts")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Valore", b =>
@@ -376,14 +375,26 @@ namespace GestioneAccounts.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Account", b =>
-                {
-                    b.Navigation("Valori");
-                });
-
             modelBuilder.Entity("Role", b =>
                 {
-                    b.Navigation("Accounts");
+                    b.HasOne("GestioneAccounts.BE.Domain.Models.Account", "account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("GestioneAccounts.BE.Domain.Models.Account", null)
+                        .WithOne("Role")
+                        .HasForeignKey("Role", "AccountId1");
+
+                    b.Navigation("account");
+                });
+
+            modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Account", b =>
+                {
+                    b.Navigation("Role")
+                        .IsRequired();
+
+                    b.Navigation("Valori");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,61 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt24b3312c-2606-4f3d-a076-da9b24c79d9f.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt24b3312c-2606-4f3d-a076-da9b24c79d9f.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt4e1b9db4-b7ac-4b11-86b1-03cb2709ba25.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\matt4e1b9db4-b7ac-4b11-86b1-03cb2709ba25.jpg"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt5a7c9cc7-ff24-479c-a756-01aa8296f04e.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt5a7c9cc7-ff24-479c-a756-01aa8296f04e.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt6b89e53e-cbdf-4e81-bc7e-50dec449f8c8.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt6b89e53e-cbdf-4e81-bc7e-50dec449f8c8.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt89f82434-4253-4fa4-b66b-ba665132d8fb.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt89f82434-4253-4fa4-b66b-ba665132d8fb.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt9bdce0a3-3f68-4cd9-8035-31ad4779ee46.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt9bdce0a3-3f68-4cd9-8035-31ad4779ee46.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matta0da0929-8994-48be-bd6f-617ef950980f.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matta0da0929-8994-48be-bd6f-617ef950980f.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattc941e4d2-3b76-4f38-974f-c0c4d520b8ec.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattc941e4d2-3b76-4f38-974f-c0c4d520b8ec.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattd061f7cd-32e9-4c0c-8b16-ea7700e62d3f.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattd061f7cd-32e9-4c0c-8b16-ea7700e62d3f.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattd9c8bd43-a456-4506-ad37-17e80ac5c66a.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattd9c8bd43-a456-4506-ad37-17e80ac5c66a.bin"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.GestioneAccounts.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.GestioneAccounts.props",
+      "PackagePath": "build\\GestioneAccounts.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.GestioneAccounts.props",
+      "PackagePath": "buildMultiTargeting\\GestioneAccounts.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.GestioneAccounts.props",
+      "PackagePath": "buildTransitive\\GestioneAccounts.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

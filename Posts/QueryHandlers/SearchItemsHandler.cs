@@ -1,11 +1,12 @@
+using GestioneAccounts.Abstractions;
 using GestioneAccounts.BE.Domain.Models;
 using GestioneAccounts.DataAccess.Repositories;
 using MediatR;
 
 public class SearchAccountQueryHandler : IRequestHandler<SearchAccount, Account>
 {
-  public AccountRepository _accountRepository { get; set; }
-  public SearchAccountQueryHandler(AccountRepository accountRepository)
+  public IAccountRepository _accountRepository { get; set; }
+  public SearchAccountQueryHandler(IAccountRepository accountRepository)
   {
     _accountRepository = accountRepository;
   }

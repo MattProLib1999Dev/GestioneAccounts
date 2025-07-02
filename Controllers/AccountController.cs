@@ -49,7 +49,7 @@ namespace GestioneAccounts.Controllers
       try
       {
 
-        request.Id = 0;
+        request.Id = "" + Guid.NewGuid().ToString();
         request.voce = string.Empty;
         request.dataCreazione = DateTime.Now;
 
@@ -135,7 +135,7 @@ namespace GestioneAccounts.Controllers
       return BadRequest("Account deletion failed.");
     }
 
-    private bool AccountExists(long id)
+    private bool AccountExists(string id)
     {
       return _context.Accounts.Any(e => e.Id == id);
     }

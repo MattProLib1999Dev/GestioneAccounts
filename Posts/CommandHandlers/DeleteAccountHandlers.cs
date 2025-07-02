@@ -1,4 +1,4 @@
-using GestioneAccounts.DataAccess.Repositories;
+using GestioneAccounts.Abstractions;  // Assicurati di avere la using corretta
 using GestioneAccounts.Posts.Commands;
 using MediatR;
 using System.Threading;
@@ -8,21 +8,20 @@ namespace GestioneAccounts.Posts.CommandHandlers
 {
     public class DeleteAccountHandler : IRequestHandler<DeleteAccount, Unit>
     {
-        private readonly AccountRepository _accountRepository;
+        private readonly IAccountRepository _accountRepository;
 
-        public DeleteAccountHandler(AccountRepository accountRepository)
+        // Cambia la dipendenza qui
+        public DeleteAccountHandler(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }
 
         public async Task<Unit> Handle(DeleteAccount request, CancellationToken cancellationToken)
         {
-            await Task.Run(() =>
-            {
-            }, cancellationToken);
-            
+            // Qui dovrai chiamare il metodo per cancellare l'account
+            await _accountRepository.DeleteAccount(request.Id);
+
             return Unit.Value;
         }
-
     }
 }

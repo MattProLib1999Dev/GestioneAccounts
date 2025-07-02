@@ -1,30 +1,27 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using GestioneAccounts.Abstractions;
+using GestioneAccounts.BE.Domain.Models;
 using GestioneAccounts.DataAccess;
 using GestioneAccounts.DataAccess.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Namespace.GestioneAccounts.Configuration;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using GestioneAccounts.BE.Domain.Models;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Registrazione del DbContext con la stringa di connessione dal file appsettings.json
+// 1. Database Context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Registrazione dei repository
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<IValoriRepository, ValoriRepository>();
-builder.Services.AddScoped<AccountRepository>();
-builder.Services.AddScoped<ValoriRepository>();
+builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 
-// Configurazione Identity con ruolo corretto (IdentityRole)
+
+// 2. Identity
 builder.Services.AddIdentity<Account, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -33,13 +30,18 @@ builder.Services.AddIdentity<Account, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// Configurazione MediatR
+// 3. Repositories (Dependency Injection)
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IValoriRepository, ValoriRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+
+// 4. MediatR (CQRS)
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-// Configurazione JWT Bearer Authentication
-builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+// 5. JWT Authentication
 var secret = builder.Configuration.GetValue<string>("JwtConfig:Secret")
-             ?? throw new InvalidOperationException("JwtConfig:Secret is not configured.");
+    ?? throw new InvalidOperationException("JwtConfig:Secret is not configured.");
+
 var key = Encoding.ASCII.GetBytes(secret);
 
 builder.Services.AddAuthentication(options =>
@@ -51,8 +53,8 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
+        ValidateIssuer = false, // Set true and configure if needed
+        ValidateAudience = false, // Set true and add "Audience" in appsettings if needed
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
@@ -61,19 +63,18 @@ builder.Services.AddAuthentication(options =>
     options.SaveToken = true;
 });
 
-// Configurazione CORS
+// 6. CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        policy =>
-        {
-            policy.AllowAnyOrigin()
-                  .AllowAnyMethod()
-                  .AllowAnyHeader();
-        });
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("https://localhost:7045", "http://localhost:5000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
-// Configurazione Controller e JSON options
+// 7. Controllers + JSON options
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -82,26 +83,20 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.WriteIndented = true;
     });
 
-// Configurazione Swagger
+// 8. Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gestione Accounts API", Version = "v1" });
 });
-builder.Services.AddCors(options =>
-{
-        options.AddPolicy("AllowAll",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
-});
-builder.WebHost.UseWebRoot("wwwroot");
 
+// 9. Web root (opzionale)
+builder.WebHost.UseWebRoot("wwwroot");
 
 var app = builder.Build();
 
-// Middleware pipeline
-app.UseCors("AllowAll");
+// === Middleware pipeline ===
+app.UseCors("AllowFrontend");
 
 if (app.Environment.IsDevelopment())
 {
@@ -114,7 +109,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();  // Authentication deve venire PRIMA di Authorization
+app.UseAuthentication(); // Deve venire prima di UseAuthorization
 app.UseAuthorization();
 
 app.MapControllers();

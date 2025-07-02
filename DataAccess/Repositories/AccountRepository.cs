@@ -18,7 +18,7 @@ namespace GestioneAccounts.DataAccess.Repositories
 
         public async Task<bool> DeleteAccount(long accountId)
         {
-            var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
+            var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.ToString());
             if (account == null)
                 return false;
 
@@ -29,7 +29,7 @@ namespace GestioneAccounts.DataAccess.Repositories
 
         public async Task<Account> GetAccountById(long accountId)
         {
-            return await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId) ?? new Account();
+            return await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.ToString()) ?? new Account();
         }
 
 
@@ -39,9 +39,9 @@ namespace GestioneAccounts.DataAccess.Repositories
         }
         public async Task<Account> UpdateAccount(string? nome, long accountId)
         {
-            var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
+            var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.ToString());
             if (account == null)
-                return new Account { Id = accountId, Nome = nome ?? "Default" };
+                return new Account { Id = accountId.ToString(), Nome = nome ?? "Default" };
 
             account.Nome = nome ?? account.Nome;
             await _applicationDbContext.SaveChangesAsync();

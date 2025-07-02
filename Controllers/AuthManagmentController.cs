@@ -67,34 +67,36 @@ namespace GestioneAccounts.Controllers
             return BadRequest(isCreated.Errors.Select(x => x.Description).ToList());
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] AccountRegistrationRequestDto model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+       [HttpPost("login")]
+public async Task<IActionResult> Login([FromBody] AccountRegistrationRequestDto model)
+{
+    if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
 
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                return Unauthorized(new { Message = "Invalid email or password." });
-            }
+    var user = await _userManager.FindByEmailAsync(model.Email);
+    if (user == null)
+    {
+        return Unauthorized(new { Message = "Invalid email or password." });
+    }
 
-            var isPasswordValid = await _userManager.CheckPasswordAsync(user, model.Password);
-            if (!isPasswordValid)
-            {
-                return Unauthorized(new { Message = "Invalid email or password." });
-            }
+    var isPasswordValid = await _userManager.CheckPasswordAsync(user, model.Password);
+    if (!isPasswordValid)
+    {
+        return Unauthorized(new { Message = "Invalid email or password." });
+    }
 
-            var token = GenerateJwtToken(user);
+    // Optional: Include user roles or claims if needed
+    var token = GenerateJwtToken(user);
 
-            return Ok(new
-            {
-                Email = model.Email,
-                Token = token
-            });
-        }
+    return Ok(new
+    {
+        Email = user.Email,
+        Token = token
+    });
+}
+
 
         private string GenerateJwtToken(Account user)
         {
