@@ -59,14 +59,14 @@ namespace GestioneAccounts.DataAccess.Repositories
         {
           Admin = role.Admin,
           User = role.User,
-          Accounts = role.Accounts
+          Account = role.Account
         };
            // Crea un nuovo oggetto Valori
         var nuovoRole = new Role
         {
           Admin = modifiedRole.Admin,
           User = modifiedRole.User,
-          Accounts = modifiedRole.Accounts
+          Account = modifiedRole.Account
         };
 
         // Aggiungi il nuovo oggetto al contesto
@@ -80,7 +80,7 @@ namespace GestioneAccounts.DataAccess.Repositories
         // Aggiorna le proprietà di valori con quelle di account (se necessario)
         modifiedRole.Admin = modifiedRole.Admin;
         modifiedRole.User = modifiedRole.User;
-        modifiedRole.Accounts = modifiedRole.Accounts;
+        modifiedRole.Account = modifiedRole.Account;
       }
 
       // Salva le modifiche nel database

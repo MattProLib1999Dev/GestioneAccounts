@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using GestioneAccounts.DataAccess;
+using GestioneAccounts.BE.Domain; // Ensure this is the correct namespace for ApplicationDbContext
 using MediatR;
 using GestioneAccounts.Posts.Queries;
 using GestioneAccounts.Posts.Commands;
@@ -49,7 +50,7 @@ namespace GestioneAccounts.Controllers
       try
       {
 
-        request.Id = "" + Guid.NewGuid().ToString();
+        request.Id = "";
         request.voce = string.Empty;
         request.dataCreazione = DateTime.Now;
 
@@ -102,7 +103,7 @@ namespace GestioneAccounts.Controllers
 
     // PUT: api/Account/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateAccount(long id, [FromBody] UpdateAccountCommand command)
+    public async Task<IActionResult> UpdateAccount(int id, [FromBody] UpdateAccountCommand command)
     {
       if (command == null)
       {
@@ -135,9 +136,9 @@ namespace GestioneAccounts.Controllers
       return BadRequest("Account deletion failed.");
     }
 
-    private bool AccountExists(string id)
+    private bool AccountExists(int id)
     {
-      return _context.Accounts.Any(e => e.Id == id);
+      return _context.Accounts.Any(e => e.Id == id.ToString());
     }
 
     // GET: api/Account/search

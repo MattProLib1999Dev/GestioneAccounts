@@ -33,9 +33,15 @@ namespace GestioneAccounts.DataAccess
 {
     base.OnModelCreating(modelBuilder);
 
+     modelBuilder.Entity<Valore>()
+        .HasOne(v => v.Account)
+        .WithMany(a => a.Valori)
+        .HasForeignKey(v => v.AccountId);
+
     modelBuilder.Entity<Valore>()
-        .Property(v => v.Id)
-        .ValueGeneratedOnAdd();
+        .Property(v => v.ValoreNumerico)
+        .HasPrecision(18, 4);
+
 
     modelBuilder.Entity<Account>()
         .HasMany(a => a.Valori)
@@ -56,9 +62,9 @@ namespace GestioneAccounts.DataAccess
 // e Account ha una proprietà di navigazione Role Role (relazione 1 a molti)
 
 modelBuilder.Entity<Role>()
-    .HasMany(r => r.Accounts)
+    .HasOne(r => r.Account)
     .WithOne(a => a.Role)
-    .HasForeignKey(a => a.RoleId)   // Usa RoleId come FK, non Id!
+    .HasForeignKey<Role>(r => r.AccountId) // Assicurati che AccountId sia la chiave esterna in Role
     .OnDelete(DeleteBehavior.Cascade);
 
 

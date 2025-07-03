@@ -3,7 +3,7 @@ using MediatR;
 
 public class UpdateAccountCommand : IRequest<Account>
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
     public string Nome { get; set; } = String.Empty;
     public List<Valore>? Valori { get; set; }
     public string valoreString { get; set; } = String.Empty;

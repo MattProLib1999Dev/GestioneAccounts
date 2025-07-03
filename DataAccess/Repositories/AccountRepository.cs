@@ -5,65 +5,89 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestioneAccounts.DataAccess.Repositories
 {
-    public class AccountRepository(ApplicationDbContext applicationDbContext) : IAccountRepository
+  public class AccountRepository(ApplicationDbContext applicationDbContext) : IAccountRepository
+  {
+    private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
+
+    public async Task<Account> CreateAccount(Account account)
     {
-        private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
+      _applicationDbContext.Add(account);
+      await _applicationDbContext.SaveChangesAsync();
+      return account;
+    }
 
-        public async Task<Account> CreateAccount(Account account)
-        {
-            _applicationDbContext.Add(account);
-            await _applicationDbContext.SaveChangesAsync();
-            return account;
-        }
+    public async Task<bool> DeleteAccount(long accountId)
+    {
+      var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.ToString());
+      if (account == null)
+        return false;
 
-        public async Task<bool> DeleteAccount(long accountId)
-        {
-            var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.ToString());
-            if (account == null)
-                return false;
+      _applicationDbContext.Accounts.Remove(account);
+      await _applicationDbContext.SaveChangesAsync();
+      return true;
+    }
 
-            _applicationDbContext.Accounts.Remove(account);
-            await _applicationDbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<Account> GetAccountById(long accountId)
-        {
-            return await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.ToString()) ?? new Account();
-        }
+    public async Task<Account> GetAccountById(string accountId)
+    {
+      return await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId) ?? new Account();
+    }
 
 
-        public async Task<ICollection<Account>> GetAllAccounts()
-        {
-            return await _applicationDbContext.Accounts.ToListAsync();
-        }
-        public async Task<Account> UpdateAccount(string? nome, long accountId)
-        {
-            var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.ToString());
-            if (account == null)
-                return new Account { Id = accountId.ToString(), Nome = nome ?? "Default" };
+    public async Task<ICollection<Account>> GetAllAccounts()
+    {
+      return await _applicationDbContext.Accounts.ToListAsync();
+    }
+    // Removed duplicate UpdateAccount method to resolve conflict
 
-            account.Nome = nome ?? account.Nome;
-            await _applicationDbContext.SaveChangesAsync();
-            return account;
-        }
+    // search accounts by nome, dataCreazione, valoreString, voce
+    public Task<ICollection<Account>> SearchAccounts(string? nome, DateTime? dataCreazione, string? valoreString, string? voce)
+    {
+      var query = _applicationDbContext.Accounts.AsQueryable();
+      if (!string.IsNullOrEmpty(nome))
+        query = query.Where(a => a.Nome.Contains(nome));
+      if (dataCreazione.HasValue)
+        query = query.Where(a => a.dataCreazione == dataCreazione);
+      if (!string.IsNullOrEmpty(valoreString))
+        query = query.Where(a => a.valoreString.Contains(valoreString));
+      if (!string.IsNullOrEmpty(voce))
+        query = query.Where(a => a.voce.Contains(voce));
 
-        // search accounts by nome, dataCreazione, valoreString, voce
-        public Task<ICollection<Account>> SearchAccounts(string? nome, DateTime? dataCreazione, string? valoreString, string? voce)
-        {
-            var query = _applicationDbContext.Accounts.AsQueryable();
-            if (!string.IsNullOrEmpty(nome))
-                query = query.Where(a => a.Nome.Contains(nome));
-            if (dataCreazione.HasValue)
-                query = query.Where(a => a.dataCreazione == dataCreazione);
-            if (!string.IsNullOrEmpty(valoreString))
-                query = query.Where(a => a.valoreString.Contains(valoreString));
-            if (!string.IsNullOrEmpty(voce))
-                query = query.Where(a => a.voce.Contains(voce));
+      return query.ToListAsync().ContinueWith(task => (ICollection<Account>)task.Result);
+    }
 
-            return query.ToListAsync().ContinueWith(task => (ICollection<Account>)task.Result);
-        }
+    public async Task<Account> UpdateAccount(string? nome, int accountId)
+    {
+      var existingAccount = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.ToString());
+      if (existingAccount == null)
+        return new Account { Id = accountId.ToString(), Nome = nome ?? string.Empty };
+
+      existingAccount.Nome = nome ?? existingAccount.Nome;
+      _applicationDbContext.Accounts.Update(existingAccount);
+      await _applicationDbContext.SaveChangesAsync();
+      return existingAccount;
+    }
+    public async Task<Account> UpdateAccount(string? nome, string accountId)
+    {
+      var existingAccount = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
+      if (existingAccount == null)
+        return new Account { Id = accountId, Nome = nome ?? string.Empty };
+
+      existingAccount.Nome = nome ?? existingAccount.Nome;
+      _applicationDbContext.Accounts.Update(existingAccount);
+      await _applicationDbContext.SaveChangesAsync();
+      return existingAccount;
+    }
+    public async Task<bool> DeleteAccount(string accountId)
+    {
+      var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
+      if (account == null)
+        return false;
+
+      _applicationDbContext.Accounts.Remove(account);
+      await _applicationDbContext.SaveChangesAsync();
+      return true;
 
 
     }
+  }
 }

@@ -19,7 +19,7 @@ namespace GestioneAccounts.Posts.CommandHandlers
         public async Task<Unit> Handle(DeleteAccount request, CancellationToken cancellationToken)
         {
             // Qui dovrai chiamare il metodo per cancellare l'account
-            await _accountRepository.DeleteAccount(request.Id);
+            await _accountRepository.DeleteAccount(request.Id.ToString());
 
             return Unit.Value;
         }

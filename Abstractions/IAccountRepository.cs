@@ -6,10 +6,10 @@ namespace GestioneAccounts.Abstractions
 	public interface IAccountRepository
 	{
 		Task<ICollection<Account>> GetAllAccounts();
-		Task<Account> GetAccountById(long accountId);
+		Task<Account> GetAccountById(string accountId);
     Task<Account> CreateAccount(Account account);
-    Task<Account> UpdateAccount(string ?nome, long accountId);
-		Task<bool> DeleteAccount(long accountId);
+    Task<Account> UpdateAccount(string ?nome, int accountId);
+		Task<bool> DeleteAccount(string accountId);
     Task<ICollection<Account>> SearchAccounts(string ?nome, DateTime ?dataCreazione, string ?valoreString, string ?voce);
 
 	}

@@ -7,10 +7,10 @@ public class Role
 {
   [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), JsonIgnore]
   public int Id { get; set; }
-  public string Admin { get; set; } = "Admin";
-  public string User { get; set; } = "User";
+  public string Admin { get; set; } = null!;
+  public string User { get; set; } = null!;
 
-  [JsonIgnore]
-   public ICollection<Account>? Accounts { get; set; }
+  public string? AccountId { get; set; }  // <-- CAMBIATO: deve essere string?
+  public Account? Account { get; set; }   // Navigation property
 
 }

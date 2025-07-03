@@ -30,9 +30,9 @@ namespace GestioneAccounts.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    voce = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     valoreString = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    voce = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     dataCreazione = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -161,24 +161,46 @@ namespace GestioneAccounts.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Admin = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    User = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Roles_AspNetUsers_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Valori",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Voce = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ValoreStr = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AccountId = table.Column<long>(type: "bigint", nullable: true),
-                    AccountId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AccountId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descrizione = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ValoreNumerico = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     DataCreazione = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ValoreStr = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Voce = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Valori", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Valori_AspNetUsers_AccountId1",
-                        column: x => x.AccountId1,
+                        name: "FK_Valori_AspNetUsers_AccountId",
+                        column: x => x.AccountId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -223,9 +245,16 @@ namespace GestioneAccounts.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Valori_AccountId1",
+                name: "IX_Roles_AccountId",
+                table: "Roles",
+                column: "AccountId",
+                unique: true,
+                filter: "[AccountId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Valori_AccountId",
                 table: "Valori",
-                column: "AccountId1");
+                column: "AccountId");
         }
 
         /// <inheritdoc />
@@ -245,6 +274,9 @@ namespace GestioneAccounts.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Valori");

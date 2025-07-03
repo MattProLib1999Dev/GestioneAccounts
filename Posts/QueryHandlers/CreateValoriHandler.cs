@@ -32,11 +32,11 @@ public class CreateValoriHandler(ApplicationDbContext context) : IRequest<Valore
             // Crea il nuovo valore
             var valori = new Valore
             {
-                AccountId = request.AccountId,
-                DataCreazione = DateTime.UtcNow,
-                Nome = account.Nome,
-                ValoreStr = account.valoreString,
-                Voce = account.voce
+                AccountId = request.AccountId.ToString(),
+                Nome = request.Nome,
+                Descrizione = request.Descrizione,
+                ValoreNumerico = (decimal) request.ValoreNumerico,
+                DataCreazione = DateTime.UtcNow
             };
 
             // Aggiungi il nuovo record nella tabella Valori

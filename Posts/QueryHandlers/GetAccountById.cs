@@ -15,7 +15,7 @@ using MediatR;
                     throw new ArgumentNullException(nameof(request.Id), "Account Id cannot be null.");
                 }
 
-                return await _accountRepository.GetAccountById(request.Id.Value);
+                return await _accountRepository.GetAccountById(request.Id.Value.ToString());
             }
 
     }

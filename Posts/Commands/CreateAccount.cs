@@ -8,7 +8,7 @@ namespace GestioneAccounts.Posts.Commands
 	public class CreateAccount: IRequest<Account>
 	{
         [Key]
-        public long Id { get; set; }  // Primary key (non-nullable)
+        public int Id { get; set; }  // Primary key (non-nullable)
 
         [StringLength(100, ErrorMessage = "Il nome non può essere più lungo di 100 caratteri.")]
         public string Nome { get; set; } = string.Empty;  // Account Name

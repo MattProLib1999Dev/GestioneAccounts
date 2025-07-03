@@ -25,7 +25,6 @@ namespace GestioneAccounts.Migrations
             modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Account", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
@@ -50,8 +49,7 @@ namespace GestioneAccounts.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -61,10 +59,6 @@ namespace GestioneAccounts.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("Ore_lavorate")
-                        .HasMaxLength(1)
-                        .HasColumnType("int");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -73,9 +67,6 @@ namespace GestioneAccounts.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -96,8 +87,7 @@ namespace GestioneAccounts.Migrations
 
                     b.Property<string>("voce")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -109,43 +99,44 @@ namespace GestioneAccounts.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Valore", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long?>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("AccountId1")
+                    b.Property<string>("AccountId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DataCreazione")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Descrizione")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("ValoreNumerico")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
                     b.Property<string>("ValoreStr")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Voce")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId1");
+                    b.HasIndex("AccountId");
 
                     b.ToTable("Valori");
                 });
@@ -291,6 +282,9 @@ namespace GestioneAccounts.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AccountId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Admin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -302,25 +296,18 @@ namespace GestioneAccounts.Migrations
                     b.HasKey("Id")
                         .HasName("PK_Roles");
 
+                    b.HasIndex("AccountId")
+                        .IsUnique()
+                        .HasFilter("[AccountId] IS NOT NULL");
+
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Account", b =>
-                {
-                    b.HasOne("Role", "Role")
-                        .WithMany("Accounts")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Valore", b =>
                 {
                     b.HasOne("GestioneAccounts.BE.Domain.Models.Account", "Account")
                         .WithMany("Valori")
-                        .HasForeignKey("AccountId1");
+                        .HasForeignKey("AccountId");
 
                     b.Navigation("Account");
                 });
@@ -376,14 +363,21 @@ namespace GestioneAccounts.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Account", b =>
-                {
-                    b.Navigation("Valori");
-                });
-
             modelBuilder.Entity("Role", b =>
                 {
-                    b.Navigation("Accounts");
+                    b.HasOne("GestioneAccounts.BE.Domain.Models.Account", "Account")
+                        .WithOne("Role")
+                        .HasForeignKey("Role", "AccountId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Account", b =>
+                {
+                    b.Navigation("Role");
+
+                    b.Navigation("Valori");
                 });
 #pragma warning restore 612, 618
         }
