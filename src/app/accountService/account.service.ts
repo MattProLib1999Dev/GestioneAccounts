@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PutAccount } from '../models/PutAccount';
-import { PostAccounts } from '../models/PostAccounts';
-import { getAccount } from '../models/getAccount';
+import { getAccount, getAccounts } from '../models/getAccount';
 import { search } from '../models/search';
+import { PostAccounts } from '../models/PostAccounts';
+import { Account } from '../modal/account/account.component';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class AccountService {
     return this.httpClient.put<PutAccount>(`${this.rootUrl}/${accountId}`, putAccount);
   }
 
-  getAccount(): Observable<getAccount[]> {
-    return this.httpClient.get<getAccount[]>(`${this.rootUrl}/all`);
+  getAccount(): Observable<getAccounts> {
+    return this.httpClient.get<getAccounts>(`${this.rootUrl}/all`);
   }
 
   getByIdAccount(idUtente: number): Observable<any> {

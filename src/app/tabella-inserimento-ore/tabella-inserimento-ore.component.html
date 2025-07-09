@@ -1,0 +1,65 @@
+<div class="container my-5">
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item shadow-sm">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+          aria-expanded="true" aria-controls="collapseOne">
+          Inserimento Ore Lavorate
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+        data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+
+          <p class="text-center fw-bold fs-5 mb-4">Ricerca account per nome</p>
+
+          <form (submit)="onSubmitRicerca($event)" class="mb-4">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <label for="nome" class="form-label">Nome Account</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nome"
+                    name="nome"
+                  />
+                  <button type="submit" class="btn btn-primary">Cerca</button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+              <caption class="text-center" style="caption-side: top; font-weight: bold; margin: 0px 0px auto auto;">
+                Inserisci le ore che hai lavorato, inclusi permessi e ferie
+              </caption>
+              <thead class="table-light text-center">
+                <tr>
+                  <th>Nome Account</th>
+                  <th *ngFor="let giorno of giorniMese">{{ giorno | date: 'dd/MM' }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let account of filteredAccounts()">
+                  <th scope="row">{{ account.nome }}</th>
+                  <td *ngFor="let giorno of giorniMese; let i = index" class="p-1">
+                    <input
+                      type="number"
+                      class="form-control form-control-sm text-center"
+                      min="0"
+                      [value]="oreLavorate[account.id]?.[i] || 0"
+                      (input)="aggiornaOre(account.id, i, $any($event.target).value)"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

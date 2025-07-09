@@ -1,10 +1,9 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { AccountService } from '../accountService/account.service';
-import { Account, getAccount } from '../models/getAccount';
+import {  getAccount, getAccounts } from '../models/getAccount';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Root, search } from '../models/search';
-import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search',
@@ -21,7 +20,7 @@ export class SearchComponent implements OnInit {
   accounts!: getAccount;
   search!: search;
 
-  filteredAccounts: Account[] = [];
+  filteredAccounts: getAccounts[] = [];
 
   nomedata: string = '';
   dataCreazioneData: string = '';
@@ -46,7 +45,7 @@ export class SearchComponent implements OnInit {
 
     const searchData: search = this.searchForm.value;
 
-    this.accountService.search(searchData).subscribe((result: Account | null) => {
+    this.accountService.search(searchData).subscribe((result: getAccounts | null) => {
       console.log(result)
       this.filteredAccounts = result ? [result] : [];
     });

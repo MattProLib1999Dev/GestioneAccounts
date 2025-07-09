@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
   <div class="col-12 col-md-6 offset-md-3">
     <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
       <input type="text" formControlName="nome" placeholder="Nome" class="form-control" />
@@ -7,9 +7,14 @@
       <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Cerca</button>
     </form>
 
-    <div *ngFor="let account of filteredAccounts">
-      <p>{{ account.nome }} - {{ account.dataCreazione }} - {{ account.valoreString }}</p>
+
+
+    <ng-container *ngFor="let account of filteredAccounts">
+    <div *ngFor="let singleAccount of account" >
+      <p>{{ singleAccount.nome }} - {{ singleAccount.dataCreazione }} - {{ singleAccount.valoreString }}</p>
     </div>
+    </ng-container>
+
 
 
     <ng-template #noResults>
@@ -18,3 +23,4 @@
 
   </div>
 </div>
+ -->

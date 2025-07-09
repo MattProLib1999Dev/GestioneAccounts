@@ -1,137 +1,112 @@
-import { Component } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 import { AccountService } from '../../accountService/account.service';
 import { PostAccounts } from '../../models/PostAccounts';
-import { getAccount } from '../../models/getAccount';
-import { Account } from '../account/account.component';
 
 @Component({
-  selector: 'app-aggiungi-account',
-  standalone: true, // Abilita il componente standalone
+  selector: 'aggiungi-account',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, NgIf, NgFor],
+  providers: [],
   templateUrl: './aggiungi-account.component.html',
-  styleUrls: ['./aggiungi-account.component.css'],
-  imports: [HttpClientModule, FormsModule, CommonModule, ReactiveFormsModule], // Importiamo HttpClientModule direttamente qui
+  styleUrls: ['./aggiungi-account.component.css']
 })
-export class AggiungiAccountComponent {
-  accounts!: getAccount;
-  errorMessage: string | null = 'Inserisci un account';
-  successMessage: string | null = 'Account aggiunto con successo!';
-  selectedValue: any = null; // Inizializza selectedValue a null
-  accountForm: FormGroup = new FormGroup({}); // Inizializza accountForm come un nuovo FormGroup
-  value: any;
-  valoriArray: object[] = []; // Inizializza valoriArray come un array vuoto
-  voce!: string | number | null;
-  valoreStr!: string | number | null;
-  account!: string | number | null;
-  dataCreazione!: string | number | null;
-  nome!: string | number | null;
-  sortedAccounts: getAccount = []; // Inizializza sortedAccounts come un array vuoto
+export class AccountComponent implements OnInit {
+  accountForm!: FormGroup;
+  valoriForm!: FormGroup;
+  accounts: any[] = [];
+  sortedAccounts: any[] = [];
 
-  constructor(
-    private http: HttpClient,
-    private accountService: AccountService,
-    private fb: FormBuilder
-  ) {}
+  constructor(private fb: FormBuilder, private http: HttpClient, private accountService: AccountService) {}
 
   ngOnInit(): void {
-    // Inizializza il form con FormBuilder
     this.accountForm = this.fb.group({
       nome: ['', Validators.required],
       userName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: [''],
+      phoneNumber: ['', Validators.required],
       valoreString: [''],
       voce: [''],
-      dataCreazione: ['', Validators.required],
+      dataCreazione: [''],
       passwordHash: [''],
-      accessFailedCount: [0],
+      accessFailedCount: [0, Validators.required],
       emailConfirmed: [false],
       phoneNumberConfirmed: [false],
       twoFactorEnabled: [false]
     });
 
+    this.valoriForm = this.fb.group({
+      nomeValore: [''],
+      dataCreazioneValore: ['', Validators.required],
+      account: [''],
+      valoreNumerico: [0],
+      descrizione: [''],
+      valoreString: [''],
+      voce: ['']
+    });
 
-    this.loadAccounts();
-    console.log(this.accounts); // Log accounts array to see its structure
+    this.getAccounts();
   }
 
-  loadAccounts(): void {
-    this.accountService.getAccount().subscribe(
-      (data: any) => {
-        this.accounts = data; // Assegna i dati ricevuti alla variabile accounts
-        console.log(this.accounts); // Log accounts array to see its structure
-        this.errorMessage = null; // Reset error message on successful load
-        this.successMessage = null; // Reset success message on successful load
-      },
-      (error: Error) => {
-        console.error('Error loading accounts:', error);
-        this.errorMessage = 'Failed to load accounts.';
-      }
-    );
+  getAccounts() {
+    this.http.get<any[]>('/api/accounts').subscribe(data => {
+      this.accounts = data;
+      this.sortedAccounts = [...this.accounts];
+    });
   }
 
-  addAccount(account: PostAccounts): void {
-    const payload = {
-      ...account,
-      dataCreazione: new Date(account.dataCreazione).toISOString() // normalize datetime
+  sortAccountsByName() {
+    this.sortedAccounts = [...this.accounts].sort((a, b) => a.nome.localeCompare(b.nome));
+  }
+
+  addAccount() {
+    const now = new Date().toISOString();
+
+    const valore = {
+      accountId: "string", // puoi anche usare "" se non hai l’id
+      nome: this.valoriForm.value.nomeValore,
+      descrizione: this.valoriForm.value.descrizione,
+      valoreNumerico: this.valoriForm.value.valoreNumerico,
+      dataCreazione: new Date(this.valoriForm.value.dataCreazioneValore).toISOString(),
+      valoreStr: this.valoriForm.value.valoreString,
+      voce: this.valoriForm.value.voce
     };
 
-    console.log(payload); // inspect structure
+    const accountData: PostAccounts = {
+      userName: this.accountForm.value.userName,
+      normalizedUserName: this.accountForm.value.userName.toUpperCase(),
+      email: this.accountForm.value.email,
+      normalizedEmail: this.accountForm.value.email.toUpperCase(),
+      emailConfirmed: this.accountForm.value.emailConfirmed,
+      passwordHash: this.accountForm.value.passwordHash,
+      securityStamp: "", // se il backend lo imposta puoi lasciare vuoto
+      concurrencyStamp: "",
+      phoneNumber: this.accountForm.value.phoneNumber,
+      phoneNumberConfirmed: this.accountForm.value.phoneNumberConfirmed,
+      twoFactorEnabled: this.accountForm.value.twoFactorEnabled,
+      lockoutEnd: now,
+      lockoutEnabled: true,
+      accessFailedCount: this.accountForm.value.accessFailedCount || 0,
+      valori: [valore],
+      nome: this.accountForm.value.nome,
+      voce: this.valoriForm.value.voce,
+      valoreString: this.valoriForm.value.valoreString,
+      dataCreazione: now
+    };
 
-    this.accountService.createAccount(payload).subscribe(
-      (response: PostAccounts) => {
-        console.log(response);
-        this.successMessage = 'Account created successfully!';
-        this.errorMessage = null;
+    console.log('Payload inviato al backend:', JSON.stringify(accountData, null, 2));
+
+    this.accountService.createAccount(accountData).subscribe({
+      next: res => {
+        console.log('Account creato:', res);
       },
-      (error: Error) => {
-        alert('An error occurred while creating the account');
-        console.error(error);
+      error: err => {
+        console.error('Errore nella creazione dell’account:', err);
       }
-    );
+    });
   }
-
-
-  deleteAccount(accountId: number): void {
-    this.accountService.deleteAccount(accountId).subscribe(
-      (response: any) => {
-        this.successMessage = 'Account deleted successfully!';
-        this.errorMessage = null;
-        this.loadAccounts(); // Ricarica gli account dopo la cancellazione
-      },
-      (error: Error) => {
-        console.error('Error deleting account:', error);
-        this.errorMessage = 'Failed to delete account.';
-        this.successMessage = null;
-      }
-    );
-  }
-
-  sortAccountsByName(): void {
-    this.accountService.getOrderByName().subscribe(
-      (data: any) => {
-        this.sortedAccounts = data || data;
-        this.errorMessage = null;
-        this.successMessage = null;
-        console.log('Accounts sorted by name:', this.accounts);
-      },
-      (error: Error) => {
-        console.error('Errore durante l\'ordinamento:', error);
-        this.errorMessage = 'Errore durante l\'ordinamento.';
-      }
-    );
-  }
-
 
 }

@@ -1,112 +1,97 @@
-<div class="container mt-5">
-  <h2 class="mb-4">Elenco Account</h2>
-
-  <!-- Pulsante per ordinare tutti gli accounts per nome -->
-  <div class="text-start mb-3">
-    <button class="btn btn-primary" (click)="sortAccountsByName()">Ordina per Nome</button>
-  </div>
-
-  <table class="table table-bordered table-striped table-hover table-responsive table-sm">
-    <thead class="thead-dark text-center table-primary">
-      <tr>
-        <th scope="col">nome</th>
-        <th scope="col">username</th>
-        <th scope="col">email</th>
-        <th scope="col">dataCreazione</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let account of accounts" class="text-center table-light">
-        <td>{{ account.nome }}</td>
-        <td>{{ account.userName }}</td>
-        <td>{{ account.email }}</td>
-        <td>{{ account.dataCreazione | date: 'dd/MM/yyyy' }}</td>
-    </tbody>
-  </table>
-</div>
-
-<!-- Tabella ordinata -->
-<div class="container mt-5">
-  <!-- Tabella ordinata per nome -->
-<div class="mt-5">
-  <h2>Elenco Account Ordinato per Nome</h2>
-  <table class="table table-bordered table-striped table-hover table-responsive table-sm">
-    <thead class="thead-dark text-center table-primary">
-      <tr>
-        <th scope="col">nome</th>
-        <th scope="col">username</th>
-        <th scope="col">email</th>
-        <th scope="col">dataCreazione</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let account of sortedAccounts" class="text-center table-light">
-        <td>{{ account.nome }}</td>
-        <td>{{ account.userName }}</td>
-        <td>{{ account.email }}</td>
-        <td>{{ account.dataCreazione | date: 'dd/MM/yyyy' }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-
-
-
-
-<div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+<!-- MODAL PER CREARE ACCOUNT -->
+<div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nuovo Account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="accountForm" (ngSubmit)="addAccount(accountForm.value)">
+      <form [formGroup]="accountForm" (ngSubmit)="addAccount()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nuovo Account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+        </div>
+
+        <div class="modal-body">
           <div class="row g-3">
 
             <!-- Nome -->
             <div class="col-md-4">
               <label class="form-label">Nome</label>
               <input type="text" class="form-control" formControlName="nome" />
-              <div *ngIf="accountForm.get('nome')?.touched && accountForm.get('nome')?.invalid" class="text-danger">
-                Il nome è obbligatorio.
-              </div>
             </div>
 
             <!-- Username -->
             <div class="col-md-4">
               <label class="form-label">Username</label>
               <input type="text" class="form-control" formControlName="userName" />
-              <div *ngIf="accountForm.get('userName')?.touched && accountForm.get('userName')?.invalid" class="text-danger">
-                L'username è obbligatorio.
-              </div>
             </div>
 
             <!-- Email -->
             <div class="col-md-4">
               <label class="form-label">Email</label>
               <input type="email" class="form-control" formControlName="email" />
-              <div *ngIf="accountForm.get('email')?.touched && accountForm.get('email')?.invalid" class="text-danger">
-                Inserisci un'email valida.
-              </div>
             </div>
 
             <!-- Telefono -->
             <div class="col-md-4">
               <label class="form-label">Telefono</label>
               <input type="tel" class="form-control" formControlName="phoneNumber" />
-              <div *ngIf="accountForm.get('phoneNumber')?.touched && accountForm.get('phoneNumber')?.invalid" class="text-danger">
-                Il numero di telefono è obbligatorio.
-              </div>
             </div>
 
-            <!-- Livello Utente -->
+            <!-- Password Hash -->
             <div class="col-md-4">
-              <label class="form-label">Livello Utente</label>
+              <label class="form-label">Password Hash</label>
+              <input type="text" class="form-control" formControlName="passwordHash" />
+            </div>
+
+            <!-- Accessi falliti -->
+            <div class="col-md-4">
+              <label class="form-label">Tentativi Accesso Falliti</label>
+              <input type="number" class="form-control" formControlName="accessFailedCount" />
+            </div>
+
+            <!-- Email Confermata -->
+            <div class="col-md-4 form-check mt-4">
+              <input type="checkbox" class="form-check-input" formControlName="emailConfirmed" />
+              <label class="form-check-label">Email Confermata</label>
+            </div>
+
+            <!-- Telefono Confermato -->
+            <div class="col-md-4 form-check mt-4">
+              <input type="checkbox" class="form-check-input" formControlName="phoneNumberConfirmed" />
+              <label class="form-check-label">Telefono Confermato</label>
+            </div>
+
+            <!-- 2FA -->
+            <div class="col-md-4 form-check mt-4">
+              <input type="checkbox" class="form-check-input" formControlName="twoFactorEnabled" />
+              <label class="form-check-label">2FA Abilitato</label>
+            </div>
+          </div>
+
+          <!-- SEZIONE VALORI -->
+          <hr />
+          <h5>Valori</h5>
+          <div [formGroup]="valoriForm" class="row g-3 mt-2">
+
+            <!-- Nome Valore -->
+            <div class="col-md-4">
+              <label class="form-label">Nome</label>
+              <input type="text" class="form-control" formControlName="nomeValore" />
+            </div>
+
+            <!-- Descrizione -->
+            <div class="col-md-4">
+              <label class="form-label">Descrizione</label>
+              <input type="text" class="form-control" formControlName="descrizione" />
+            </div>
+
+            <!-- Valore Numerico -->
+            <div class="col-md-4">
+              <label class="form-label">Valore Numerico</label>
+              <input type="number" class="form-control" formControlName="valoreNumerico" />
+            </div>
+
+            <!-- Valore Stringa -->
+            <div class="col-md-4">
+              <label class="form-label">Valore Stringa</label>
               <input type="text" class="form-control" formControlName="valoreString" />
             </div>
 
@@ -116,58 +101,20 @@
               <input type="text" class="form-control" formControlName="voce" />
             </div>
 
-            <!-- Data Creazione -->
+            <!-- Data Creazione Valore -->
             <div class="col-md-4">
               <label class="form-label">Data Creazione</label>
-              <input type="datetime-local" class="form-control" formControlName="dataCreazione" />
-              <div *ngIf="accountForm.get('dataCreazione')?.touched && accountForm.get('dataCreazione')?.invalid" class="text-danger">
-                La data è obbligatoria.
-              </div>
-            </div>
-
-            <!-- Password Hash -->
-            <div class="col-md-4">
-              <label class="form-label">Password Hash</label>
-              <input type="text" class="form-control" formControlName="passwordHash" />
-            </div>
-
-            <!-- Tentativi di accesso falliti -->
-            <div class="col-md-4">
-              <label class="form-label">Tentativi di accesso falliti</label>
-              <input type="number" class="form-control" formControlName="accessFailedCount" />
-              <div *ngIf="accountForm.get('accessFailedCount')?.touched && accountForm.get('accessFailedCount')?.invalid" class="text-danger">
-                Inserisci un numero valido.
-              </div>
-            </div>
-
-            <!-- Checkbox -->
-            <div class="col-md-4 form-check mt-4">
-              <input type="checkbox" class="form-check-input" formControlName="emailConfirmed" />
-              <label class="form-check-label">Email Confermata</label>
-            </div>
-
-            <div class="col-md-4 form-check mt-4">
-              <input type="checkbox" class="form-check-input" formControlName="phoneNumberConfirmed" />
-              <label class="form-check-label">Telefono Confermato</label>
-            </div>
-
-            <div class="col-md-4 form-check mt-4">
-              <input type="checkbox" class="form-check-input" formControlName="twoFactorEnabled" />
-              <label class="form-check-label">2FA Abilitato</label>
+              <input type="datetime-local" class="form-control" formControlName="dataCreazioneValore" />
             </div>
           </div>
+        </div>
 
-          <div class="row mt-4">
-            <div class="col-md-12 text-center">
-              <button type="submit" class="btn btn-primary" [disabled]="accountForm.invalid">
-                Aggiungi Account
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer"></div>
+        <!-- BOTTONI -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Salva Account</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
-

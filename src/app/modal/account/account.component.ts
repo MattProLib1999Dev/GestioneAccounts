@@ -5,13 +5,13 @@ import { CommonModule } from '@angular/common';
 
 import { AccountService } from '../../accountService/account.service';
 import { PostAccounts } from '../../models/PostAccounts';
-import { AggiungiAccountComponent } from "../aggiungi-account/aggiungi-account.component";
-import { AggiungiValoreComponent } from '../aggiungi-valore/aggiungi-valore/aggiungi-valore.component';
 import { SearchComponent } from "../../search/search.component";
 import { HttpClient } from '@angular/common/http';
 import { Base64Image } from '../../models/base64'; // Assuming you have a base64 string to upload
 import { BASE64_IMAGES } from '../../models/base64'; // Assuming you have a predefined set of base64 images
 import { ImageUpload } from '../../services/image-upload.service';
+import { AccountComponent } from '../aggiungi-account/aggiungi-account.component';
+import { TabellaInserimentoOreComponent } from '../../tabella-inserimento-ore/tabella-inserimento-ore.component';
 
 @Component({
   selector: 'app-account',
@@ -19,9 +19,9 @@ import { ImageUpload } from '../../services/image-upload.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    AggiungiAccountComponent,
-    AggiungiValoreComponent,
-    SearchComponent
+    AccountComponent, // Importing the component for adding accounts
+    SearchComponent,
+    TabellaInserimentoOreComponent
   ],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],

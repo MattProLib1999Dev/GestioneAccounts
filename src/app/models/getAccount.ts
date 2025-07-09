@@ -1,7 +1,7 @@
 
-export type getAccount = Account[]
+export type getAccounts = getAccount[]
 
-export interface Account {
+export interface getAccount {
   id: string
   nome: string
   valoreString: string

@@ -6,12 +6,13 @@ import { Register } from './models/register';
 import { AuthenticationService } from './services/authentication.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { TabellaInserimentoOreComponent } from "./tabella-inserimento-ore/tabella-inserimento-ore.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
-  imports: [Account, FormsModule],
+  imports: [Account, FormsModule, TabellaInserimentoOreComponent],
 })
 export class AppComponent implements OnInit {
   title = 'Gestione Accounts';
