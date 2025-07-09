@@ -142,22 +142,27 @@ namespace GestioneAccounts.Controllers
 
     // GET: api/Account/search
     [HttpGet("search")]
-    public async Task<IActionResult> Search([FromQuery] string nome, [FromQuery] DateTime dataCreazione, [FromQuery] string valoreString)
+public async Task<IActionResult> Search([FromQuery] string nome)
+{
+    if (string.IsNullOrWhiteSpace(nome))
     {
-      var query = new SearchAccount
-      {
-        Nome = nome,
-        DataCreazione = dataCreazione,
-        ValoreString = valoreString,
-      };
-
-      var result = await _mediator.Send(query);
-      if (result == null)
-      {
-        return NotFound(new { message = "No accounts found." });
-      }
-      return Ok(result);
+        return BadRequest(new { message = "Il nome è obbligatorio." });
     }
+
+    // 🔍 Controllo diretto se esiste almeno un account con quel nome
+    var exists = await _context.Accounts.AnyAsync(a => a.Nome == nome);
+
+    if (!exists)
+    {
+        return NotFound(new { message = "Nessun account trovato con questo nome." });
+    }
+
+    // ✅ Se esiste, prosegui con MediatR
+    var query = new SearchAccount { Nome = nome };
+    var result = await _mediator.Send(query);
+
+    return Ok(result);
+}
 
     // GET: api/Account/orderByName
     [HttpGet("orderByName")]
