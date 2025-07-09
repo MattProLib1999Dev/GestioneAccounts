@@ -18,6 +18,8 @@ export class TabellaInserimentoOreComponent implements OnInit {
 
   giorniMese: Date[] = [];
   oreLavorate: { [accountId: string]: number[] } = {};
+  totaleOreLavorate: { [accountId: string]: number } = {};
+
 
   constructor(private accountService: AccountService) {}
 
@@ -54,6 +56,8 @@ export class TabellaInserimentoOreComponent implements OnInit {
     const oreNum = parseFloat(ore);
     if (!isNaN(oreNum)) {
       this.oreLavorate[accountId][giornoIndex] = oreNum;
+      this.calcolaTotaleOrePerAccount();
+
     }
   }
 
@@ -70,4 +74,15 @@ onSubmitRicerca(event: Event) {
   event.preventDefault();
   // Se vuoi fare qualcosa al submit, altrimenti non serve
 }
+
+calcolaTotaleOrePerAccount(): void {
+  this.totaleOreLavorate = {};
+
+  for (const accountId in this.oreLavorate) {
+    const ore = this.oreLavorate[accountId];
+    const somma = ore.reduce((acc, curr) => acc + curr, 0);
+    this.totaleOreLavorate[accountId] = somma;
+  }
+}
+
 }

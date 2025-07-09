@@ -53,6 +53,9 @@
                       (input)="aggiornaOre(account.id, i, $any($event.target).value)"
                     />
                   </td>
+                  <td class="fw-bold text-center">
+                    {{ totaleOreLavorate[account.id] || 0 }}
+                  </td>
                 </tr>
               </tbody>
             </table>
