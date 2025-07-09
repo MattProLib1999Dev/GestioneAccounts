@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 
 import { AccountService } from '../../accountService/account.service';
 import { PostAccounts } from '../../models/PostAccounts';
-import { SearchComponent } from "../../search/search.component";
 import { HttpClient } from '@angular/common/http';
 import { Base64Image } from '../../models/base64'; // Assuming you have a base64 string to upload
 import { BASE64_IMAGES } from '../../models/base64'; // Assuming you have a predefined set of base64 images
@@ -20,7 +19,6 @@ import { TabellaInserimentoOreComponent } from '../../tabella-inserimento-ore/ta
     CommonModule,
     ReactiveFormsModule,
     AccountComponent, // Importing the component for adding accounts
-    SearchComponent,
     TabellaInserimentoOreComponent
   ],
   templateUrl: './account.component.html',

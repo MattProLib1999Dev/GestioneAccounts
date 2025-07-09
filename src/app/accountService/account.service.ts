@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PutAccount } from '../models/PutAccount';
 import { getAccount, getAccounts } from '../models/getAccount';
-import { search } from '../models/search';
+import { Root, search } from '../models/search';
 import { PostAccounts } from '../models/PostAccounts';
 import { Account } from '../modal/account/account.component';
 
@@ -33,7 +33,7 @@ export class AccountService {
     return this.httpClient.get<any>(`${this.rootUrl}/${idUtente}`);
   }
 
-  deleteAccount(idUtente: number): Observable<any> {
+  deleteAccount(idUtente: string): Observable<any> {
     return this.httpClient.delete<any>(`${this.rootUrl}/Delete/${idUtente}`);
   }
 
@@ -41,14 +41,12 @@ export class AccountService {
     return this.httpClient.get(`${this.rootUrl}/orderByName`);
   }
 
-  search(search: { nome: string; dataCreazione: string; valoreString: string }): Observable<any> {
-    const params = new HttpParams()
-      .set('nome', search.nome || '')
-      .set('dataCreazione', search.dataCreazione || '')
-      .set('valoreString', search.valoreString || '');
+  search(nome: string): Observable<search[]> {
+    const params = new HttpParams().set('nome', nome || '');
 
-    return this.httpClient.get(`${this.rootUrl}/search/`, { params });
+    return this.httpClient.get<search[]>(`${this.rootUrl}/search`, { params });
   }
+
 
 }
 

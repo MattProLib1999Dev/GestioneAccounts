@@ -13,17 +13,12 @@
 
           <p class="text-center fw-bold fs-5 mb-4">Ricerca account per nome</p>
 
-          <form (submit)="onSubmitRicerca($event)" class="mb-4">
+          <form (submit)="cercaAccount()" class="mb-4" [formGroup]="formAccount">
             <div class="row justify-content-center">
               <div class="col-md-6">
                 <label for="nome" class="form-label">Nome Account</label>
                 <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="nome"
-                    name="nome"
-                  />
+                  <input type="text" class="form-control" id="nome" name="nome" formControlName="nome" />
                   <button type="submit" class="btn btn-primary">Cerca</button>
                 </div>
               </div>
@@ -32,16 +27,19 @@
 
           <div class="table-responsive">
             <table class="table table-bordered table-hover align-middle">
-              <caption class="text-center" style="caption-side: top; font-weight: bold; margin: 0px 0px auto auto;">
+              <caption class="text-center fw-bold" style="caption-side: top;">
                 Inserisci le ore che hai lavorato, inclusi permessi e ferie
               </caption>
+
               <thead class="table-light text-center">
                 <tr>
                   <th>Nome Account</th>
                   <th *ngFor="let giorno of giorniMese">{{ giorno | date: 'dd/MM' }}</th>
+                  <th>Totale</th>
                 </tr>
               </thead>
-              <tbody>
+
+              <tbody *ngIf="filteredAccounts().length > 0; else noResults">
                 <tr *ngFor="let account of filteredAccounts()">
                   <th scope="row">{{ account.nome }}</th>
                   <td *ngFor="let giorno of giorniMese; let i = index" class="p-1">
@@ -58,8 +56,18 @@
                   </td>
                 </tr>
               </tbody>
+
             </table>
           </div>
+
+          <!-- Template mostrato quando nessun account è presente -->
+          <ng-template #noResults>
+            <tr>
+              <td [attr.colspan]="giorniMese.length + 2" class="text-center fst-italic">
+                Nessun account trovato.
+              </td>
+            </tr>
+          </ng-template>
 
         </div>
       </div>
