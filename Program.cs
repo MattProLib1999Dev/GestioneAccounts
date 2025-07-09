@@ -66,13 +66,16 @@ builder.Services.AddAuthentication(options =>
 // 6. CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
-    {
-        policy.WithOrigins("https://localhost:7045", "http://localhost:5000", "http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
 });
+
+
 
 // 7. Controllers + JSON options
 builder.Services.AddControllers()
@@ -109,7 +112,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // Deve venire prima di UseAuthorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

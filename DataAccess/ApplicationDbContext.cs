@@ -10,7 +10,8 @@ namespace GestioneAccounts.DataAccess
   public class ApplicationDbContext : IdentityDbContext<Account>
   {
     public DbSet<Account> Accounts { get; set; } = default!;
-    public DbSet<Valore> Valori { get; set; } = default!;
+    public DbSet<Valore> Valori { get; set; }
+
     public new DbSet<Role> Roles { get; set; } = default!;
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

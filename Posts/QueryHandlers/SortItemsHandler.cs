@@ -15,8 +15,8 @@ public class SortAccountsHandler(IAccountRepository repository) : IRequestHandle
         {
             "Nome" => request.Descending ? [.. accounts.OrderByDescending(a => a.Nome)] : accounts.OrderBy(a => a.Nome).ToList(),
             "DataCreazione" => request.Descending ? [.. accounts.OrderByDescending(a => a.Nome)] : [.. accounts.OrderBy(a => a.Nome).ToList(),],
-            "ValoreString" => request.Descending ? [.. accounts.OrderByDescending(a => a.valoreString)] : [.. accounts.OrderBy(a => a.valoreString).ToList(),],
-            "Voce" => request.Descending ? [.. accounts.OrderByDescending(a => a.voce)] : [.. accounts.OrderBy(a => a.voce).ToList(),],
+            "ValoreString" => request.Descending ? [.. accounts.OrderByDescending(a => a.ValoreString)] : [.. accounts.OrderBy(a => a.ValoreString).ToList(),],
+            "Voce" => request.Descending ? [.. accounts.OrderByDescending(a => a.Voce)] : [.. accounts.OrderBy(a => a.Voce).ToList(),],
             _ => [.. accounts] // Se il campo OrderBy non è valido, ritorna la lista non ordinata
         };
     }

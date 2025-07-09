@@ -13,7 +13,7 @@ public class PaginateItemsHandler(ApplicationDbContext context) : IRequestHandle
             .OrderBy(i => i.Id)
             .Skip((request.Page - 1) * request.PageSize)
             .Take(request.PageSize)
-            .Select(i => new Account { Id = i.Id, Nome = i.Nome, Valori = i.Valori, dataCreazione = i.dataCreazione, valoreString = i.valoreString, voce = i.voce })
+            .Select(i => new Account { Id = i.Id, Nome = i.Nome, Valori = i.Valori, DataCreazione = i.DataCreazione, ValoreString = i.ValoreString, Voce = i.Voce })
             .ToListAsync(cancellationToken);
     }
 }

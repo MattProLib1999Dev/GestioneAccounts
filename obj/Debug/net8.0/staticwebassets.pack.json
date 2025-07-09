@@ -1,44 +1,304 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt011bc905-ce78-4f2d-a965-fb44516a29ac.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt011bc905-ce78-4f2d-a965-fb44516a29ac.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt036929ed-df4f-4aa2-8e07-04ce700fae4e.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt036929ed-df4f-4aa2-8e07-04ce700fae4e.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt06873754-2338-4410-82ce-c40c1b74843a.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt06873754-2338-4410-82ce-c40c1b74843a.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt082d2e3f-84a6-464c-a09a-4fea4fc273f7.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt082d2e3f-84a6-464c-a09a-4fea4fc273f7.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt0a2dd747-4d8e-4777-bb45-253ffc0fa94d.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt0a2dd747-4d8e-4777-bb45-253ffc0fa94d.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt0b428e35-7497-49bc-80a6-2ba47dff6f5c.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt0b428e35-7497-49bc-80a6-2ba47dff6f5c.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt0dd8f9ab-a980-4881-9e00-d75c12b7a094.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt0dd8f9ab-a980-4881-9e00-d75c12b7a094.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt102a4f90-36f6-43d2-bc6d-8ced11d75aff.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt102a4f90-36f6-43d2-bc6d-8ced11d75aff.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt13cad499-9dc7-43b0-954a-7247d066c8b4.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt13cad499-9dc7-43b0-954a-7247d066c8b4.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt1d612f02-953a-4327-ba70-9c00ee154a4c.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt1d612f02-953a-4327-ba70-9c00ee154a4c.bin"
+    },
+    {
       "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt24b3312c-2606-4f3d-a076-da9b24c79d9f.bin",
       "PackagePath": "staticwebassets\\assets\\img\\matt24b3312c-2606-4f3d-a076-da9b24c79d9f.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt27076e35-78b7-4cf7-bc9b-84e0061d70e9.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt27076e35-78b7-4cf7-bc9b-84e0061d70e9.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt2963365d-56ad-4d68-b49a-45dc87d5c410.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt2963365d-56ad-4d68-b49a-45dc87d5c410.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt30a4e9ae-4566-4080-bfe9-77895f12ff92.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt30a4e9ae-4566-4080-bfe9-77895f12ff92.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt39a56c06-953d-4786-911f-f99c4710593c.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt39a56c06-953d-4786-911f-f99c4710593c.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt4082195b-4f2d-4e9c-8048-fafc8e8300e7.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt4082195b-4f2d-4e9c-8048-fafc8e8300e7.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt40b860e0-79c1-4e84-af7e-a112a24c9181.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt40b860e0-79c1-4e84-af7e-a112a24c9181.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt430775d7-715b-4e9e-8edb-fe0b88b02322.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt430775d7-715b-4e9e-8edb-fe0b88b02322.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt46a1e6e0-50cb-4e9b-a1e5-a79b8cbdb0da.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt46a1e6e0-50cb-4e9b-a1e5-a79b8cbdb0da.bin"
     },
     {
       "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt4e1b9db4-b7ac-4b11-86b1-03cb2709ba25.jpg",
       "PackagePath": "staticwebassets\\assets\\img\\matt4e1b9db4-b7ac-4b11-86b1-03cb2709ba25.jpg"
     },
     {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt5263f08c-f72c-4656-b564-d95394f2c3ac.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt5263f08c-f72c-4656-b564-d95394f2c3ac.bin"
+    },
+    {
       "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt5a7c9cc7-ff24-479c-a756-01aa8296f04e.bin",
       "PackagePath": "staticwebassets\\assets\\img\\matt5a7c9cc7-ff24-479c-a756-01aa8296f04e.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt5ba7dd91-6f1b-4da5-b303-1ca9232c0432.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt5ba7dd91-6f1b-4da5-b303-1ca9232c0432.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt5bdc3a76-6405-4ae4-9016-aafcf5016b69.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt5bdc3a76-6405-4ae4-9016-aafcf5016b69.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt63355c20-2c98-4c5d-acee-49a2deabda0f.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt63355c20-2c98-4c5d-acee-49a2deabda0f.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt634ae88b-218d-4482-9c32-9e9525f09565.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt634ae88b-218d-4482-9c32-9e9525f09565.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt66f84cb7-e5b1-48d9-9463-3833f32c985c.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt66f84cb7-e5b1-48d9-9463-3833f32c985c.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt68eed346-d600-43ce-818e-b81a901ddc52.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt68eed346-d600-43ce-818e-b81a901ddc52.bin"
     },
     {
       "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt6b89e53e-cbdf-4e81-bc7e-50dec449f8c8.bin",
       "PackagePath": "staticwebassets\\assets\\img\\matt6b89e53e-cbdf-4e81-bc7e-50dec449f8c8.bin"
     },
     {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt6df868ff-d18f-4a83-9580-2778ce8b70c8.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt6df868ff-d18f-4a83-9580-2778ce8b70c8.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt6f965445-39df-41e7-b68f-425d3e07324f.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt6f965445-39df-41e7-b68f-425d3e07324f.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt7498c600-6f61-47da-9134-b20cc33a795b.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt7498c600-6f61-47da-9134-b20cc33a795b.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt79ac3691-22b2-4753-8ce8-60610095d258.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt79ac3691-22b2-4753-8ce8-60610095d258.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt7b21fe55-3045-45c2-ac3d-f2001fb1d3ba.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt7b21fe55-3045-45c2-ac3d-f2001fb1d3ba.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt7dc6b5fb-5328-4922-a86c-6fdd234bae82.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt7dc6b5fb-5328-4922-a86c-6fdd234bae82.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt7e7cc1fc-6369-4351-9c57-f0f3b60fe2c2.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt7e7cc1fc-6369-4351-9c57-f0f3b60fe2c2.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt7f12cefe-c266-4c61-aeb2-2e89553e1dac.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt7f12cefe-c266-4c61-aeb2-2e89553e1dac.bin"
+    },
+    {
       "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt89f82434-4253-4fa4-b66b-ba665132d8fb.bin",
       "PackagePath": "staticwebassets\\assets\\img\\matt89f82434-4253-4fa4-b66b-ba665132d8fb.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt8d037f28-0cd7-4400-a194-c36e118c028e.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt8d037f28-0cd7-4400-a194-c36e118c028e.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt8e119fff-d1f8-4750-93c2-8afe68cb0e8d.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt8e119fff-d1f8-4750-93c2-8afe68cb0e8d.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt91291135-f109-4340-910b-bab40b1a0b5f.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt91291135-f109-4340-910b-bab40b1a0b5f.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt9174edc4-7093-436f-8804-b7fa088dc0bb.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt9174edc4-7093-436f-8804-b7fa088dc0bb.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt919e40b0-6bcb-49ce-9c97-230b48bac8c8.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt919e40b0-6bcb-49ce-9c97-230b48bac8c8.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt953a5a79-603d-4ae1-ba41-06229be78886.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt953a5a79-603d-4ae1-ba41-06229be78886.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt958220e6-f46f-42b2-bbf8-bfa27e625fa1.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt958220e6-f46f-42b2-bbf8-bfa27e625fa1.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt981c0ac7-c72e-43a3-ae09-a4a4ab2f78ba.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt981c0ac7-c72e-43a3-ae09-a4a4ab2f78ba.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt99821143-5ae7-4c93-9ebe-ef893a20b3e0.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matt99821143-5ae7-4c93-9ebe-ef893a20b3e0.bin"
     },
     {
       "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matt9bdce0a3-3f68-4cd9-8035-31ad4779ee46.bin",
       "PackagePath": "staticwebassets\\assets\\img\\matt9bdce0a3-3f68-4cd9-8035-31ad4779ee46.bin"
     },
     {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matta071b12a-0a26-4658-8723-d6aa975952ba.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matta071b12a-0a26-4658-8723-d6aa975952ba.bin"
+    },
+    {
       "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matta0da0929-8994-48be-bd6f-617ef950980f.bin",
       "PackagePath": "staticwebassets\\assets\\img\\matta0da0929-8994-48be-bd6f-617ef950980f.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matta0fd2b58-1fae-431a-a3bf-5a823fa026f3.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matta0fd2b58-1fae-431a-a3bf-5a823fa026f3.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matta64b3467-9f6f-4207-b023-d3b67d5cc517.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matta64b3467-9f6f-4207-b023-d3b67d5cc517.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattae564c25-afae-459a-891f-773d0e9dca04.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattae564c25-afae-459a-891f-773d0e9dca04.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattb66e61e4-0c1a-456d-8b0c-651cecbf9f8c.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattb66e61e4-0c1a-456d-8b0c-651cecbf9f8c.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattb72362d5-0e93-4ab9-a4d0-1671565568ca.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattb72362d5-0e93-4ab9-a4d0-1671565568ca.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattc34e3179-78ee-4bc2-ada4-24893d9ba48f.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattc34e3179-78ee-4bc2-ada4-24893d9ba48f.bin"
     },
     {
       "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattc941e4d2-3b76-4f38-974f-c0c4d520b8ec.bin",
       "PackagePath": "staticwebassets\\assets\\img\\mattc941e4d2-3b76-4f38-974f-c0c4d520b8ec.bin"
     },
     {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattcd67938c-83f3-474a-8e7e-d89be17b3c88.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattcd67938c-83f3-474a-8e7e-d89be17b3c88.bin"
+    },
+    {
       "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattd061f7cd-32e9-4c0c-8b16-ea7700e62d3f.bin",
       "PackagePath": "staticwebassets\\assets\\img\\mattd061f7cd-32e9-4c0c-8b16-ea7700e62d3f.bin"
     },
     {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattd41b4abf-2b57-4db4-bf55-3b85f9d9a93d.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattd41b4abf-2b57-4db4-bf55-3b85f9d9a93d.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattd73e6a38-3f5d-4c4c-a11c-62e6eb80b2c1.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattd73e6a38-3f5d-4c4c-a11c-62e6eb80b2c1.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattd92ccb33-a5bb-4039-b654-bb0f0f1c7c9c.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattd92ccb33-a5bb-4039-b654-bb0f0f1c7c9c.bin"
+    },
+    {
       "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattd9c8bd43-a456-4506-ad37-17e80ac5c66a.bin",
       "PackagePath": "staticwebassets\\assets\\img\\mattd9c8bd43-a456-4506-ad37-17e80ac5c66a.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattda1efb94-2eb0-4753-ba0f-aa1c2c9ac89a.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattda1efb94-2eb0-4753-ba0f-aa1c2c9ac89a.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matte06463ef-3c71-4871-8f77-1b38a8fb33c2.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matte06463ef-3c71-4871-8f77-1b38a8fb33c2.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matte49b0f94-8ada-4a63-a241-3250ff48ed64.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matte49b0f94-8ada-4a63-a241-3250ff48ed64.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matte5a2bd6d-b3dd-48b7-beb0-ffb3e384bb34.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matte5a2bd6d-b3dd-48b7-beb0-ffb3e384bb34.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\matte75f23f1-c356-4799-b3b9-d1e6afbb75ce.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\matte75f23f1-c356-4799-b3b9-d1e6afbb75ce.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattf14761df-604d-4b67-99a4-0a87037b0249.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattf14761df-604d-4b67-99a4-0a87037b0249.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattf3a88a2b-b6f9-4899-abce-1f876b3e11d3.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattf3a88a2b-b6f9-4899-abce-1f876b3e11d3.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattf5de5230-d858-42d6-b193-60902d82b3cb.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattf5de5230-d858-42d6-b193-60902d82b3cb.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattf76746de-2251-4ad6-83db-05828dd74b49.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattf76746de-2251-4ad6-83db-05828dd74b49.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattf7e7268a-3db4-4c38-a5fb-b1686038897c.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattf7e7268a-3db4-4c38-a5fb-b1686038897c.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattfab4d574-db35-431d-b945-cff4a15979e7.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattfab4d574-db35-431d-b945-cff4a15979e7.bin"
+    },
+    {
+      "Id": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\wwwroot\\assets\\img\\mattff1377ab-f179-436f-ad9f-9ab6296a54f1.bin",
+      "PackagePath": "staticwebassets\\assets\\img\\mattff1377ab-f179-436f-ad9f-9ab6296a54f1.bin"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.GestioneAccounts.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -11,11 +11,12 @@ namespace GestioneAccounts.BE.Domain.Models
   public class Account : IdentityUser
   {
     public ICollection<Valore> Valori { get; set; }
+    [JsonIgnore]
     public Role? Role { get; set; }
     public string Nome { get; set; } = string.Empty;
-    public string voce { get; set; } = string.Empty;
-    public string valoreString { get; set; } = string.Empty;
-    public DateTime dataCreazione { get; set; } = DateTime.Now;
+    public string Voce { get; set; } = string.Empty;
+    public string ValoreString { get; set; } = string.Empty;
+    public DateTime DataCreazione { get; set; } = DateTime.Now;
 
   }
 }

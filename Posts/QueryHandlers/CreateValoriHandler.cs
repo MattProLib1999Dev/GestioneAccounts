@@ -12,7 +12,7 @@ public class CreateValoriHandler(ApplicationDbContext context) : IRequest<Valore
 
   public async Task<Valore> Handle(CreateValoreRequest request, CancellationToken cancellationToken)
     {
-        if (request.AccountId <= 0)
+        if (request.AccountId == null || request.AccountId == Guid.Empty.ToString())
         {
             throw new ArgumentException("AccountId non valido.", nameof(request.AccountId));
         }
@@ -32,11 +32,11 @@ public class CreateValoriHandler(ApplicationDbContext context) : IRequest<Valore
             // Crea il nuovo valore
             var valori = new Valore
             {
-                AccountId = request.AccountId.ToString(),
+                AccountId = request.AccountId,
                 Nome = request.Nome,
                 Descrizione = request.Descrizione,
                 ValoreNumerico = (decimal) request.ValoreNumerico,
-                DataCreazione = DateTime.UtcNow
+                DataCreazione =DateTime.UtcNow,
             };
 
             // Aggiungi il nuovo record nella tabella Valori

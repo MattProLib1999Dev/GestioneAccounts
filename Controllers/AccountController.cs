@@ -40,51 +40,50 @@ namespace GestioneAccounts.Controllers
 
     // POST: api/Account/create
     [HttpPost("create")]
-    public async Task<IActionResult> CreateAccount([FromBody] Account request)
+    [Authorize(Roles = "Admin,Manager")] // Ensure only Admin or Manager can create accounts
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(Account), 200)]
+    public async Task<IActionResult> CreateAccount([FromBody] PostAccountDto dto)
     {
-      if (request == null || string.IsNullOrWhiteSpace(request.Nome))
+      var account = new Account
       {
-        return BadRequest(new { message = "Invalid request. Account data is required." });
-      }
+        UserName = dto.UserName,
+        NormalizedUserName = dto.NormalizedUserName,
+        Email = dto.Email,
+        NormalizedEmail = dto.NormalizedEmail,
+        EmailConfirmed = dto.EmailConfirmed,
+        PasswordHash = dto.PasswordHash,
+        SecurityStamp = dto.SecurityStamp,
+        ConcurrencyStamp = dto.ConcurrencyStamp,
+        PhoneNumber = dto.PhoneNumber,
+        PhoneNumberConfirmed = dto.PhoneNumberConfirmed,
+        TwoFactorEnabled = dto.TwoFactorEnabled,
+        LockoutEnd = dto.LockoutEnd,
+        LockoutEnabled = dto.LockoutEnabled,
+        AccessFailedCount = dto.AccessFailedCount,
+        Nome = dto.Nome,
+        Voce = dto.Voce,
+        ValoreString = dto.ValoreString,
+        DataCreazione = dto.DataCreazione,
 
-      try
-      {
-
-        request.Id = "";
-        request.voce = string.Empty;
-        request.dataCreazione = DateTime.Now;
-
-        var existingAccount = await _context.Accounts
-            .FirstOrDefaultAsync(a => a.Nome == request.Nome && a.voce == request.voce && a.valoreString == request.valoreString);
-        if (existingAccount != null)
+        Valori = dto.Valori.Select(v => new Valore
         {
-          return Conflict(new { message = "Account already exists." });
-        }
+          Nome = v.Nome,
+          ValoreStr = v.valoreString,
+          Voce = v.voce,
+          DataCreazione = v.DataCreazione,
+          Descrizione = v.Descrizione,
+          ValoreNumerico = v.ValoreNumerico,
+          AccountId = (string)v.AccountId // Set to null, will be set by EF when saving
+        }).ToList()
+      };
 
-        _context.Entry(request).State = EntityState.Added;
-        _context.Accounts.Add(request);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction(nameof(GetAll), new { id = request.Id }, request);
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "An error occurred while creating the account.");
-        return StatusCode(500, new { message = "An error occurred." });
-      }
-    }
-
-    // GET: api/Account/all
-    [HttpGet("all")]
-    public async Task<IActionResult> GetAll()
-    {
-      var account = await _context.Accounts.ToListAsync();
-
-      if (account == null || !account.Any())
-        return NotFound(new { message = "Nessun valore trovato." });
+      _context.Accounts.Add(account);
+      await _context.SaveChangesAsync();
 
       return Ok(account);
     }
+
 
     // GET: api/Account/{id}
     [HttpGet("{id}")]
@@ -209,7 +208,24 @@ namespace GestioneAccounts.Controllers
       }
     }
 
-
-
+    //getall
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllAccounts()
+    {
+      try
+      {
+        var accounts = await _context.Accounts.ToListAsync();
+        if (accounts == null || !accounts.Any())
+        {
+          return NotFound(new { message = "No accounts found." });
+        }
+        return Ok(accounts);
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "Error retrieving accounts");
+        return StatusCode(500, new { message = "Internal server error" });
+      }
+    }
   }
 }

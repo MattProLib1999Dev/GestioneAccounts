@@ -57,10 +57,10 @@ namespace GestioneAccounts.DataAccess.Repositories
                 // Crea un nuovo oggetto Valori
                 var nuovoValore = new Valore
                 {
-                    DataCreazione = DateTime.Now,
+                    DataCreazione =DateTime.UtcNow,
                     Nome = account.Nome,
-                    ValoreStr = account.valoreString,
-                    Voce = account.voce
+                    ValoreStr = account.ValoreString,
+                    Voce = account.Voce
                 };
 
                 // Aggiungi il nuovo oggetto al contesto
@@ -73,8 +73,8 @@ namespace GestioneAccounts.DataAccess.Repositories
             {
                 // Aggiorna le proprietà di valori con quelle di account (se necessario)
                 valore.Nome = account.Nome;
-                valore.ValoreStr = account.valoreString;
-                valore.Voce = account.voce;
+                valore.ValoreStr = account.ValoreString;
+                valore.Voce = account.Voce;
             }
 
             // Salva le modifiche nel database

@@ -46,11 +46,11 @@ namespace GestioneAccounts.DataAccess.Repositories
       if (!string.IsNullOrEmpty(nome))
         query = query.Where(a => a.Nome.Contains(nome));
       if (dataCreazione.HasValue)
-        query = query.Where(a => a.dataCreazione == dataCreazione);
+        query = query.Where(a => a.DataCreazione == dataCreazione);
       if (!string.IsNullOrEmpty(valoreString))
-        query = query.Where(a => a.valoreString.Contains(valoreString));
+        query = query.Where(a => a.ValoreString.Contains(valoreString));
       if (!string.IsNullOrEmpty(voce))
-        query = query.Where(a => a.voce.Contains(voce));
+        query = query.Where(a => a.Voce.Contains(voce));
 
       return query.ToListAsync().ContinueWith(task => (ICollection<Account>)task.Result);
     }
