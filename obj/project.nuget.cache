@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "wzmq++mJSKg=",
+  "dgSpecHash": "LuHxKa572qQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\matteo.proietti\\progetti\\Progetti personali e esercitazioni\\esercitazioni dotnet\\GestioneAccounts\\BE\\GestioneAccounts\\GestioneAccounts.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\matteo.proietti\\.nuget\\packages\\automapper\\15.0.1\\automapper.15.0.1.nupkg.sha512",
+    "C:\\Users\\matteo.proietti\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
@@ -107,12 +109,12 @@
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identity.client\\4.47.2\\microsoft.identity.client.4.47.2.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identity.client.extensions.msal\\2.19.3\\microsoft.identity.client.extensions.msal.2.19.3.nupkg.sha512",
-    "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.0.3\\microsoft.identitymodel.abstractions.7.0.3.nupkg.sha512",
-    "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.0.3\\microsoft.identitymodel.jsonwebtokens.7.0.3.nupkg.sha512",
-    "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identitymodel.logging\\7.0.3\\microsoft.identitymodel.logging.7.0.3.nupkg.sha512",
+    "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.0.1\\microsoft.identitymodel.abstractions.8.0.1.nupkg.sha512",
+    "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\8.0.1\\microsoft.identitymodel.jsonwebtokens.8.0.1.nupkg.sha512",
+    "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identitymodel.logging\\8.0.1\\microsoft.identitymodel.logging.8.0.1.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identitymodel.protocols\\7.0.3\\microsoft.identitymodel.protocols.7.0.3.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\7.0.3\\microsoft.identitymodel.protocols.openidconnect.7.0.3.nupkg.sha512",
-    "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.0.3\\microsoft.identitymodel.tokens.7.0.3.nupkg.sha512",
+    "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.0.1\\microsoft.identitymodel.tokens.8.0.1.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.net.stringtools\\17.7.2\\microsoft.net.stringtools.17.7.2.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.openapi\\1.6.22\\microsoft.openapi.1.6.22.nupkg.sha512",
     "C:\\Users\\matteo.proietti\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
@@ -182,6 +184,16 @@
       "warningLevel": 1,
       "message": "È stata rilevata una versione del pacchetto all'esterno del vincolo di dipendenza: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 richiede MediatR (>= 11.0.0 && < 12.0.0) ma è stata risolta la versione MediatR 12.4.1.",
       "libraryId": "MediatR",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "È stata rilevata una versione del pacchetto all'esterno del vincolo di dipendenza: AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1 richiede AutoMapper (= 12.0.1) ma è stata risolta la versione AutoMapper 15.0.1.",
+      "libraryId": "AutoMapper",
       "targetGraphs": [
         "net8.0"
       ]

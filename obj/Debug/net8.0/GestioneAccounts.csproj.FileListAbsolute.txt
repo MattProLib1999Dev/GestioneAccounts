@@ -268,3 +268,5 @@ C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazio
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\obj\Debug\net8.0\ref\GestioneAccounts.dll
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\package-lock.json
 C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\package.json
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\matteo.proietti\progetti\Progetti personali e esercitazioni\esercitazioni dotnet\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

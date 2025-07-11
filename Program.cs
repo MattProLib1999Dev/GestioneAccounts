@@ -95,6 +95,10 @@ builder.Services.AddSwaggerGen(c =>
 
 // 9. Web root (opzionale)
 builder.WebHost.UseWebRoot("wwwroot");
+// Registra tutti i profili nell'assembly corrente
+builder.Services.AddAutoMapper(typeof(Program));
+
+// oppure: builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 

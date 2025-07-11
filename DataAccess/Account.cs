@@ -18,5 +18,8 @@ namespace GestioneAccounts.BE.Domain.Models
     public string ValoreString { get; set; } = string.Empty;
     public DateTime DataCreazione { get; set; } = DateTime.Now;
 
+    [StringLength(1), MinLength(1)]
+    public int OreLavorate { get; set; } = 0;
+
   }
 }

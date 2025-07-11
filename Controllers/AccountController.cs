@@ -1,17 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using GestioneAccounts.DataAccess;
-using GestioneAccounts.BE.Domain; // Ensure this is the correct namespace for ApplicationDbContext
 using MediatR;
 using GestioneAccounts.Posts.Queries;
 using GestioneAccounts.Posts.Commands;
 using GestioneAccounts.BE.Domain.Models;
 using GestioneAccounts.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace GestioneAccounts.Controllers
 {
@@ -24,27 +20,31 @@ namespace GestioneAccounts.Controllers
     private readonly ILogger<AccountController> _logger;
     public readonly AccountRepository accountRepository;
     private readonly IWebHostEnvironment _env;
+    private readonly IMapper _mapper;
 
     public AccountController(
         ILogger<AccountController> logger,
         ApplicationDbContext context,
         IMediator mediator,
-        IWebHostEnvironment env)
+        IWebHostEnvironment env,
+        IMapper mapper)
     {
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
       _context = context ?? throw new ArgumentNullException(nameof(context));
       _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
       accountRepository = new AccountRepository(context);
       _env = env;
+      _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     // POST: api/Account/create
     [HttpPost("create")]
-    [Authorize(Roles = "Admin,Manager")] // Ensure only Admin or Manager can create accounts
+    [Authorize(Roles = "Admin")] // Ensure only Admin or Manager can create accounts
     [AllowAnonymous]
     [ProducesResponseType(typeof(Account), 200)]
-    public async Task<IActionResult> CreateAccount([FromBody] PostAccountDto dto)
+    public async Task<IActionResult> CreateAccount([FromBody] CreateAccountDto dto)
     {
+
       var account = new Account
       {
         UserName = dto.UserName,
@@ -65,23 +65,26 @@ namespace GestioneAccounts.Controllers
         Voce = dto.Voce,
         ValoreString = dto.ValoreString,
         DataCreazione = dto.DataCreazione,
+        OreLavorate = dto.OreLavorate,
 
-        Valori = dto.Valori.Select(v => new Valore
-        {
-          Nome = v.Nome,
-          ValoreStr = v.valoreString,
-          Voce = v.voce,
-          DataCreazione = v.DataCreazione,
-          Descrizione = v.Descrizione,
-          ValoreNumerico = v.ValoreNumerico,
-          AccountId = (string)v.AccountId // Set to null, will be set by EF when saving
-        }).ToList()
+          Valori = dto.Valori.Select(v => new Valore
+          {
+            Nome = v.Nome,
+            ValoreStr = v.valoreString,
+            Voce = v.voce,
+            DataCreazione = v.DataCreazione,
+            Descrizione = v.Descrizione,
+            ValoreNumerico = v.ValoreNumerico,
+            AccountId = v.AccountId
+          }).ToList()
       };
+      var accountDto = _mapper.Map<CreateAccountDto>(account);
+
 
       _context.Accounts.Add(account);
       await _context.SaveChangesAsync();
 
-      return Ok(account);
+      return Ok(accountDto);
     }
 
 
@@ -220,11 +223,13 @@ public async Task<IActionResult> Search([FromQuery] string nome)
       try
       {
         var accounts = await _context.Accounts.ToListAsync();
-        if (accounts == null || !accounts.Any())
+        if (accounts == null || accounts.Count != 0)
         {
           return NotFound(new { message = "No accounts found." });
         }
-        return Ok(accounts);
+        // Map accounts to DTOs if necessary
+        var accountDto = accounts.Select(a => _mapper.Map<CreateAccountDto>(a)).ToList();
+        return Ok(accountDto);
       }
       catch (Exception ex)
       {
@@ -232,5 +237,33 @@ public async Task<IActionResult> Search([FromQuery] string nome)
         return StatusCode(500, new { message = "Internal server error" });
       }
     }
+
+    // POST: account/approvaOreLavorate
+    [HttpPost("approvaOreLavorate")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> ApprovaOreLavorate([FromBody] CreateAccountDto CreateAccountDto)
+    {
+      if (CreateAccountDto == null)
+      {
+        return BadRequest("Account data is required.");
+      }
+
+      // Trova l'account esistente
+      var account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == CreateAccountDto.Id.ToString());
+      if (account == null)
+      {
+        return NotFound("Account not found.");
+      }
+
+      // Aggiorna le ore lavorate
+      var accountDto = _mapper.Map<CreateAccountDto>(account);
+
+      // Salva le modifiche nel database
+      _context.Accounts.Update(account);
+      await _context.SaveChangesAsync();
+
+      return Ok(accountDto);
+    }
+
   }
 }
