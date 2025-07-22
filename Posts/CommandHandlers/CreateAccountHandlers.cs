@@ -21,7 +21,7 @@ public class CreateAccountHandlers : IRequestHandler<CreateAccount, Account>
         ValoreString = request.valoreString,
         Voce = request.voce,
         DataCreazione = DateTime.Now,
-        Id = request.Id.ToString(),
+        Id = new Guid(),
       };
       return await _accountRepository.CreateAccount(account);
   }

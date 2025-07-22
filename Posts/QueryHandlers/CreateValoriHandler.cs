@@ -18,9 +18,10 @@ public class CreateValoriHandler(ApplicationDbContext context) : IRequest<Valore
         }
 
         // Verifica se l'AccountId esiste nel database
+        var id = new Guid(request.AccountId);
         var account = await _context.Accounts
             .AsNoTracking() // Ottimizzazione se non sono necessarie modifiche all'oggetto Account
-            .FirstOrDefaultAsync(a => a.Id == request.AccountId.ToString(), cancellationToken);
+            .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 
         if (account == null)
         {

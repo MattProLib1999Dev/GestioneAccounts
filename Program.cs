@@ -18,10 +18,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// 2. JWT Config
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 
-
-// 2. Identity
+// 3. Identity
 builder.Services.AddIdentity<Account, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -30,15 +30,18 @@ builder.Services.AddIdentity<Account, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// 3. Repositories (Dependency Injection)
+// 4. Repository DI
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IValoriRepository, ValoriRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
-// 4. MediatR (CQRS)
+// 5. MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-// 5. JWT Authentication
+// 6. AutoMapper
+builder.Services.AddAutoMapper(typeof(Program)); // Assicurati che i profili siano nello stesso assembly
+
+// 7. Authentication JWT
 var secret = builder.Configuration.GetValue<string>("JwtConfig:Secret")
     ?? throw new InvalidOperationException("JwtConfig:Secret is not configured.");
 
@@ -53,31 +56,28 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = false, // Set true and configure if needed
-        ValidateAudience = false, // Set true and add "Audience" in appsettings if needed
+        ValidateIssuer = false,
+        ValidateAudience = false,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        RequireExpirationTime = true
+        RequireExpirationTime = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key)
     };
     options.SaveToken = true;
 });
 
-// 6. CORS
+// 8. CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:4200")
-                  .AllowAnyMethod()
-                  .AllowAnyHeader();
-        });
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
-
-
-// 7. Controllers + JSON options
+// 9. Controllers + JSON
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -86,23 +86,19 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.WriteIndented = true;
     });
 
-// 8. Swagger
+// 10. Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gestione Accounts API", Version = "v1" });
 });
 
-// 9. Web root (opzionale)
+// 11. Web root (opzionale)
 builder.WebHost.UseWebRoot("wwwroot");
-// Registra tutti i profili nell'assembly corrente
-builder.Services.AddAutoMapper(typeof(Program));
-
-// oppure: builder.Services.AddAutoMapper(typeof(MappingProfile));
-
-var app = builder.Build();
 
 // === Middleware pipeline ===
+var app = builder.Build();
+
 app.UseCors("AllowFrontend");
 
 if (app.Environment.IsDevelopment())

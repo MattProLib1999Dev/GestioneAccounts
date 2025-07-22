@@ -1,107 +1,91 @@
 using GestioneAccounts.Abstractions;
 using GestioneAccounts.BE.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GestioneAccounts.DataAccess.Repositories
 {
-  public class RoleRepository(ApplicationDbContext applicationDbContext) : IRoleRepository
-  {
-    private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
-
-    // Crea un nuovo "Role"
-    public async Task<Role> CreateRole(Role role)
+    public class RoleRepository : IRoleRepository
     {
-      _applicationDbContext.Add(role);
-      await _applicationDbContext.SaveChangesAsync();
-      return role;
-    }
+        private readonly ApplicationDbContext _applicationDbContext;
 
-    // Elimina un "Role" per ID
-    public async Task<bool> DeleteValori(long roleId)
-    {
-      var roles = await _applicationDbContext.Roles.FirstOrDefaultAsync(a => a.Id == roleId);
-      if (roles == null)
-        return false;
-
-      _applicationDbContext.Roles.Remove(roles);
-      await _applicationDbContext.SaveChangesAsync();
-      return true;
-    }
-
-    // Ottieni un "Roles" per ID
-    public async Task<Role> GetRoleById(long roleId)
-    {
-      return await _applicationDbContext.Roles
-          .FirstOrDefaultAsync(a => a.Id == roleId) ?? new Role();
-    }
-
-
-    // Ottieni tutti i "Roles"
-    public async Task<ICollection<Role>> GetAllRoles()
-    {
-      var role = await _applicationDbContext.Roles.ToListAsync();
-      return role ?? new List<Role>();
-    }
-
-
-    // Aggiorna o crea un "Roles" in base all'account
-    public async Task<Role> UpdateRole(Role role, long roleId)
-    {
-      var modifiedRole = await _applicationDbContext.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
-
-      if (modifiedRole == null || role == null)
-      {
-        // Se il ruolo non esiste, crea un nuovo oggetto Role
-        modifiedRole = new Role
+        public RoleRepository(ApplicationDbContext applicationDbContext)
         {
-          Admin = role.Admin,
-          User = role.User,
-          Account = role.Account
-        };
-           // Crea un nuovo oggetto Valori
-        var nuovoRole = new Role
+            _applicationDbContext = applicationDbContext;
+        }
+
+        public async Task<Role> CreateRole(Role role)
         {
-          Admin = modifiedRole.Admin,
-          User = modifiedRole.User,
-          Account = modifiedRole.Account
-        };
+            _applicationDbContext.Add(role);
+            await _applicationDbContext.SaveChangesAsync();
+            return role;
+        }
 
-        // Aggiungi il nuovo oggetto al contesto
-        _applicationDbContext.Roles.Add(nuovoRole);
+        public async Task<bool> DeleteValori(string roleId)
+        {
+            var role = await _applicationDbContext.Roles.FirstOrDefaultAsync(a => a.Id.ToString() == roleId);
+            if (role == null)
+                return false;
 
-        // Imposta la variabile valori al nuovo oggetto creato
-        modifiedRole = nuovoRole;
-      }
-      else
-      {
-        // Aggiorna le proprietà di valori con quelle di account (se necessario)
-        modifiedRole.Admin = modifiedRole.Admin;
-        modifiedRole.User = modifiedRole.User;
-        modifiedRole.Account = modifiedRole.Account;
-      }
+            _applicationDbContext.Roles.Remove(role);
+            await _applicationDbContext.SaveChangesAsync();
+            return true;
+        }
 
-      // Salva le modifiche nel database
-      await _applicationDbContext.SaveChangesAsync();
+        public async Task<Role> GetRoleById(string roleId)
+        {
+            var role = await _applicationDbContext.Roles
+                .Include(r => r.Accounts) // se vuoi includere gli accounts associati
+                .FirstOrDefaultAsync(r => r.Id.ToString() == roleId);
 
-      // Restituisci l'oggetto aggiornato
-      return modifiedRole;
+            if (role == null)
+                throw new KeyNotFoundException($"Role with ID {roleId} not found.");
+
+            return role;
+        }
+
+        public async Task<ICollection<Role>> GetAllRoles()
+        {
+            return await _applicationDbContext.Roles
+                .Include(r => r.Accounts)
+                .ToListAsync();
+        }
+
+        public async Task<Role> UpdateRole(Role role, int roleId)
+        {
+            var modifiedRole = await _applicationDbContext.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
+
+            if (modifiedRole == null || role == null)
+            {
+                var nuovoRole = new Role
+                {
+                    Accounts = role?.Accounts,
+                    Id = roleId
+                };
+                _applicationDbContext.Roles.Add(nuovoRole);
+                modifiedRole = nuovoRole;
+            }
+            else
+            {
+                // aggiorna campi necessari di modifiedRole con quelli di role
+                // es: modifiedRole.Name = role.Name; (dipende da proprietà Role)
+            }
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            return modifiedRole;
+        }
+
+        public async Task<bool> DeleteRole(string roleId)
+        {
+            var role = await _applicationDbContext.Roles.FirstOrDefaultAsync(a => a.Id.ToString() == roleId);
+            if (role == null)
+                return false;
+
+            _applicationDbContext.Roles.Remove(role);
+            await _applicationDbContext.SaveChangesAsync();
+            return true;
+        }
     }
-
-    //Delete
-    public async Task<bool> DeleteRole(long roleId)
-    {
-      var role = await _applicationDbContext.Roles.FirstOrDefaultAsync(a => a.Id == roleId);
-      if (role == null)
-        return false;
-
-      _applicationDbContext.Roles.Remove(role);
-      await _applicationDbContext.SaveChangesAsync();
-      return true;
-
-
-    }
-  }
 }

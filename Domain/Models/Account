@@ -14,7 +14,8 @@ namespace matteo.proietti.progetti.Progetti_personali_e_esercitazioni.esercitazi
 
                 public required string Nome { get; set; }
                 public List<Valori>? valori { get; set; } = new ();
-	}
+                public string Roles { get; set; } = string.Empty;
+  }
 }
 
 

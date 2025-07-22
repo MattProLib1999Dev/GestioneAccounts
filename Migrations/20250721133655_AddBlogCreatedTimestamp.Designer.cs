@@ -4,6 +4,7 @@ using GestioneAccounts.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestioneAccounts.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250721133655_AddBlogCreatedTimestamp")]
+    partial class AddBlogCreatedTimestamp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,17 +27,17 @@ namespace GestioneAccounts.Migrations
 
             modelBuilder.Entity("AccountRole", b =>
                 {
-                    b.Property<string>("AccountsId")
+                    b.Property<string>("AccountId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("RolesId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.HasKey("AccountsId", "RolesId");
+                    b.HasKey("AccountId", "RoleId");
 
-                    b.HasIndex("RolesId");
+                    b.HasIndex("RoleId");
 
-                    b.ToTable("RolesAccounts", (string)null);
+                    b.ToTable("AccountRoles", (string)null);
                 });
 
             modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Account", b =>
@@ -327,10 +330,6 @@ namespace GestioneAccounts.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -345,10 +344,6 @@ namespace GestioneAccounts.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Roles")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -368,13 +363,13 @@ namespace GestioneAccounts.Migrations
                 {
                     b.HasOne("GestioneAccounts.BE.Domain.Models.Account", null)
                         .WithMany()
-                        .HasForeignKey("AccountsId")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Role", null)
                         .WithMany()
-                        .HasForeignKey("RolesId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

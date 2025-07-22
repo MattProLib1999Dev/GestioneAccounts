@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestioneAccounts.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250703085326_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250722095741_AddRoleName")]
+    partial class AddRoleName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,17 +25,39 @@ namespace GestioneAccounts.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AccountRole", b =>
+                {
+                    b.Property<string>("AccountsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RolesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AccountsId", "RolesId");
+
+                    b.HasIndex("RolesId");
+
+                    b.ToTable("RolesAccounts", (string)null);
+                });
+
             modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Account", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DataCreazione")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -62,6 +84,10 @@ namespace GestioneAccounts.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<double>("OreLavorate")
+                        .HasMaxLength(1)
+                        .HasColumnType("float");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -81,14 +107,11 @@ namespace GestioneAccounts.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime>("dataCreazione")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("valoreString")
+                    b.Property<string>("ValoreString")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("voce")
+                    b.Property<string>("Voce")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -114,6 +137,7 @@ namespace GestioneAccounts.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AccountId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DataCreazione")
@@ -128,8 +152,7 @@ namespace GestioneAccounts.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ValoreNumerico")
-                        .HasPrecision(18, 4)
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ValoreStr")
                         .HasColumnType("nvarchar(max)");
@@ -285,32 +308,87 @@ namespace GestioneAccounts.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("AccountId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Admin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("User")
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id")
-                        .HasName("PK_Roles");
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("AccountId")
-                        .IsUnique()
-                        .HasFilter("[AccountId] IS NOT NULL");
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Roles")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("AccountRole", b =>
+                {
+                    b.HasOne("GestioneAccounts.BE.Domain.Models.Account", null)
+                        .WithMany()
+                        .HasForeignKey("AccountsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Valore", b =>
                 {
                     b.HasOne("GestioneAccounts.BE.Domain.Models.Account", "Account")
                         .WithMany("Valori")
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Account");
                 });
@@ -366,20 +444,8 @@ namespace GestioneAccounts.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Role", b =>
-                {
-                    b.HasOne("GestioneAccounts.BE.Domain.Models.Account", "Account")
-                        .WithOne("Role")
-                        .HasForeignKey("Role", "AccountId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("GestioneAccounts.BE.Domain.Models.Account", b =>
                 {
-                    b.Navigation("Role");
-
                     b.Navigation("Valori");
                 });
 #pragma warning restore 612, 618

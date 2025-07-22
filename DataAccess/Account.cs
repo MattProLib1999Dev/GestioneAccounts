@@ -8,10 +8,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GestioneAccounts.BE.Domain.Models
 {
-  public class Account : IdentityUser
+  public class Account : IdentityUser<string>
   {
-    public ICollection<Valore> Valori { get; set; }
-    [JsonIgnore]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
+    public int AccountId{ get; set; }
+    public ICollection<Valore> Valori { get; set; } = new List<Valore>(); // ✅
+    [NotMapped]
     public Role? Role { get; set; }
     public string Nome { get; set; } = string.Empty;
     public string Voce { get; set; } = string.Empty;
@@ -19,7 +22,10 @@ namespace GestioneAccounts.BE.Domain.Models
     public DateTime DataCreazione { get; set; } = DateTime.Now;
 
     [StringLength(1), MinLength(1)]
-    public int OreLavorate { get; set; } = 0;
+    public double OreLavorate { get; set; } = 0.0;
+        public ICollection<Role> Roles { get; set; } = new List<Role>();  // ✅
+
+
 
   }
 }

@@ -1,8 +1,8 @@
 public interface IRoleRepository
 {
     Task<ICollection<Role>> GetAllRoles();
-    Task<Role> GetRoleById(long roleId);
+    Task<Role> GetRoleById(string roleId);
     Task<Role> CreateRole(Role role);
-    Task<Role> UpdateRole(Role role, long roleId);
-    Task<bool> DeleteRole(long roleId);
+    Task<Role> UpdateRole(Role role, int roleId);
+    Task<bool> DeleteRole(string roleId);
 }

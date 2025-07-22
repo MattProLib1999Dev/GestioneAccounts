@@ -8,6 +8,8 @@ using GestioneAccounts.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace GestioneAccounts.Controllers
 {
@@ -21,71 +23,63 @@ namespace GestioneAccounts.Controllers
     public readonly AccountRepository accountRepository;
     private readonly IWebHostEnvironment _env;
     private readonly IMapper _mapper;
+    private readonly UserManager<Account> _userManager;
+
+
 
     public AccountController(
-        ILogger<AccountController> logger,
-        ApplicationDbContext context,
-        IMediator mediator,
-        IWebHostEnvironment env,
-        IMapper mapper)
+    ILogger<AccountController> logger,
+    ApplicationDbContext context,
+    IMediator mediator,
+    IWebHostEnvironment env,
+    IMapper mapper,
+    UserManager<Account> userManager) // ✅ Assicurati che sia passato qui
     {
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
       _context = context ?? throw new ArgumentNullException(nameof(context));
       _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-      accountRepository = new AccountRepository(context);
       _env = env;
       _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+      _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager)); // ✅
     }
 
     // POST: api/Account/create
     [HttpPost("create")]
-    [Authorize(Roles = "Admin")] // Ensure only Admin or Manager can create accounts
     [AllowAnonymous]
     [ProducesResponseType(typeof(Account), 200)]
     public async Task<IActionResult> CreateAccount([FromBody] CreateAccountDto dto)
     {
-
       var account = new Account
       {
         UserName = dto.UserName,
-        NormalizedUserName = dto.NormalizedUserName,
         Email = dto.Email,
-        NormalizedEmail = dto.NormalizedEmail,
-        EmailConfirmed = dto.EmailConfirmed,
-        PasswordHash = dto.PasswordHash,
-        SecurityStamp = dto.SecurityStamp,
-        ConcurrencyStamp = dto.ConcurrencyStamp,
-        PhoneNumber = dto.PhoneNumber,
-        PhoneNumberConfirmed = dto.PhoneNumberConfirmed,
-        TwoFactorEnabled = dto.TwoFactorEnabled,
-        LockoutEnd = dto.LockoutEnd,
-        LockoutEnabled = dto.LockoutEnabled,
-        AccessFailedCount = dto.AccessFailedCount,
         Nome = dto.Nome,
         Voce = dto.Voce,
         ValoreString = dto.ValoreString,
         DataCreazione = dto.DataCreazione,
         OreLavorate = dto.OreLavorate,
-
-          Valori = dto.Valori.Select(v => new Valore
-          {
-            Nome = v.Nome,
-            ValoreStr = v.valoreString,
-            Voce = v.voce,
-            DataCreazione = v.DataCreazione,
-            Descrizione = v.Descrizione,
-            ValoreNumerico = v.ValoreNumerico,
-            AccountId = v.AccountId
-          }).ToList()
+        Valori = dto.Valori.Select(v => new Valore
+        {
+          Nome = v.Nome,
+          ValoreStr = v.valoreString,
+          Voce = v.voce,
+          DataCreazione = v.DataCreazione,
+          Descrizione = v.Descrizione,
+          ValoreNumerico = v.ValoreNumerico,
+          // NON settare AccountId: EF lo imposta automaticamente
+        }).ToList()
       };
+
+      // Usa UserManager per gestire la creazione
+      var result = await _userManager.CreateAsync(account, dto.PasswordHash);
+
+      if (!result.Succeeded)
+        return BadRequest(result.Errors);
+
       var accountDto = _mapper.Map<CreateAccountDto>(account);
-
-
-      _context.Accounts.Add(account);
-      await _context.SaveChangesAsync();
-
       return Ok(accountDto);
     }
+
 
 
     // GET: api/Account/{id}
@@ -138,34 +132,29 @@ namespace GestioneAccounts.Controllers
       return BadRequest("Account deletion failed.");
     }
 
-    private bool AccountExists(int id)
-    {
-      return _context.Accounts.Any(e => e.Id == id.ToString());
-    }
-
     // GET: api/Account/search
     [HttpGet("search")]
-public async Task<IActionResult> Search([FromQuery] string nome)
-{
-    if (string.IsNullOrWhiteSpace(nome))
+    public async Task<IActionResult> Search([FromQuery] string nome)
     {
+      if (string.IsNullOrWhiteSpace(nome))
+      {
         return BadRequest(new { message = "Il nome è obbligatorio." });
-    }
+      }
 
-    // 🔍 Controllo diretto se esiste almeno un account con quel nome
-    var exists = await _context.Accounts.AnyAsync(a => a.Nome == nome);
+      // 🔍 Controllo diretto se esiste almeno un account con quel nome
+      var exists = await _context.Accounts.AnyAsync(a => a.Nome == nome);
 
-    if (!exists)
-    {
+      if (!exists)
+      {
         return NotFound(new { message = "Nessun account trovato con questo nome." });
+      }
+
+      // ✅ Se esiste, prosegui con MediatR
+      var query = new SearchAccount { Nome = nome };
+      var result = await _mediator.Send(query);
+
+      return Ok(result);
     }
-
-    // ✅ Se esiste, prosegui con MediatR
-    var query = new SearchAccount { Nome = nome };
-    var result = await _mediator.Send(query);
-
-    return Ok(result);
-}
 
     // GET: api/Account/orderByName
     [HttpGet("orderByName")]
@@ -216,27 +205,61 @@ public async Task<IActionResult> Search([FromQuery] string nome)
       }
     }
 
-    //getall
-    [HttpGet("all")]
-    public async Task<IActionResult> GetAllAccounts()
+[HttpGet("all")]
+public async Task<IActionResult> GetAllAccounts()
+{
+    try
     {
-      try
-      {
-        var accounts = await _context.Accounts.ToListAsync();
-        if (accounts == null || accounts.Count != 0)
+        var accounts = await _context.Accounts
+            .Include(a => a.Role)
+            .ToListAsync();
+
+        if (accounts == null || !accounts.Any())
         {
-          return NotFound(new { message = "No accounts found." });
+            return NotFound(new { message = "Nessun account trovato." });
         }
-        // Map accounts to DTOs if necessary
-        var accountDto = accounts.Select(a => _mapper.Map<CreateAccountDto>(a)).ToList();
-        return Ok(accountDto);
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "Error retrieving accounts");
-        return StatusCode(500, new { message = "Internal server error" });
-      }
+
+        var accountDtos = accounts.Select(account =>
+        {
+            Guid idGuid;
+            if (!Guid.TryParse(account.Id.ToString(), out idGuid))
+            {
+                // Se l'id non è un GUID valido, logga e assegna Guid.Empty o gestisci come preferisci
+                _logger.LogWarning($"Account ID non valido come GUID: {account.Id}");
+                idGuid = Guid.Empty;
+            }
+
+            return new GetAccountDto
+            {
+                Id = idGuid.ToString(),
+                Email = account.Email,
+                UserName = account.UserName,
+            };
+        }).ToList();
+
+        return Ok(accountDtos);
     }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Errore durante il recupero degli account: {Message}", ex.Message);
+
+        return StatusCode(500, new
+        {
+            message = "Errore interno del server",
+            error = ex.Message,
+            inner = ex.InnerException?.Message,
+            stackTrace = ex.StackTrace
+        });
+    }
+}
+
+
+
+
+
+
+
+
 
     // POST: account/approvaOreLavorate
     [HttpPost("approvaOreLavorate")]
@@ -249,7 +272,7 @@ public async Task<IActionResult> Search([FromQuery] string nome)
       }
 
       // Trova l'account esistente
-      var account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == CreateAccountDto.Id.ToString());
+      var account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == CreateAccountDto.Id);
       if (account == null)
       {
         return NotFound("Account not found.");

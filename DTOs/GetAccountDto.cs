@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-public class CreateAccountDto
+public class GetAccountDto
 {
-  public Guid  Id { get; set; }
-  public int AccountId { get; set; } = 0;
-
+  public string  Id { get; set; }
   [Required]
   public string UserName { get; set; } = string.Empty;
 
@@ -48,6 +46,7 @@ public class CreateAccountDto
 
   public List<ValoriDto> Valori { get; set; } = new();
   public int OreLavorate { get; set; } = 0;
-  public List<string>? Roles { get; set; }
+  public List<string> Roles { get; set; }
+  public int AccountId { get; set; } = 0;
 
 }

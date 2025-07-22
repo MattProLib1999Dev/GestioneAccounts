@@ -18,7 +18,7 @@ namespace GestioneAccounts.DataAccess.Repositories
 
     public async Task<bool> DeleteAccount(long accountId)
     {
-      var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.ToString());
+      var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id.ToString() == accountId.ToString());
       if (account == null)
         return false;
 
@@ -29,7 +29,7 @@ namespace GestioneAccounts.DataAccess.Repositories
 
     public async Task<Account> GetAccountById(string accountId)
     {
-      return await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId) ?? new Account();
+      return await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id.ToString() == accountId) ?? new Account();
     }
 
 
@@ -57,9 +57,10 @@ namespace GestioneAccounts.DataAccess.Repositories
 
     public async Task<Account> UpdateAccount(string? nome, int accountId)
     {
-      var existingAccount = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId.ToString());
+      var id = new Guid();
+      var existingAccount = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == id);
       if (existingAccount == null)
-        return new Account { Id = accountId.ToString(), Nome = nome ?? string.Empty };
+        return new Account { Id = id, Nome = nome ?? string.Empty };
 
       existingAccount.Nome = nome ?? existingAccount.Nome;
       _applicationDbContext.Accounts.Update(existingAccount);
@@ -68,9 +69,10 @@ namespace GestioneAccounts.DataAccess.Repositories
     }
     public async Task<Account> UpdateAccount(string? nome, string accountId)
     {
-      var existingAccount = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
+      var id = new Guid();
+      var existingAccount = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == id);
       if (existingAccount == null)
-        return new Account { Id = accountId, Nome = nome ?? string.Empty };
+        return new Account { Id = id, Nome = nome ?? string.Empty };
 
       existingAccount.Nome = nome ?? existingAccount.Nome;
       _applicationDbContext.Accounts.Update(existingAccount);
@@ -79,7 +81,8 @@ namespace GestioneAccounts.DataAccess.Repositories
     }
     public async Task<bool> DeleteAccount(string accountId)
     {
-      var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
+      var id = new Guid();
+      var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(a => a.Id == id);
       if (account == null)
         return false;
 
