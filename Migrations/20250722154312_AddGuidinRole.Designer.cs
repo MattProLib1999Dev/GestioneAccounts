@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestioneAccounts.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250722095741_AddRoleName")]
-    partial class AddRoleName
+    [Migration("20250722154312_AddGuidinRole")]
+    partial class AddGuidinRole
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -311,9 +311,8 @@ namespace GestioneAccounts.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AccountId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");

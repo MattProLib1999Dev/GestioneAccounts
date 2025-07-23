@@ -2,7 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using GestioneAccounts.DataAccess;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using GestioneAccounts.BE.Domain.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using AutoMapper.Internal;
 
 namespace GestioneAccounts.Controllers;
 
@@ -14,17 +17,21 @@ public class RoleController : ControllerBase
   private readonly IMediator _mediator;
   private readonly ILogger<RoleController> _logger;
   private readonly IWebHostEnvironment _env;
+  private readonly IMapper _mapper;
+
 
   public RoleController(
       ILogger<RoleController> logger,
       ApplicationDbContext context,
       IMediator mediator,
-      IWebHostEnvironment env)
+      IWebHostEnvironment env,
+      IMapper mapper)
   {
     _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     _context = context ?? throw new ArgumentNullException(nameof(context));
     _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     _env = env;
+    _mapper = mapper;
   }
 
   // POST: api/Role/create
@@ -45,7 +52,7 @@ public class RoleController : ControllerBase
 
       var createdRole = await _mediator.Send(command);
 
-      return CreatedAtAction(nameof(getAll), new { id = createdRole.Id }, createdRole);
+      return CreatedAtAction(nameof(GetAllRoles), new { id = createdRole.Id }, createdRole);
     }
     catch (Exception ex)
     {
@@ -111,25 +118,48 @@ public class RoleController : ControllerBase
     }
   }
 
-  // GET: api/Role/getAll
-  [HttpGet("getAll")]
-  public async Task<IActionResult> getAll()
-  {
+  [HttpGet("all-roles")]
+public async Task<IActionResult> GetAllRoles()
+{
     try
     {
-      var roles = await _mediator.Send(new Role()
-      {
-        Accounts = _context.Accounts.ToList(),
-        Roles = new List<string> { "Admin", "Dipendente" },
-        Name = "All Roles",
-        AccountId = Guid.Empty
-      });
-      return Ok(roles);
+        var roles = await _context.Roles.ToListAsync();
+
+        if (roles == null || roles.Count == 0)
+        {
+            return NotFound(new { message = "Nessun ruolo trovato." });
+        }
+
+        var roleDtos = roles.Select(role =>
+        {
+            Guid accountGuid;
+            if (!Guid.TryParse(role.AccountId.ToString(), out accountGuid))
+            {
+                _logger.LogWarning($"AccountId non valido come GUID per il ruolo: {role.Name}");
+                accountGuid = Guid.Empty;
+            }
+
+            return new RoleDto
+            {
+                AccountId = accountGuid,
+                Roles = role.Roles,
+            };
+        }).ToList();
+
+        return Ok(roleDtos);
     }
     catch (Exception ex)
     {
-      _logger.LogError(ex, "Error retrieving roles");
-      return StatusCode(500, new { message = "Internal server error" });
+        _logger.LogError(ex, "Errore durante il recupero dei ruoli: {Message}", ex.Message);
+
+        return StatusCode(500, new
+        {
+            message = "Errore interno del server",
+            error = ex.Message,
+            inner = ex.InnerException?.Message,
+            stackTrace = ex.StackTrace
+        });
     }
-  }
 }
+
+ }

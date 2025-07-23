@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GestioneAccounts.Migrations
 {
     /// <inheritdoc />
-    public partial class AddBlogCreatedTimestamp : Migration
+    public partial class AddGuidinRole : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,7 +62,9 @@ namespace GestioneAccounts.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Roles = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -215,33 +217,28 @@ namespace GestioneAccounts.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccountRoles",
+                name: "RolesAccounts",
                 columns: table => new
                 {
-                    AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    AccountsId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RolesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountRoles", x => new { x.AccountId, x.RoleId });
+                    table.PrimaryKey("PK_RolesAccounts", x => new { x.AccountsId, x.RolesId });
                     table.ForeignKey(
-                        name: "FK_AccountRoles_AspNetUsers_AccountId",
-                        column: x => x.AccountId,
+                        name: "FK_RolesAccounts_AspNetUsers_AccountsId",
+                        column: x => x.AccountsId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AccountRoles_Roles_RoleId",
-                        column: x => x.RoleId,
+                        name: "FK_RolesAccounts_Roles_RolesId",
+                        column: x => x.RolesId,
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AccountRoles_RoleId",
-                table: "AccountRoles",
-                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -283,6 +280,11 @@ namespace GestioneAccounts.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RolesAccounts_RolesId",
+                table: "RolesAccounts",
+                column: "RolesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Valori_AccountId",
                 table: "Valori",
                 column: "AccountId");
@@ -291,9 +293,6 @@ namespace GestioneAccounts.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AccountRoles");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -310,13 +309,16 @@ namespace GestioneAccounts.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "RolesAccounts");
+
+            migrationBuilder.DropTable(
                 name: "Valori");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
