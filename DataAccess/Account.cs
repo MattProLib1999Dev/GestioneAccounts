@@ -12,7 +12,9 @@ namespace GestioneAccounts.BE.Domain.Models
   {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
-    public int AccountId{ get; set; }
+    public int AccountId { get; set; }
+
+    [JsonIgnore,NotMapped]
     public ICollection<Valore> Valori { get; set; } = new List<Valore>(); // ✅
     [NotMapped]
     public Role? Role { get; set; }
@@ -23,7 +25,11 @@ namespace GestioneAccounts.BE.Domain.Models
 
     [StringLength(1), MinLength(1)]
     public double OreLavorate { get; set; } = 0.0;
-        public ICollection<Role> Roles { get; set; } = new List<Role>();  // ✅
+
+    public string Password { get; set; } = string.Empty;
+
+    [JsonIgnore, NotMapped]
+    public ICollection<Role> Roles { get; set; } = new List<Role>();  // ✅
 
 
 

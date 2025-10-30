@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 public class CreateAccountDto
 {
-  public Guid  Id { get; set; }
-  public int AccountId { get; set; } = 0;
+  public Guid Id { get; set; }
+  public int AccountId { get; set; } 
 
   [Required]
   public string UserName { get; set; } = string.Empty;
@@ -20,7 +22,7 @@ public class CreateAccountDto
 
   public bool EmailConfirmed { get; set; }
 
-  public string PasswordHash { get; set; } = string.Empty;
+  public string Password { get; set; } = string.Empty;
 
   public string SecurityStamp { get; set; } = string.Empty;
 
@@ -46,8 +48,11 @@ public class CreateAccountDto
 
   public DateTime DataCreazione { get; set; } = DateTime.UtcNow;
 
+  [JsonIgnore, NotMapped]
   public List<ValoriDto> Valori { get; set; } = new();
   public int OreLavorate { get; set; } = 0;
+
+  [JsonIgnore, NotMapped]
   public string? Roles { get; set; } = string.Empty;
 
 }

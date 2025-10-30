@@ -20,7 +20,7 @@ public class GetAccountDto
 
   public bool EmailConfirmed { get; set; }
 
-  public string PasswordHash { get; set; } = string.Empty;
+  public string Password { get; set; } = string.Empty;
 
   public string SecurityStamp { get; set; } = string.Empty;
 

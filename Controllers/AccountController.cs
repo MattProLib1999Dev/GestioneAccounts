@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using System.Linq.Expressions;
 
 
 namespace GestioneAccounts.Controllers
@@ -52,26 +53,17 @@ namespace GestioneAccounts.Controllers
       var account = new Account
       {
         UserName = dto.UserName,
+        AccountId = dto.AccountId,
         Email = dto.Email,
         Nome = dto.Nome,
         Voce = dto.Voce,
         ValoreString = dto.ValoreString,
         DataCreazione = dto.DataCreazione,
-        OreLavorate = dto.OreLavorate,
-        Valori = dto.Valori.Select(v => new Valore
-        {
-          Nome = v.Nome,
-          ValoreStr = v.valoreString,
-          Voce = v.voce,
-          DataCreazione = v.DataCreazione,
-          Descrizione = v.Descrizione,
-          ValoreNumerico = v.ValoreNumerico,
-          // NON settare AccountId: EF lo imposta automaticamente
-        }).ToList()
+        OreLavorate = dto.OreLavorate
       };
 
       // Usa UserManager per gestire la creazione
-      var result = await _userManager.CreateAsync(account, dto.PasswordHash);
+      var result = await _userManager.CreateAsync(account, dto.Password);
 
       if (!result.Succeeded)
         return BadRequest(result.Errors);
@@ -83,31 +75,38 @@ namespace GestioneAccounts.Controllers
 
 
     // GET: api/Account/{id}
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int accountId)
+   [HttpGet]
+public async Task<IActionResult> GetById([FromQuery] int accountId)
+{
+    try
     {
-      var accounts = await _context.Accounts
-       .Select(a => new GetAccountDto
-       {
-         UserName = a.UserName ?? string.Empty,
-         Email = a.Email ?? string.Empty,
-         EmailConfirmed = a.EmailConfirmed,
-         Nome = a.Nome,
-         Voce = a.Voce,
-         ValoreString = a.ValoreString,
-         DataCreazione = a.DataCreazione,
-         OreLavorate = (int) a.OreLavorate,
-       })
-       .ToListAsync();
-      var account = accounts.FirstOrDefault(a => a.AccountId == accountId);
+        var account = await _context.Accounts
+            .Where(a => a.AccountId == accountId)
+            .Select(a => new GetAccountDto
+            {
+                AccountId = a.AccountId,
+                UserName = a.UserName ?? string.Empty,
+                Email = a.Email ?? string.Empty,
+                EmailConfirmed = a.EmailConfirmed,
+                Nome = a.Nome,
+                Voce = a.Voce,
+                ValoreString = a.ValoreString,
+                DataCreazione = a.DataCreazione,
+                OreLavorate = a.OreLavorate,
+            })
+            .FirstOrDefaultAsync();
 
-      if (account == null)
-      {
-        return NotFound();
-      }
+        if (account == null)
+            return NotFound();
 
-      return Ok(account);
+        return Ok(account);
     }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Errore durante il recupero dell'account per ID: {AccountId}. Messaggio: {Message}", accountId, ex.Message);
+        return StatusCode(500, new { message = "Errore interno del server", error = ex.Message });
+    }
+}
 
     // PUT: api/Account/{id}
     [HttpPut("{id}")]
@@ -217,73 +216,64 @@ namespace GestioneAccounts.Controllers
       }
     }
 
-[HttpGet("all")]
-public async Task<IActionResult> GetAllAccounts()
-{
-    try
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllAccounts()
     {
+      try
+      {
         var accounts = await _context.Accounts
             .Include(a => a.Roles) // Include corretto su collection di ruoli
             .ToListAsync();
 
         if (accounts == null || !accounts.Any())
         {
-            return NotFound(new { message = "Nessun account trovato." });
+          return NotFound(new { message = "Nessun account trovato." });
         }
 
         var accountDtos = accounts.Select(account =>
         {
-            Guid idGuid;
-            if (!Guid.TryParse(account.Id.ToString(), out idGuid))
-            {
-                _logger.LogWarning($"Account ID non valido come GUID: {account.Id}");
-                idGuid = Guid.Empty;
-            }
+          Guid idGuid;
+          if (!Guid.TryParse(account.Id.ToString(), out idGuid))
+          {
+            _logger.LogWarning($"Account ID non valido come GUID: {account.Id}");
+            idGuid = Guid.Empty;
+          }
 
-            // Mappatura DTO con lista di ruoli (nomi ruoli)
-            var ruoloNomi = account.Roles != null
-                ? account.Roles.Select(r => r.Name).ToList()
-                : new List<string>();
+          // Mappatura DTO con lista di ruoli (nomi ruoli)
+          var ruoloNomi = account.Roles != null
+              ? account.Roles.Select(r => r.Name).ToList()
+              : new List<string>();
 
-            return new GetAccountDto
-            {
-              Id = idGuid.ToString(),
-              AccountId = account.AccountId,
-              UserName = account.UserName ?? string.Empty,
-              Email = account.Email ?? string.Empty,
-              EmailConfirmed = account.EmailConfirmed,
-              Nome = account.Nome,
-              Voce = account.Voce,
-              ValoreString = account.ValoreString,
-              DataCreazione = account.DataCreazione,
-              OreLavorate = account.OreLavorate,
-            };
+          return new GetAccountDto
+          {
+            AccountId = account.AccountId,
+            UserName = account.UserName ?? string.Empty,
+            Email = account.Email ?? string.Empty,
+            EmailConfirmed = account.EmailConfirmed,
+            Nome = account.Nome,
+            Voce = account.Voce,
+            ValoreString = account.ValoreString,
+            DataCreazione = account.DataCreazione,
+            OreLavorate = account.OreLavorate,
+            Password = account.Password
+          };
         }).ToList();
 
         return Ok(accountDtos);
-    }
-    catch (Exception ex)
-    {
+      }
+      catch (Exception ex)
+      {
         _logger.LogError(ex, "Errore durante il recupero degli account: {Message}", ex.Message);
 
         return StatusCode(500, new
         {
-            message = "Errore interno del server",
-            error = ex.Message,
-            inner = ex.InnerException?.Message,
-            stackTrace = ex.StackTrace
+          message = "Errore interno del server",
+          error = ex.Message,
+          inner = ex.InnerException?.Message,
+          stackTrace = ex.StackTrace
         });
+      }
     }
-}
-
-
-
-
-
-
-
-
-
 
     // POST: account/approvaOreLavorate
     [HttpPost("approvaOreLavorate")]

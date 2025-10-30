@@ -85,6 +85,10 @@ namespace GestioneAccounts.Migrations
                         .HasMaxLength(1)
                         .HasColumnType("float");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 

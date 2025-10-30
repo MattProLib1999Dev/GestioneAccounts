@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestioneAccounts.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250825130641_InitialCreate")]
+    [Migration("20251030144543_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -87,6 +87,10 @@ namespace GestioneAccounts.Migrations
                     b.Property<double>("OreLavorate")
                         .HasMaxLength(1)
                         .HasColumnType("float");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
