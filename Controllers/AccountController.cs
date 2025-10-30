@@ -84,10 +84,22 @@ namespace GestioneAccounts.Controllers
 
     // GET: api/Account/{id}
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(long id)
+    public async Task<IActionResult> GetById(int accountId)
     {
-      var getAccount = new GetAccountById { Id = id };
-      var account = await _mediator.Send(getAccount);
+      var accounts = await _context.Accounts
+       .Select(a => new GetAccountDto
+       {
+         UserName = a.UserName ?? string.Empty,
+         Email = a.Email ?? string.Empty,
+         EmailConfirmed = a.EmailConfirmed,
+         Nome = a.Nome,
+         Voce = a.Voce,
+         ValoreString = a.ValoreString,
+         DataCreazione = a.DataCreazione,
+         OreLavorate = (int) a.OreLavorate,
+       })
+       .ToListAsync();
+      var account = accounts.FirstOrDefault(a => a.AccountId == accountId);
 
       if (account == null)
       {
@@ -211,7 +223,7 @@ public async Task<IActionResult> GetAllAccounts()
     try
     {
         var accounts = await _context.Accounts
-            .Include(a => a.Role)
+            .Include(a => a.Roles) // Include corretto su collection di ruoli
             .ToListAsync();
 
         if (accounts == null || !accounts.Any())
@@ -224,16 +236,27 @@ public async Task<IActionResult> GetAllAccounts()
             Guid idGuid;
             if (!Guid.TryParse(account.Id.ToString(), out idGuid))
             {
-                // Se l'id non è un GUID valido, logga e assegna Guid.Empty o gestisci come preferisci
                 _logger.LogWarning($"Account ID non valido come GUID: {account.Id}");
                 idGuid = Guid.Empty;
             }
 
+            // Mappatura DTO con lista di ruoli (nomi ruoli)
+            var ruoloNomi = account.Roles != null
+                ? account.Roles.Select(r => r.Name).ToList()
+                : new List<string>();
+
             return new GetAccountDto
             {
-                Id = idGuid.ToString(),
-                Email = account.Email,
-                UserName = account.UserName,
+              Id = idGuid.ToString(),
+              AccountId = account.AccountId,
+              UserName = account.UserName ?? string.Empty,
+              Email = account.Email ?? string.Empty,
+              EmailConfirmed = account.EmailConfirmed,
+              Nome = account.Nome,
+              Voce = account.Voce,
+              ValoreString = account.ValoreString,
+              DataCreazione = account.DataCreazione,
+              OreLavorate = account.OreLavorate,
             };
         }).ToList();
 
@@ -252,6 +275,7 @@ public async Task<IActionResult> GetAllAccounts()
         });
     }
 }
+
 
 
 

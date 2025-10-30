@@ -8627,7 +8627,7 @@
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "È stata rilevata una versione del pacchetto all'esterno del vincolo di dipendenza: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 richiede MediatR (>= 11.0.0 && < 12.0.0) ma è stata risolta la versione MediatR 12.4.1.",
+      "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.4.1 was resolved.",
       "libraryId": "MediatR",
       "targetGraphs": [
         "net8.0"

@@ -123,30 +123,35 @@ public async Task<IActionResult> GetAllRoles()
 {
     try
     {
-        var roles = await _context.Roles.ToListAsync();
-
-        if (roles == null || roles.Count == 0)
+      var roles = await _context.Roles
+        .Select(role => new
+        {
+          AccountId = role.AccountId,
+          Roles = role.Roles
+        })
+        .ToListAsync();
+      if (roles == null || roles.Count == 0)
         {
             return NotFound(new { message = "Nessun ruolo trovato." });
         }
 
-        var roleDtos = roles.Select(role =>
+      var roleDtos = roles.Select(role =>
+      {
+        Guid accountGuid;
+        if (!Guid.TryParse(role.AccountId.ToString(), out accountGuid))
         {
-            Guid accountGuid;
-            if (!Guid.TryParse(role.AccountId.ToString(), out accountGuid))
-            {
-                _logger.LogWarning($"AccountId non valido come GUID per il ruolo: {role.Name}");
-                accountGuid = Guid.Empty;
-            }
+          _logger.LogWarning($"AccountId non valido come GUID per il ruolo: {role.Roles}");
+          accountGuid = Guid.Empty;
+        }
 
-            return new RoleDto
-            {
-                AccountId = accountGuid,
-                Roles = role.Roles,
-            };
-        }).ToList();
+        return new RoleDto
+        {
+          AccountId = accountGuid,
+          Roles = role.Roles,
+        };
+      });
 
-        return Ok(roleDtos);
+      return Ok(roleDtos);
     }
     catch (Exception ex)
     {
@@ -161,5 +166,28 @@ public async Task<IActionResult> GetAllRoles()
         });
     }
 }
+
+//get: api/Role/123
+[HttpGet("rolesById/{id}")]
+public async Task<IActionResult> GetRoleById(string id)
+{
+    try
+    {
+        var role = await _context.Roles
+            .Include(r => r.Accounts)  // Include proprietà di navigazione corretta
+            .FirstOrDefaultAsync(r => r.Id.ToString() == id);
+
+        if (role == null)
+            return NotFound(new { message = "Ruolo non trovato." });
+
+        return Ok(_mapper.Map<RoleDto>(role));
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Errore durante il recupero del ruolo con ID: {Id}", id);
+        return StatusCode(500, new { message = "Errore interno del server" });
+    }
+}
+
 
  }

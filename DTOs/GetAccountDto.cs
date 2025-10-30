@@ -4,7 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 public class GetAccountDto
 {
-  public string  Id { get; set; }
+  public string Id { get; set; }
+
+  public int AccountId { get; set; } = 0;
   [Required]
   public string UserName { get; set; } = string.Empty;
 
@@ -45,8 +47,7 @@ public class GetAccountDto
   public DateTime DataCreazione { get; set; } = DateTime.UtcNow;
 
   public List<ValoriDto> Valori { get; set; } = new();
-  public int OreLavorate { get; set; } = 0;
-  public List<string> Roles { get; set; }
-  public int AccountId { get; set; } = 0;
+  public double OreLavorate { get; set; } = 0;
+  public string Roles { get; set; }
 
 }

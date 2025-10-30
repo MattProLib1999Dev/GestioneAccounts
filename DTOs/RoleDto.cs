@@ -4,7 +4,7 @@ using GestioneAccounts.BE.Domain.Models;
 public class RoleDto
 {
   public Guid AccountId { get; set; }
-  public List<string> Roles { get; set; } = new List<string>() { "Admin", "Dipendente" };
+  public string Roles { get; set; } = string.Empty;
   public List<Guid> RolesId { get; set; } = new List<Guid>();
 
 

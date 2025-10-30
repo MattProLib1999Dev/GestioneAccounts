@@ -48,6 +48,6 @@ public class CreateAccountDto
 
   public List<ValoriDto> Valori { get; set; } = new();
   public int OreLavorate { get; set; } = 0;
-  public List<string>? Roles { get; set; }
+  public string? Roles { get; set; } = string.Empty;
 
 }

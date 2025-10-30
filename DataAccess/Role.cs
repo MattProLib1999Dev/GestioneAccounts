@@ -10,7 +10,7 @@ public class Role : IdentityUser
   public int Id { get; set; }
   public Guid AccountId { get; set; } = Guid.Empty;
   public ICollection<Account> Accounts { get; set; } = new List<Account>();  // ✅
-  public List<string> Roles { get; set; } = new List<string>() { "Admin", "Dipendente" };
+  public string Roles { get; set; } = string.Empty;
 
   public string Name { get; set; }  = string.Empty;
 

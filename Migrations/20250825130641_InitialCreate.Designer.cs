@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestioneAccounts.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250722154312_AddGuidinRole")]
-    partial class AddGuidinRole
+    [Migration("20250825130641_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

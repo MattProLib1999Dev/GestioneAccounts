@@ -95,9 +95,23 @@ builder.Services.AddSwaggerGen(c =>
 
 // 11. Web root (opzionale)
 builder.WebHost.UseWebRoot("wwwroot");
+WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+var app = builder.Build();
+
 
 // === Middleware pipeline ===
-var app = builder.Build();
 
 app.UseCors("AllowFrontend");
 
