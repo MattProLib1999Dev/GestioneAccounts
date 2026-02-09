@@ -34,20 +34,20 @@ namespace GestioneAccounts.Controllers
     IMediator mediator,
     IWebHostEnvironment env,
     IMapper mapper,
-    UserManager<Account> userManager) // ✅ Assicurati che sia passato qui
+    UserManager<Account> userManager)
     {
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
       _context = context ?? throw new ArgumentNullException(nameof(context));
       _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
       _env = env;
       _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-      _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager)); // ✅
+      _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
     }
 
     // POST: api/Account/create
     [HttpPost("create")]
     [AllowAnonymous]
-    [ProducesResponseType(typeof(Account), 200)]
+    [ProducesResponseType(typeof(CreateAccountDto), 200)]
     public async Task<IActionResult> CreateAccount([FromBody] CreateAccountDto dto)
     {
       var account = new Account
@@ -87,7 +87,6 @@ public async Task<IActionResult> GetById([FromQuery] int accountId)
                 AccountId = a.AccountId,
                 UserName = a.UserName ?? string.Empty,
                 Email = a.Email ?? string.Empty,
-                EmailConfirmed = a.EmailConfirmed,
                 Nome = a.Nome,
                 Voce = a.Voce,
                 ValoreString = a.ValoreString,
@@ -142,6 +141,14 @@ public async Task<IActionResult> GetById([FromQuery] int accountId)
 
       return BadRequest("Account deletion failed.");
     }
+
+    [HttpGet("autocomplete")]
+    public async Task<IActionResult> AutocompleteSearchInAccountField([FromQuery] string term)
+    {
+      var results = await _mediator.Send(new AutocompleteAccountQuery(term));
+      return Ok(results);
+    }
+
 
     // GET: api/Account/search
     [HttpGet("search")]
@@ -249,7 +256,6 @@ public async Task<IActionResult> GetById([FromQuery] int accountId)
             AccountId = account.AccountId,
             UserName = account.UserName ?? string.Empty,
             Email = account.Email ?? string.Empty,
-            EmailConfirmed = account.EmailConfirmed,
             Nome = account.Nome,
             Voce = account.Voce,
             ValoreString = account.ValoreString,

@@ -8,10 +8,13 @@ public class Role : IdentityUser
 {
   [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), JsonIgnore]
   public int Id { get; set; }
-  public Guid AccountId { get; set; } = Guid.Empty;
-  public ICollection<Account> Accounts { get; set; } = new List<Account>();  // ✅
-  public string Roles { get; set; } = string.Empty;
 
+  [JsonIgnore, NotMapped]
+  public Guid AccountId { get; set; } = Guid.Empty;
+
+  [JsonIgnore, NotMapped]
+  public ICollection<Account> Accounts { get; set; } = new List<Account>();
+  public string Roles { get; set; } = string.Empty;
   public string Name { get; set; }  = string.Empty;
 
 

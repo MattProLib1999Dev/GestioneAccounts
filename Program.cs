@@ -1,3 +1,4 @@
+using System.Configuration;
 using System.Text;
 using System.Text.Json.Serialization;
 using GestioneAccounts.Abstractions;
@@ -15,8 +16,21 @@ using Namespace.GestioneAccounts.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Database Context
+/*builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));*/
+
+//MySql connection
+var connectionString = builder.Configuration.GetConnectionString("MysqlConnection");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+  options.UseMySql(
+    connectionString,
+    ServerVersion.AutoDetect(connectionString));
+});
+
+
+
 
 // 2. JWT Config
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));

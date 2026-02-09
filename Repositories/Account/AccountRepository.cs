@@ -37,7 +37,6 @@ namespace GestioneAccounts.DataAccess.Repositories
     {
       return await _applicationDbContext.Accounts.ToListAsync();
     }
-    // Removed duplicate UpdateAccount method to resolve conflict
 
     // search accounts by nome, dataCreazione, valoreString, voce
     public Task<ICollection<Account>> SearchAccounts(string? nome, DateTime? dataCreazione, string? valoreString, string? voce)
