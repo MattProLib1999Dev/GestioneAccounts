@@ -1,11 +1,6 @@
-C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\angular.json
 C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\appsettings.Development.json
 C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\appsettings.json
 C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\omnisharp.json
-C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\package-lock.json
-C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\package.json
-C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\tsconfig.app.json
-C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\tsconfig.spec.json
 C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\GestioneAccounts.staticwebassets.runtime.json
 C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\GestioneAccounts.staticwebassets.endpoints.json
 C:\Users\matte\Desktop\GestioneAccounts\BE\GestioneAccounts\bin\Debug\net10.0\GestioneAccounts.exe

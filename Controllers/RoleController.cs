@@ -6,6 +6,7 @@ using AutoMapper;
 using GestioneAccounts.BE.Domain.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using AutoMapper.Internal;
+using GestioneAccounts.Domain.Models;
 
 namespace GestioneAccounts.Controllers;
 
@@ -43,14 +44,22 @@ public class RoleController : ControllerBase
 
     try
     {
-      var command = new CreateRoleCommand
-      {
-        AccountId = roleDto.AccountId,
-        Roles = roleDto.Roles,
-        Name = "New Role"
-      };
 
-      var createdRole = await _mediator.Send(command);
+      Role createdRole = new Role();
+
+      foreach (var role in roleDto.listaRuoli)
+      {
+
+
+        var command = new CreateRoleCommand
+        {
+          AccountId = roleDto.AccountId,
+          Roles = role.ToString()
+        };
+
+        createdRole = await _mediator.Send(command);
+
+      }
 
       return CreatedAtAction(nameof(GetAllRoles), new { id = createdRole.Id }, createdRole);
     }
@@ -147,7 +156,7 @@ public async Task<IActionResult> GetAllRoles()
         return new RoleDto
         {
           AccountId = accountGuid,
-          Roles = role.Roles,
+          listaRuoli = new List<Ruolo>()
         };
       });
 
